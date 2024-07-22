@@ -1,0 +1,8 @@
+a {
+    color: blue; /* Set the color of links to blue */
+    text-decoration: underline; /* Underline links */
+}
+
+a:hover {
+    color: darkblue; /* Change link color to dark blue on hover */
+}
