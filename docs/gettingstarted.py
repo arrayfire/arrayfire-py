@@ -38,7 +38,7 @@ randcplx = af.randu((2,1))
 
 
 # [gettingstarted3-snippet]
-import arrayFire as af
+import arrayfire as af
 # Create a six-element array on the host
 hA = ([0, 1, 2, 3, 4, 5])
 
@@ -269,8 +269,6 @@ def main():
     result = af.sum(a)
     print(f"sum: {result}\n")
 
-if __name__ == "__main__":
-    main()
 
 # [gettingstarted13-endsnippet]
 
