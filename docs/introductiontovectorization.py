@@ -50,7 +50,7 @@ conv = af.convolve2(signal, filter)
 
 # Print the result if needed
 print("Convolution result:")
-af.af_print(conv)
+print(conv)
 # [vectorization3-endsnippet]
 
 
@@ -64,7 +64,7 @@ HEIGHT = 256
 NUM_IMAGES = 100
 
 # Generate an array of 100 WIDTH x HEIGHT images of random numbers
-imgs = af.randu(WIDTH, HEIGHT, NUM_IMAGES)
+imgs = af.randu((NUM_IMAGES, (WIDTH, HEIGHT)))
 
 # Rotate all of the images in a single command (rotate by 45 degrees)
 rot_imgs = af.rotate(imgs, 45)
@@ -96,7 +96,7 @@ print(a)
 # [vectorization5-endsnippet]
 
 
-
+#NOT WORKING
 # [vectorization6-snippet]
 
 import arrayfire as af
@@ -129,7 +129,7 @@ B = af.accum(A)
 
 # [vectorization7-endsnippet]
 
-
+#NOT WORKING
 # [vectorization8-snippet]
 
 import arrayfire as af
@@ -161,12 +161,12 @@ af.af_print(combination)
 import arrayfire as af
 
 # Create the filter and weight vectors
-filter = af.randn(1, 5)
-weights = af.randu(5, 5)
+filter = af.randu((1, 5))
+weights = af.randu((5, 5))
 
 # Apply the filter using a for-loop equivalent
-filtered_weights = af.constant(0, 5, 5)
-for i in range(weights.dims()[1]):
+filtered_weights = af.constant(0, (5, 5))
+for i in range(weights.shape[1]):
     filtered_weights[:, i] = af.matmul(filter, weights[:, i])
 
 # Print the filtered weights array
@@ -180,8 +180,8 @@ af.af_print(filtered_weights)
 import arrayfire as af
 
 # Create the filter and weight vectors
-filter = af.randn(1, 5)   # Shape: 1x5
-weights = af.randu(5, 5)  # Shape: 5x5
+filter = af.randu((1, 5))   # Shape: 1x5
+weights = af.randu((5, 5))  # Shape: 5x5
 
 # Transpose the filter to align dimensions for broadcasting
 filter_transposed = af.transpose(filter)  # Shape: 5x1
@@ -191,5 +191,5 @@ filtered_weights = filter_transposed * weights
 
 # Print the filtered weights array
 print("Filtered weights:")
-af.af_print(filtered_weights)
+print(filtered_weights)
 # [vectorization10-endsnippet]

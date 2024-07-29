@@ -90,7 +90,7 @@ ref = af.matmul(inputA, inputB)
 
 reference = A[:, 2]
 
-a[:, 2] = 3.14
+A[:, 2] = 3.14
 # [indexing10-endsnippet]
 
 
