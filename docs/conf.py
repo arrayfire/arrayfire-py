@@ -24,6 +24,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
+    'sphinx_collapse',
 ]
 
 templates_path = ['_templates']
@@ -36,6 +37,6 @@ exclude_patterns = []
 
 html_theme = 'sphinxawesome_theme'
 html_static_path = ['_static']
-
+html_permalinks = False
 
 
