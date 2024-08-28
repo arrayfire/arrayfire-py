@@ -2,7 +2,7 @@ import arrayfire as af
 
 # [pi-example-simple-snippet]
 # Monte Carlo estimation of pi
-def calc_pi_device(samples):
+def calc_pi_device(samples) -> float:
     # Simple, array based API
     # Generate uniformly distributed random numers
     x = af.randu(samples)
