@@ -16,11 +16,11 @@ Function Documentation
 .. sidebar:: af.reorder()
 
     Syntax:
-        af.reorder(array, *order)
+        af.reorder(array, \*order)
     
     Parameters:
         'array': The ArrayFire array whose dimensions are to be reordered.
-        '*order': The new order of dimensions specified as a sequence of integers. Each integer represents the index of the dimension in the new order.
+        '\*order': The new order of dimensions specified as a sequence of integers. Each integer represents the index of the dimension in the new order.
 
     Returns:
         An ArrayFire array with the dimensions reordered according to the specified order.

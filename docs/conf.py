@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.abspath('../..'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'ArrayFire'
-copyright = '2024, Michael Egwuatu'
-author = 'Michael Egwuatu'
-release = '6/11/2024'
+copyright = '2024, ArrayFire'
+author = 'ArrayFire'
+release = ''
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -39,4 +39,8 @@ html_theme = 'sphinxawesome_theme'
 html_static_path = ['_static']
 html_permalinks = False
 
+# -- Suppress specific warnings --------------------------------------------
 
+suppress_warnings = [
+    'ref.include_missing',
+]

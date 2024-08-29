@@ -13,6 +13,7 @@ Install Instructions
 * :ref:`macOs <macOS>`
 
 .. _Windows:
+
 Windows
 =======
 Once the ArrayFire has been downloaded, run the installer.
@@ -23,6 +24,7 @@ For more information on using ArrayFire on Windows, visit the following page.
 
 
 .. _Linux:
+
 Linux
 =====
 
@@ -44,6 +46,7 @@ Given sudo permissions, the ArrayFire libraries can be added to the path via :li
 
     echo /opt/arrayfire/lib64 > /etc/ld.so.conf.d/arrayfire.conf
     sudo ldconfig
+
 Otherwise, the :literal:`LD_LIBRARY_PATH` environment variable can be set so that the shared library loader can find the ArrayFire libraries.
 
 For more information on using ArrayFire on Linux, visit the following page*.
@@ -74,6 +77,7 @@ To install these dependencies on common Linux distributions:
 
 
 .. _macOS:
+
 macOS
 =====
 

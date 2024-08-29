@@ -16,10 +16,10 @@ Function Documentation
 .. sidebar:: af.reshape()
 
     Syntax:
-        af.reshape(array,*new_shape)    
+        af.reshape(array,\*new_shape)
         
     Parameters:
         'array': The ArrayFire array to be reshaped.
-        '*new_shape': The new shape for the array, specified as a sequence of integers. The product of these dimensions must equal the total number of elements in the original array.
+        '\*new_shape': The new shape for the array, specified as a sequence of integers. The product of these dimensions must equal the total number of elements in the original array.
     Returns:
         An ArrayFire array with the specified new shape.

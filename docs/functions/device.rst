@@ -14,6 +14,7 @@ The 'af.device()' function is useful for managing and querying the device that A
 - Getting the Current Device: Retrieve the index of the currently selected device.
 - Setting the Current Device: Select a specific device for computations.
 - Querying Device Properties: Obtain information about the current device.
+
 This functionality is important for applications that need to explicitly choose between multiple GPUs or check device capabilities.
 
 Function Documentation

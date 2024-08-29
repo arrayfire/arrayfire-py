@@ -24,6 +24,7 @@ ArrayFire provides one generic container object, the array on which functions an
 * u64 64-bit unsigned integer (:literal:`uintl`)
 * s16 16-bit signed integer (:literal:`short`)
 * u16 16-bit unsigned integer (:literal:`unsigned short`)
+
 Most of these data types are supported on all modern GPUs; however, some older devices may lack support for double precision arrays. In this case, a runtime error will be generated when the array is constructed.
 
 If not specified otherwise, :literal:`array`s are created as single precision floating point numbers (:literal:`f32`).

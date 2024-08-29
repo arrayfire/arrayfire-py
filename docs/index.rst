@@ -3,11 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to TestProject2's documentation!
-========================================
+Welcome to ArrayFire's documentation!
+=====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    overview
@@ -15,6 +15,17 @@ Welcome to TestProject2's documentation!
    functions
    releasenotes
    examples
+   arrayandmatrixmanipulation
+   arrayfirejitcodegeneration
+   configuringarrayfireenvironment
+   debuggingarrayfirecode
+   gettingstarted
+   indexing
+   installation
+   introductiontovectorization
+   linux
+   functions/index
+
 
 Indices and tables
 ==================
@@ -23,19 +34,6 @@ Indices and tables
    * :ref:`search`
 
 
-
-.. automodule:: pkg.sub_pkg1
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: pkg.sub_pkg2
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-   
 
 
 
