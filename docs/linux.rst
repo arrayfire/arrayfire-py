@@ -4,6 +4,7 @@ Using ArrayFire on Linux
 Once you have :ref:`installed <Linux>` ArrayFire on your system, the next thing to do is set up your build system. On Linux, you can create ArrayFire projects using almost any editor, compiler, or build system. The only requirements are that you include the ArrayFire header directories and link with the ArrayFire library you intend to use i.e. CUDA, OpenCL, oneAPI, CPU, or Unified backends.
 
 .. _bigpicture:
+
 The big picture
 ===============
 
@@ -87,6 +88,7 @@ Next we need to instruct CMake to create build instructions and then compile. We
     cd build
     cmake ..
     make
+
 NOTE: If you have installed ArrayFire to a non-standard location, CMake can still help you out. When you execute CMake specify the path to ArrayFire installation root as :literal:`ArrayFire_DIR` variable.
 
 For example, if ArrayFire were installed locally to :literal:`/home/user/ArrayFire` then you would modify the :literal:`cmake` command above to contain the following definition:
@@ -94,6 +96,7 @@ For example, if ArrayFire were installed locally to :literal:`/home/user/ArrayFi
 .. code-block:: text
 
     cmake -DArrayFire_DIR=/home/user/ArrayFire ..
+
 You can also specify this information in the :literal:`ccmake` command-line interface.
 
 

@@ -14,12 +14,14 @@ The 'af.fft()' function performs a discrete Fourier transform of the input array
 - Signal Processing: Analyzing the frequency components of a signal.
 - Image Processing: Transforming images to the frequency domain for various processing tasks.
 - Numerical Analysis: Solving differential equations and other problems where Fourier methods are applicable.
+
 The function supports:
 
 - 1D FFT: Transforming 1D arrays (vectors).
 - 2D FFT: Transforming 2D arrays (matrices).
 - 3D FFT: Transforming 3D arrays (volumes).
 - Multi-dimensional FFTs: Transforming arrays of higher dimensions.
+
 The FFT can be computed along specified dimensions or all dimensions of the input array.
 
 Function Documentation

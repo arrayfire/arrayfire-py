@@ -16,11 +16,11 @@ Function Documentation
 .. sidebar:: af.transpose()
 
     Syntax:
-        af.transpose(array, *permutation)
+        af.transpose(array, \*permutation)
     
     Parameters:
         'array': The ArrayFire array to be transposed.
-        '*permutation': An optional sequence of integers specifying the new order of dimensions. If not provided, the function defaults to transposing the last two dimensions.
+        '\*permutation': An optional sequence of integers specifying the new order of dimensions. If not provided, the function defaults to transposing the last two dimensions.
 
     Returns:
         An ArrayFire array that is the transpose of the input array, with dimensions permuted according to the provided permutation.

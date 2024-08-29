@@ -6,6 +6,7 @@ Function
 --------
 :literal:`af.zeros()`
     - Python interface to create array filled with zeros.
+
 Detailed Description
 --------------------
 The 'af.zeros()' function creates an ArrayFire array where every element is initialized to zero. It is particularly useful when you need to allocate space for an array but want to ensure that all values start from zero. This is often used in numerical methods, data processing, and initialization of variables in scientific computing.

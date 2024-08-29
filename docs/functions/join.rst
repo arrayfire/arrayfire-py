@@ -18,10 +18,10 @@ Function Documentation
 .. sidebar:: af.join()
 
     Syntax:
-        af.join(dim, *arrays)
+        af.join(dim, \*arrays)
     
     Parameters:
         'dim': The dimension along which the arrays will be concatenated. This is an integer indicating the axis along which the join operation will take place.
-        '*arrays': The arrays to be concatenated. These can be 1D, 2D, or higher-dimensional arrays, and they must be compatible in all dimensions except the specified dimension.
+        '\*arrays': The arrays to be concatenated. These can be 1D, 2D, or higher-dimensional arrays, and they must be compatible in all dimensions except the specified dimension.
     Returns:
         An ArrayFire array that is the result of concatenating the input arrays along the specified dimension.

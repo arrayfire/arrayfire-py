@@ -16,12 +16,12 @@ Function Documentation
 .. sidebar:: af.slice()
 
     Syntax:
-        af.slice(array, *start_indices, *end_indices)
+        af.slice(array, \*start_indices, \*end_indices)
     
     Parameters:
         'array': The ArrayFire array from which the subarray will be extracted.
-        '*start_indices': A sequence of integers specifying the starting indices for each dimension.
-        '*end_indices': A sequence of integers specifying the ending indices for each dimension.
+        '\*start_indices': A sequence of integers specifying the starting indices for each dimension.
+        '\*end_indices': A sequence of integers specifying the ending indices for each dimension.
 
     Returns:
         An ArrayFire array containing the extracted subarray.

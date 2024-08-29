@@ -102,7 +102,7 @@ A[:, 2] = 3.14
 # [indexing11-endsnippet]
 
 
-# [indexing11-snippet]
+# [indexing12-snippet]
 
 hidx = [4, 3, 4, 0]
 hvals = [9.0, 8.0, 7.0, 6.0]
