@@ -954,6 +954,7 @@ def replace(lhs: Array, rhs: Array | int | float, conditional: Array, /) -> None
     wrapper.replace_scalar(lhs.arr, conditional.arr, rhs)
 
 
+@afarray_as_array
 def select(lhs: Array | int | float, rhs: Array | int | float, conditional: Array, /) -> Array:
     """
     Conditionally selects elements from one of two sources (ArrayFire arrays or scalars) based on a condition array.
