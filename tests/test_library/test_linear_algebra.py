@@ -65,8 +65,8 @@ def test_gemm_basic(matrix_a: af.Array, matrix_b: af.Array) -> None:
 def test_gemm_alpha_beta(matrix_a: af.Array, matrix_b: af.Array) -> None:
     alpha = 0.5
     beta = 2.0
-    result = af.gemm(matrix_a, matrix_b, alpha=alpha, beta=beta)
-    expected = create_from_2d_nested(10.5, 12.0, 22.5, 26.0)
+    result = af.gemm(matrix_a, matrix_b, alpha=alpha, beta=beta, accum=matrix_a)
+    expected = create_from_2d_nested(11.5, 15.0, 27.5, 33.0)
     assert result == expected, f"Expected {expected}, got {result}"
 
 

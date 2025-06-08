@@ -92,6 +92,7 @@ def gemm(
     rhs_opts: MatProp = MatProp.NONE,
     alpha: int | float = 1.0,
     beta: int | float = 0.0,
+    accum: Array = None
 ) -> Array:
     """
     Performs BLAS general matrix multiplication (GEMM) on two Array instances.
@@ -125,6 +126,10 @@ def gemm(
     beta : int | float, optional
         Scalar multiplier for the existing matrix C in the accumulation. Default is 0.0.
 
+    accum: Array, optional
+        A 2-dimensional, real or complex array representing the matrix C in the accumulation.
+        Default is None (no accumulation).
+
     Returns
     -------
     Array
@@ -135,7 +140,10 @@ def gemm(
     - The data types of `lhs` and `rhs` must be compatible.
     - Batch operations are not supported in this version.
     """
-    return cast(Array, wrapper.gemm(lhs.arr, rhs.arr, lhs_opts, rhs_opts, alpha, beta))
+    accumulator = None
+    if isinstance(accum, Array):
+        accumulator = accum.arr
+    return cast(Array, wrapper.gemm(lhs.arr, rhs.arr, lhs_opts, rhs_opts, alpha, beta, accumulator))
 
 
 @afarray_as_array
