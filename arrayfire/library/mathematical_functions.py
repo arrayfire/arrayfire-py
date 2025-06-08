@@ -261,12 +261,11 @@ def atan2(x1: int | float | Array, x2: int | float | Array, /) -> Array:
     return process_c_function(x1, x2, wrapper.atan2)
 
 
-@afarray_as_array
 def cplx(x1: int | float | Array, /, x2: int | float | Array | None = None) -> Array:
     if x2 is None:
         if not isinstance(x1, Array):
             raise TypeError("x1 can not be int or tuple when x2 is None.")
-        return cast(Array, wrapper.cplx(x1.arr))
+        return Array.from_afarray(Array, wrapper.cplx(x1.arr))
     else:
         return process_c_function(x1, x2, wrapper.cplx2)
 
