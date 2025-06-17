@@ -780,6 +780,14 @@ class Array:
             indexing = tuple(key_list)
 
         out._arr = wrapper.index_gen(self._arr, ndims, wrapper.get_indices(indexing))  # type: ignore[arg-type]
+
+        if isinstance(key, Array) and key.is_bool:
+            wrapper.release_array(indexing)
+        elif isinstance(key, tuple):
+            for i in range(len(key)):
+                if isinstance(key[i], Array) and key[i].is_bool:
+                    wrapper.release_array(indexing[i])
+
         return out
 
     def __index__(self) -> int:
@@ -807,7 +815,6 @@ class Array:
 
         """
         ndims = self.ndim
-
         is_array_with_bool = isinstance(key, Array) and type(key) is afbool
 
         if is_array_with_bool:
@@ -842,20 +849,27 @@ class Array:
             for elem in key:
                 if isinstance(elem, Array):
                     if elem.is_bool:
-                        key_list.append(wrapper.where(elem.arr))
+                        locs = wrapper.where(elem.arr)
+                        key_list.append(locs)
                     else:
                         key_list.append(elem.arr)
                 else:
                     key_list.append(elem)
             indexing = tuple(key_list)
 
-        indices = wrapper.get_indices(indexing)
+        out = wrapper.assign_gen(self._arr, other_arr, ndims, wrapper.get_indices(indexing))
 
-        out = wrapper.assign_gen(self._arr, other_arr, ndims, indices)
+        if isinstance(key, Array) and key.is_bool:
+            wrapper.release_array(indexing)
+        elif isinstance(key, tuple):
+            for i in range(len(key)):
+                if isinstance(key[i], Array) and key[i].is_bool:
+                    wrapper.release_array(indexing[i])
 
         wrapper.release_array(self._arr)
         if del_other:
             wrapper.release_array(other_arr)
+
         self._arr = out
 
     def __str__(self) -> str:
