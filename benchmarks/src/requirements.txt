@@ -1,0 +1,10 @@
+--extra-index-url https://software.repos.intel.com/python/pypi
+dpnp
+numpy
+cupy-cuda12x
+pytest
+pytest-benchmark
+matplotlib
+gdown
+pandas
+# arrayfire
