@@ -1,4 +1,4 @@
-# Benchmarks
+# Benchmarks Results
 Here are some graphs comparing ArrayFire Python against other packages for some common operations:
 
 <p align="center"><img src="img/comparison_afcuda_t4.png" width="800"></a></p>
