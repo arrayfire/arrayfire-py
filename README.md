@@ -3,28 +3,43 @@
 
 [ArrayFire](https://github.com/arrayfire/arrayfire) is a high performance library for parallel computing with an easy-to-use API. It enables users to write scientific computing code that is portable across CUDA, OpenCL and CPU devices.  
 
-This project is a **work in progress**. It is meant to provide thin Python bindings for the ArrayFire C library, i.e, it provides array functionality, math operations, printing, etc. This is the front-end python library for using ArrayFire.
+This project is a **work in progress**. It is meant to provide a numpy-like Python interface for the ArrayFire C library, i.e, it provides array functionality, math operations, printing, etc. This is the front-end python library for using ArrayFire. It is currently supported on Python 3.10+.
 
+Here is an example of the library at work:
+```py
+# Set backend and device (optional: 'cuda', 'opencl', 'oneapi', 'cpu')
+af.setBackend(af.BackendType.cuda)
+af.setDevice(0)
 
+# Create two 5x5 arrays on the GPU
+a = af.randu((5, 5))
+b = af.randu((5, 5))
+
+# Perform element-wise addition and matrix multiplication
+c = a + b
+d = af.matmul(a, b)
+
+# Print the result
+print(c, "Element-wise Sum")
+print(d, "Matrix Product")
+```
+
+# Installing
+
+**Requirement Details**
 This project is separated into 3 different parts:
 ```
 arrayfire-py -> arrayfire-binary-python-wrapper -> ArrayFire C Libraries
 ```
-The arrow `->` means `uses/depends on`. This means that arrayfire with python each of these parts is needed:
-- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-py) is the `thin` wrapper that provides the numpy-like interface to do math and array operations. *** This is the intended User Interface ***
-- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is the `binary` wrapper that provides rough direct access to the functions in the C library. Its purpose is to do the handling of finding the C libraries and handling the communication between Python and C datatypes. This package can exist in two forms, with a bundled binary distribution, or merely as a loader that will load the ArrayFire library from a system or user level install.
+This means that arrayfire with python each of these parts is needed:
+- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-py) is the `thin` wrapper that provides the numpy-like interface to execute math and array operations. *** This is the intended User Interface ***
+- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is the `binary` wrapper that provides rough direct access to the functions in the C library.
 - [`ArrayFire C Libraries`](https://github.com/arrayfire/arrayfire) are the binaries obtained from compiling the [ArrayFire C/C++ Project](https://github.com/arrayfire/arrayfire)
 
-The main reason for this separation has to do with handling updates. Bug fixes and features for user-interface and python functionality will only require updating `arrayfire-py`, updates for the communication between Python and C will require only updating `arrayfire-binary-python-wrapper`, and updates to the internal math operations, device handling, speedup, etc will only require updating the `ArrayFire C Libraries`. This way we allow the user to customize their own ArrayFire installation (e.g. only requiring the cuda backend, using both oneapi and opencl, etc.). As we continuously update each of the components, updating one of the wrapper will not force the user to reinstall the heavy binaries, and doing updating the binaries will not necessarily force the user update the python interface they are using through `arrayfire-py`.
-
-# Installing
-
-The arrayfire-py can be installed from a variety of sources or can be easily and quickly built from source:
-
-
 **Install the last stable version of python wrapper:**
-```
-pip install arrayfire-py
+```sh
+pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0-py3-none-linux_x86_64.whl # install required binary wrapper with the 3.10 ArrayFire binaries included 
+pip install arrayfire-py # install arrayfire python interface library
 ```
 
 **Install a pre-built wheel:**
@@ -49,15 +64,6 @@ To run the tests, use:
 ```bash
 python -m pytest tests/
 ```
-
-# Benchmarks
-Here are some graphs comparing ArrayFire Python against other packages for some common operations:
-
-<p align="center"><img src="docs/benchmark_results/comparison_afcuda_t4.png" width="800"></a></p>
-<p align="center"><img src="docs/benchmark_results/comparison_afopencl_t4.png" width="800"></a></p>
-<p align="center"><img src="docs/benchmark_results/comparison_afoneapi_b580.png" width="800"></a></p>
-
-These graphs were generated with this benchmark code using the ArrayFire C Libraries v3.10
 
 # Contributing
 
