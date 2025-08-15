@@ -22,6 +22,12 @@ Documentation grouped by category:
             - Creates an array filled with zeros.
         * - :doc:`af.ones() <functions/ones>`
             - Creates an array filled with ones.
+        * - :doc:`af.constant() <functions/constant>`
+            - Creates an array filled with a scalar value.
+        * - :doc:`af.range() <functions/range>`
+            - Creates an array filled with a range of linear indices along a dimension.
+        * - :doc:`af.iota() <functions/iota>`
+            - Creates an array filled with a range of linear indices along multiple dimensions
         * - :doc:`af.randu() <functions/randu>`
             - Creates an array with random uniform values.
         * - :doc:`af.randn() <functions/randn>`
@@ -54,6 +60,8 @@ Documentation grouped by category:
             - Computes the square root of each element.
         * - :doc:`af.matmul() <functions/matmul>`
             - Matrix multiplication.
+        * - :doc:`af.gemm() <functions/gemm>`
+            - General matrix multiplication.
         * - :doc:`af.inv() <functions/inv>`
             - Computes the inverse of a matrix.
         * - :doc:`af.det() <functions/det>`
@@ -80,6 +88,10 @@ Documentation grouped by category:
             - Matrix multiplication.
         * - :doc:`af.set_device() <functions/set_device>`
             - Gets the current device.
+        * - :doc:`af.set_backend() <functions/set_backend>`
+            - Sets the current backend.
+        * - :doc:`af.get_backend() <functions/get_backend>`
+            - Gets the current backend.
         * - :doc:`af.get() <functions/get>`
             - Copies data from the GPU to the CPU.
         * - :doc:`af.min() <functions/min>`
