@@ -1,13 +1,15 @@
-Documentation
+Documentation (WIP)
 ==========
+
+**This documentation is a work in progress and may not contain all currently supported operations. Please check the functions signature and description for more info on it**
 
 We use [`Sphinx`](https://www.sphinx-doc.org/en/master/index.html) for presenting our documentation.
 
 To build the docs follow these steps:
 
-1. Install the required sphinx packages and extensions from the [requirements.txt](../requirements.txt)
+1. Install the required sphinx packages and extensions from the [dev-requirements.txt](../dev-requirements.txt)
 ```sh
-pip install -r requirements.txt # install sphinx and its extensions
+pip install -r dev-requirements.txt # install sphinx and its extensions
 ```
 2. Build docs using sphinx
 ```sh
