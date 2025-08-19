@@ -1,0 +1,4 @@
+pad
+===
+
+.. autofunction:: arrayfire.pad

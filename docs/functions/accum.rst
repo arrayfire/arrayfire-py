@@ -1,0 +1,4 @@
+accum
+=====
+
+.. autofunction:: arrayfire.accum

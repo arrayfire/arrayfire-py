@@ -2,7 +2,7 @@ Release Notes
 ==============
 
 v0.1.0
-======
+******
 Welcome to the ArrayFire Python Bindings! These are the currently supported features:
 
 - Support for all backends (cpu, opencl, oneapi, cuda)

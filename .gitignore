@@ -43,3 +43,4 @@ coverage.xml
 docs/api
 site/
 mkdocs.yml
+output-docs/

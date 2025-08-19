@@ -17,7 +17,7 @@ ArrayFire provides several different methods for manipulating arrays and matrice
 Below we provide several examples of these functions and their use.
 
 flat()
-======
+******
 The **flat()** function flattens an array to one dimension:
 
 .. literalinclude:: arrayandmatrixmanipulation.py 
@@ -32,7 +32,7 @@ The **flat** function can be called from Python as follows:
    af.flat(array) - Python function for flattening an array
 
 flip()
-======
+******
 The **flip()** function flips the contents of an array along a chosen dimension. In the example below, we show the 5x2 array flipped along the zeroth (i.e. within a column) and first (e.g. across rows) axes:
 
 
@@ -49,7 +49,7 @@ The **flip** function can be called from Python as follows:
 
 
 join()
-======
+******
 
 The **join()** function joins arrays along a specific dimension. The C++ interface can join up to four arrays whereas the C interface supports up to 10 arrays. Here is an example of how to use join an array to itself:
 
@@ -66,7 +66,7 @@ The **join** function can be called from Python as follows:
    af.join(0, array, array1) - Python function for joining arrays along a specified axis
 
 moddims()
-=========
+*********
 
 The **moddims()** function changes the dimensions of an array without changing its data or order. Note that this function modifies only the metadata associated with the array. It does not modify the content of the array. Here is an example of moddims() converting an 8x1 array into a 2x4 and then back to a 8x1:
 
@@ -83,7 +83,7 @@ The moddims function has a single form in the Python API:
 
 
 reorder()
-=========
+*********
 The **reorder()** function modifies the order of data within an array by exchanging data according to the change in dimensionality. The linear ordering of data within the array is preserved.
 
 .. literalinclude:: arrayandmatrixmanipulation.py 
@@ -92,7 +92,7 @@ The **reorder()** function modifies the order of data within an array by exchang
     :end-before: [manipulation5-endsnippet]
 
 shift()
-=======
+*******
 The **shift()** function shifts data in a circular buffer fashion along a chosen dimension. Consider the following example:
 
 
@@ -107,7 +107,7 @@ The shift function can be called from Python as follows:
    af.shift(array, (3,2)) - Python function for shifting arrays along specified dimension
 
 tile()
-======
+******
 The **tile()** function repeats an array along the specified dimension. For example below we show how to tile an array along the zeroth and first dimensions of an array:
 
 .. literalinclude:: arrayandmatrixmanipulation.py 
@@ -121,7 +121,7 @@ The **tile()** function repeats an array along the specified dimension. For exam
 
 
 transpose()
-===========
+***********
 The **transpose()** function performs a standard matrix transpose. The input array must have the dimensions of a 2D-matrix.
 
 .. literalinclude:: arrayandmatrixmanipulation.py 
@@ -139,6 +139,6 @@ The python interface for transpose is as follows:
 
 
 array()
-=======
+*******
 **array()** can be used to create a (shallow) copy of a matrix with different dimensions. The total number of elements must remain the same. This function is a wrapper over the moddims() function discussed earlier.
 

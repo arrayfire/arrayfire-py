@@ -1,0 +1,4 @@
+product
+=======
+
+.. autofunction:: arrayfire.product

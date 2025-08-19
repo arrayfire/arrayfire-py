@@ -1,0 +1,4 @@
+dog
+===
+
+.. autofunction:: arrayfire.dog

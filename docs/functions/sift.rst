@@ -1,0 +1,4 @@
+sift
+====
+
+.. autofunction:: arrayfire.sift

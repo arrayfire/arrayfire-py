@@ -1,0 +1,4 @@
+imin
+====
+
+.. autofunction:: arrayfire.imin

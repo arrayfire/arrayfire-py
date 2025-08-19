@@ -57,7 +57,7 @@ Indexing with negative values will access from the end of the array. For example
 
 
 Indexing slices and subarrays*
-==============================
+******************************
 You can access regions of the array via the af::seq and af::span objects. The span objects allows you to select the entire set of elements across a particular dimension/axis of an array. For example, we can select the third column of the array by passing span as the first argument and 2 as the second argument to the parenthesis operator.
 
 .. literalinclude:: indexing.py
@@ -107,13 +107,13 @@ You can use Python's slicing notation to define a range when indexing in **array
 
 
 Indexing using af.Array ? (Does the python wrapper support cartesian products) TODO STF
-=======================================================================================
+***************************************************************************************
 
 
 In Python with arrayfire, you can also index arrays using other **af.array** objects. arrayfire performs a Cartesian product of the input arrays.
 
 References and copies
-=====================
+*********************
 All indexing operations in ArrayFire return **af.array** objects, which are instances of the array_proxy class. These objects can either be newly created arrays or references to the original array, depending on the type of indexing operation applied to them
 
 * When an array is indexed using another **af.array** , a new array is created instead of referencing the original data.
@@ -139,7 +139,7 @@ The following code snippet shows some examples of indexing that will allocate ne
 Even though the copy3 array references continuous memory in the original array, using an **af.array** for indexing in ArrayFire results in the creation of a new array
 
 Assignment
-==========
+**********
 In Python with ArrayFire, assigning an **af.array** replaces the array on the left-hand side of :literal:`=` with the result from the right-hand side. This can lead to changes in type and shape compared to the original array. Notably, assignments do not update arrays previously referenced through indexing operations.
 
 .. literalinclude:: indexing.py
@@ -195,10 +195,10 @@ You can also assign to arrays using another af::arrays as an indexing array. Thi
 **TODO STF**
 
 Member Functions TODO STF
-=========================
+*************************
 
 Additional examples
-===================
+*******************
 See Assignment & Indexing operation on arrays for the full listing.
 
 .. literalinclude:: indexing.py

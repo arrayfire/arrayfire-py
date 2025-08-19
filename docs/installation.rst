@@ -6,7 +6,7 @@ Installing ArrayFire couldn't be easier. Navigate to https://arrayfire.com/downl
 Install the latest device drivers before using ArrayFire. Drivers and runtimes should be downloaded and installed from each device vendor's website.
 
 Install Instructions
-====================
+####################
 
 * :ref:`Windows <Windows>`
 * :ref:`Linux <Linux>`
@@ -15,7 +15,7 @@ Install Instructions
 .. _Windows:
 
 Windows
-=======
+*******
 Once the ArrayFire has been downloaded, run the installer.
 
 The installer offers the option to automatically add ArrayFire to the path for all users. If the installer did not do this, simply append :literal:`%AF_PATH%/lib` to the PATH variable so that the loader can find ArrayFire DLLs.
@@ -26,7 +26,7 @@ For more information on using ArrayFire on Windows, visit the following page.
 .. _Linux:
 
 Linux
-=====
+*****
 
 There are two ways to install ArrayFire on Linux.
 
@@ -79,7 +79,7 @@ To install these dependencies on common Linux distributions:
 .. _macOS:
 
 macOS
-=====
+*****
 
 Once the ArrayFire installer has been downloaded, execute the installer by either double-clicking on the ArrayFire :literal:`pkg` file or running the following command:
 
@@ -107,7 +107,7 @@ The following dependencies are required for Tegra devices:
     sudo apt install libopenblas-dev liblapacke-dev
 
 Testing installation
-====================
+********************
 
 After ArrayFire is finished installing, we recommend building and running a few of the provided examples to verify things are working as expected.
 

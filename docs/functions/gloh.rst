@@ -1,0 +1,4 @@
+gloh
+====
+
+.. autofunction:: arrayfire.gloh

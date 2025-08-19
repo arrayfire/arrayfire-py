@@ -1,0 +1,4 @@
+fast
+====
+
+.. autofunction:: arrayfire.fast

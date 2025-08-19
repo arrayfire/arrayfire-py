@@ -1,22 +1,25 @@
 Overview
 ========
 
+About ArrayFire
+***************
 
-
-About Array Fire
-----------------
+.. image:: images/arrayfire_logo.png
+   :alt: ArrayFire Logo
+   :align: center
+   :class: responsive-img
 
 `ArrayFire <https://github.com/arrayfire/arrayfire>`_ is a high performance library for parallel computing with an easy-to-use API. It enables users to write scientific computing code that is portable across CUDA, OpenCL and CPU devices. This project provides Python bindings for the ArrayFire library.
 
 Installing ArrayFire
---------------------
+********************
 
 Install ArrayFire using either a binary installer for Windows, OSX, or Linux or download it from source:
   * `Download and install Binaries <https://arrayfire.com/download/>`_
   * `Build from source <https://github.com/arrayfire/arrayfire-python>`_
 
-Easy to use
------------
+Using ArrayFire
+***************
 
 The array object is beautifully simple.
 
@@ -24,8 +27,6 @@ Array-based notation effectively expresses computational algorithms in readable 
 
 A few lines of ArrayFire code accomplishes what can take 100s of complicated lines in CUDA, oneAPI, or OpenCL kernels.
 
-ArrayFire is extensive!
------------------------
 Support for multiple domains
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -52,9 +53,6 @@ Extending ArrayFire
 
 ArrayFire can be used as a stand-alone application or integrated with existing CUDA, oneAPI, or OpenCL code.
 
-Code once, run anywhere!
-------------------------
-
 With support for x86, ARM, CUDA, oneAPI, and OpenCL devices, ArrayFire supports for a comprehensive list of devices.
 
 Each ArrayFire installation comes with:
@@ -64,8 +62,6 @@ Each ArrayFire installation comes with:
     * an OpenCL backend (named 'libafopencl') for `OpenCL devices <https://www.khronos.org/conformance/adopters/conformant-products#opencl>`_,
     * a CPU backend (named 'libafcpu') to fall back to when CUDA, oneAPI, or OpenCL devices are unavailable.
 
-ArrayFire is highly efficient
------------------------------
 Vectorized and Batched Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -96,7 +92,8 @@ Here is an example of ArrayFire code that performs a Monte Carlo estimation of P
 
 
 Product Support
----------------
+***************
+
 Free Community Options
 ~~~~~~~~~~~~~~~~~~~~~~
   * `ArrayFire Mailing List <https://groups.google.com/g/arrayfire-users>`_ (recommended)
@@ -116,6 +113,6 @@ Email
   * Sales: sales@arrayfire.com
 
 Citations and Acknowledgements
-------------------------------
+******************************
 
 If you redistribute ArrayFire, please follow the terms established in `the license <https://github.com/arrayfire/arrayfire-python/blob/master/LICENSE>`_. If you wish to cite ArrayFire in an academic publication, please use the following reference:

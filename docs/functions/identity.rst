@@ -1,0 +1,4 @@
+identity
+=========
+
+.. autofunction:: arrayfire.identity

@@ -1,0 +1,4 @@
+upper
+=====
+
+.. autofunction:: arrayfire.upper

@@ -1,39 +1,79 @@
-.. toctree:: 
-    :maxdepth: 2
-    :caption: Functions:
+Function List
+==============
 
-    transpose
+.. toctree:: 
+    :hidden:
+    :maxdepth: 1
+    :caption: Function List:
+
+    ArrayFire
     array
     ones
     zeros
-    sum
-    subtract
-    sttdev
-    randu
-    randn
-    det
-    device
-    divide
-    dot
-    eig
-    fft
-    get
-    get_device
-    inv
-    join
-    matmul
-    max
-    mean
-    median
-    min
-    multiply
-    prod
-    reorder
-    set_device
-    slice
-    sqrt
+    constant
+    iota
+    range
+    identity
     add
+    multiply
+    subtract
+    divide
+    mod
+    sqrt
     exp
     log
+    accum
+    sum
+    product
+    diff1
+    diff2
+    gradient
+    mean
+    median
+    sttdev
+    min
+    max
+    imin
+    imax
+    all_true
+    any_true
+    isinf
+    randu
+    randn
+    inv
+    dot
+    matmul
+    gemm
+    eig
+    det
+    fft
     ifft
+    count
+    sort
+    set_intersect
+    set_union
+    set_unique
+    pad
+    orb
+    sift
+    fast
+    dog
+    gloh
+    harris
+    susan
+    hamming_matcher
+    nearest_neighbour
+    upper
+    lower
+    diag
+    transpose
+    join
+    reorder
+    slice
     reshape
+    device
+    set_device
+    set_backend
+    get_device
+    get_backend
+    get

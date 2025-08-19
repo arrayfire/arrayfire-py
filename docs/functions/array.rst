@@ -1,5 +1,8 @@
 array
 =====
+
+.. autoclass:: arrayfire.Array
+
 The 'af.array()' function is part of the ArrayFire library, which provides a powerful framework for performing high-performance numerical computations. This function is designed to create an ArrayFire array from various data structures, such as Python lists or other iterable collections.
 
 Function
