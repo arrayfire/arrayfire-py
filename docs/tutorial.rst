@@ -13,7 +13,7 @@ Tutorial
 * Unified Backend
 * Forge Visualization
 * :doc:`Indexing <indexing>`
-* Timing ArrayFire
+* :doc:`Timing ArrayFire <timing_arrayfire>`
 * :doc:`Configuring ArrayFire Environment <configuringarrayfireenvironment>`
 * :doc:`Debugging ArrayFire Code <debuggingarrayfirecode>`
 * :doc:`ArrayFire JIT Code Generation <arrayfirejitcodegeneration>`

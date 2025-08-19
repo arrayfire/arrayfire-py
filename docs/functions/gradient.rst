@@ -1,0 +1,4 @@
+gradient
+========
+
+.. autofunction:: arrayfire.gradient

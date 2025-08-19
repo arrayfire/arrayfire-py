@@ -6,7 +6,7 @@ Once you have :ref:`installed <Linux>` ArrayFire on your system, the next thing 
 .. _bigpicture:
 
 The big picture
-===============
+###############
 
 On Linux, we recommend installing ArrayFire to :literal:`/opt/arrayfire` directory. The installer will populate files in the following sub-directories:
 
@@ -24,7 +24,7 @@ On Linux, we recommend installing ArrayFire to :literal:`/opt/arrayfire` directo
 Because ArrayFire follows standard installation practices, you can use basically any build system to create and compile projects that use ArrayFire. Among the many possible build systems on Linux we suggest using ArrayFire with either CMake or Makefiles with CMake being our preferred build system.
 
 Prerequisite software
-=====================
+#####################
 
 To build ArrayFire projects you will need a compiler
 
@@ -101,7 +101,7 @@ You can also specify this information in the :literal:`ccmake` command-line inte
 
 
 Makefiles
-=========
+#########
 
 Building ArrayFire projects with Makefiles is fairly similar to CMake except you must specify all paths and libraries manually.
 

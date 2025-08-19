@@ -3,7 +3,8 @@ Introduction to Vectorization
 Programmers and Data Scientists want to take advantage of fast and parallel computational devices. Writing vectorized code is necessary to get the best performance out of the current generation parallel hardware and scientific computing software. However, writing vectorized code may not be immediately intuitive. ArrayFire provides many ways to vectorize a given code segment. In this tutorial, we present several methods to vectorize code using ArrayFire and discuss the benefits and drawbacks associated with each method.
 
 Generic/Default Vectorization
-=============================
+*****************************
+
 By its very nature, ArrayFire is a vectorized library. Most functions operate on arrays as a whole – on all elements in parallel. Wherever possible, existing vectorized functions should be used opposed to manually indexing into arrays. For example consider the following code:
 
 .. literalinclude:: introductiontovectorization.py 
@@ -62,7 +63,7 @@ Although most functions in ArrayFire do support vectorization, some do not. Most
 Using the built in vectorized operations should be the first and preferred method of vectorizing any code written with ArrayFire.
 
 GFOR: Parallel for-loops
-========================
+************************
 Another novel method of vectorization present in ArrayFire is the GFOR loop replacement construct. GFOR allows launching all iterations of a loop in parallel on the GPU or device, as long as the iterations are independent. While the standard for-loop performs each iteration sequentially, ArrayFire's gfor-loop performs each iteration at the same time (in parallel). ArrayFire does this by tiling out the values of all loop iterations and then performing computation on those tiles in one pass. You can think of gfor as performing auto-vectorization of your code, e.g. you write a gfor-loop that increments every element of a vector but behind the scenes ArrayFire rewrites it to operate on the entire vector in parallel.
 
 The original for-loop example at the beginning of this document could be rewritten using GFOR as follows:
@@ -99,7 +100,7 @@ Using GFOR requires following several rules and multiple guidelines for optimal 
 
 
 Batching
-========
+********
 The batchFunc() function allows the broad application of existing ArrayFire functions to multiple sets of data. Effectively, batchFunc() allows ArrayFire functions to execute in "batch processing" mode. In this mode, functions will find a dimension which contains "batches" of data to be processed and will parallelize the procedure.
 
 Consider the following example. Here we create a filter which we would like to apply to each of the weight vectors. The naive solution would be using a for-loop as we have seen previously:
@@ -120,7 +121,7 @@ However, as we have discussed above, this solution will be very inefficient. One
 However, the dimensions of :literal:`filter` and :literal:`weights` do not match, thus ArrayFire will generate a runtime error.
 
 Advanced Vectorization
-======================
+**********************
 We have seen the different methods ArrayFire provides to vectorize our code. Tying them all together is a slightly more involved process that needs to consider data dimensionality and layout, memory usage, nesting order, etc. An excellent example and discussion of these factors can be found on our blog:
 
 http://arrayfire.com/how-to-write-vectorized-code/

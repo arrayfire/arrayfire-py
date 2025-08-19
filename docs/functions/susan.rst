@@ -1,0 +1,4 @@
+susan
+=====
+
+.. autofunction:: arrayfire.susan

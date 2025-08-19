@@ -1,0 +1,4 @@
+count
+=====
+
+.. autofunction:: arrayfire.count

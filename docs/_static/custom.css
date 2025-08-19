@@ -6,3 +6,8 @@ a {
 a:hover {
     color: darkblue; /* Change link color to dark blue on hover */
 }
+
+.responsive-img {
+  max-width: 100%;
+  height: auto;
+}

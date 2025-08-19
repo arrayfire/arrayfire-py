@@ -1,0 +1,4 @@
+ArrayFire Package
+=================
+
+.. automodule:: arrayfire

@@ -1,0 +1,4 @@
+harris
+======
+
+.. autofunction:: arrayfire.harris

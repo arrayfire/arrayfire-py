@@ -1,0 +1,4 @@
+isinf
+=====
+
+.. autofunction:: arrayfire.isinf

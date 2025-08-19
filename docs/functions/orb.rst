@@ -1,0 +1,4 @@
+orb
+===
+
+.. autofunction:: arrayfire.orb

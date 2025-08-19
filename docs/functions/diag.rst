@@ -1,0 +1,4 @@
+diag
+====
+
+.. autofunction:: arrayfire.diag

@@ -1,41 +1,40 @@
 Examples
 ========
 
-
 .. collapse:: Getting Started
 
     .. list-table::
 
-        * - :doc:`intro.py`
+        * - :download:`intro.py <../examples/getting_started/intro.py>`
             - Shows how to set a device, initialize arrays, and do some array operations
-        * - :doc:`convolve.py`
+        * - :download:`convolve.py <../examples/getting_started/convolve.py>`
             - Shows how to do convolutions on 2D images
 
 .. collapse:: Linear Algebra
 
     .. list-table::
 
-        * - :doc:`cholesky.py`
+        * - :download:`cholesky.py <../examples/linear_algebra/cholesky.py>`
             - Shows Cholesky decomposition in/out of place
-        * - :doc:`lu.py`
+        * - :download:`lu.py <../examples/linear_algebra/lu.py>`
             - Shows LU factorization in/out of place
-        * - :doc:`qr.py`
+        * - :download:`qr.py <../examples/linear_algebra/qr.py>`
             - Shows QR factorization in/out of place
 
 .. collapse:: Financial
 
     .. list-table::
 
-        * - :doc:`black_scholes_options.py`
+        * - :download:`black_scholes_options.py <../examples/financial/black_scholes_options.py>`
             - Recreates black scholes options model utilizing ArrayFire's random and vectorization operations
-        * - :doc:`heston_model.py`
+        * - :download:`heston_model.py <../examples/financial/heston_model.py>`
             - Recreates heston model simultation utilizing ArrayFire's random and vectorization operations
-        * - :doc:`monte_carlo_options.py`
+        * - :download:`monte_carlo_options.py <../examples/financial/monte_carlo_options.py>`
             - Simulates monte carlo options model utilizing ArrayFire's random and vectorization operations
 
 .. collapse:: Benchmarks
 
     .. list-table::
 
-        * - :doc:`monte_carlo_pi.py`
+        * - :download:`monte_carlo_pi.py <../examples/benchmarks/monte_carlo_pi.py>`
             - Recreates a monte carlo method of calculating the digits of pi ArrayFire's random and vectorization operations

@@ -1,0 +1,4 @@
+imax
+=====
+
+.. autofunction:: arrayfire.imax

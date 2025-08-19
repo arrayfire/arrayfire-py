@@ -6,32 +6,50 @@
 Welcome to ArrayFire's documentation!
 =====================================
 
+.. image:: images/arrayfire_logo.png
+   :alt: ArrayFire Logo
+   :align: center
+   :class: responsive-img
+
 .. toctree::
-   :maxdepth: 4
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: The Basics
 
    overview
-   tutorial
-   functions
-   releasenotes
-   examples
-   arrayandmatrixmanipulation
-   arrayfirejitcodegeneration
-   configuringarrayfireenvironment
-   debuggingarrayfirecode
-   gettingstarted
-   indexing
    installation
+   gettingstarted
+   tutorial
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User Guide
+
+   configuringarrayfireenvironment
+   functions
    introductiontovectorization
+   arrayfirejitcodegeneration
+   arrayandmatrixmanipulation
+   indexing
+   timing_arrayfire
+   debuggingarrayfirecode
    linux
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+
+   examples
+   releasenotes
    functions/index
 
 
-Indices and tables
-==================
-   * :ref:`genindex`
-   * :ref:`modindex`
-   * :ref:`search`
+.. toctree::
+   :maxdepth: 1
+   :caption: Catalogue
+
+   genindex
+   modindex
+   search
 
 
 

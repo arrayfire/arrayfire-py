@@ -1,0 +1,4 @@
+lower
+======
+
+.. autofunction:: arrayfire.lower

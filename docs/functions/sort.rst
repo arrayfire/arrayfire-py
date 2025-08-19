@@ -1,0 +1,4 @@
+sort
+=====
+
+.. autofunction:: arrayfire.sort

@@ -4,15 +4,13 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 import sys
 import os
-sys.path.insert(0, os.path.abspath('../..'))
-
-
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'ArrayFire'
-copyright = '2024, ArrayFire'
+copyright = '2025, ArrayFire'
 author = 'ArrayFire'
 release = ''
 
@@ -38,6 +36,7 @@ exclude_patterns = []
 html_theme = 'sphinxawesome_theme'
 html_static_path = ['_static']
 html_permalinks = False
+html_logo = "_static/../images/arrayfire_icon.png"
 
 # -- Suppress specific warnings --------------------------------------------
 
