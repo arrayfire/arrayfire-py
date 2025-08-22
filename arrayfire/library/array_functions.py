@@ -1,5 +1,7 @@
 __all__ = [
     "constant",
+    "zeros",
+    "ones",
     "diag",
     "identity",
     "iota",
@@ -17,6 +19,7 @@ __all__ = [
     "flip",
     "join",
     "moddims",
+    "reshape",
     "reorder",
     "replace",
     "select",
@@ -70,6 +73,59 @@ def constant(scalar: int | float | complex, shape: tuple[int, ...] = (1,), dtype
     """
     return cast(Array, wrapper.create_constant_array(scalar, shape, dtype))
 
+def zeros(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
+    """
+    Create a multi-dimensional array filled with zeros
+
+    Parameters
+    ----------
+    shape : tuple[int, ...], optional, default: (1,)
+        The shape of the constant array.
+
+    dtype : Dtype, optional, default: float32
+        Data type of the array.
+
+    Returns
+    -------
+    Array
+        A multi-dimensional ArrayFire array filled zeros
+
+    Notes
+    -----
+    The shape parameter determines the dimensions of the resulting array:
+    - If shape is (x1,), the output is a 1D array of size (x1,).
+    - If shape is (x1, x2), the output is a 2D array of size (x1, x2).
+    - If shape is (x1, x2, x3), the output is a 3D array of size (x1, x2, x3).
+    - If shape is (x1, x2, x3, x4), the output is a 4D array of size (x1, x2, x3, x4).
+    """
+    return constant(0, shape, dtype)
+
+def ones(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
+    """
+    Create a multi-dimensional array filled with ones
+
+    Parameters
+    ----------
+    shape : tuple[int, ...], optional, default: (1,)
+        The shape of the constant array.
+
+    dtype : Dtype, optional, default: float32
+        Data type of the array.
+
+    Returns
+    -------
+    Array
+        A multi-dimensional ArrayFire array filled ones
+
+    Notes
+    -----
+    The shape parameter determines the dimensions of the resulting array:
+    - If shape is (x1,), the output is a 1D array of size (x1,).
+    - If shape is (x1, x2), the output is a 2D array of size (x1, x2).
+    - If shape is (x1, x2, x3), the output is a 3D array of size (x1, x2, x3).
+    - If shape is (x1, x2, x3, x4), the output is a 4D array of size (x1, x2, x3, x4).
+    """
+    return constant(1, shape, dtype)
 
 @afarray_as_array
 def diag(array: Array, /, *, diag_index: int = 0, extract: bool = True) -> Array:
@@ -255,8 +311,7 @@ def lower(array: Array, /, *, is_unit_diag: bool = False) -> Array:
     Notes
     -----
     - The function does not alter the elements above the main diagonal; it simply does not include them in the output.
-    - This function can be useful for mathematical operations that require lower triangular matrices, such as certain
-    types of matrix factorizations.
+    - This function can be useful for mathematical operations that require lower triangular matrices, such as certain types of matrix factorizations.
 
     Examples
     --------
@@ -312,8 +367,7 @@ def upper(array: Array, /, *, is_unit_diag: bool = False) -> Array:
     Notes
     -----
     - The function does not alter the elements below the main diagonal; it simply does not include them in the output.
-    - This function can be useful for mathematical operations that require upper triangular matrices, such as certain
-    types of matrix factorizations.
+    - This function can be useful for mathematical operations that require upper triangular matrices, such as certain types of matrix factorizations.
 
     Examples
     --------
@@ -818,6 +872,40 @@ def moddims(array: Array, shape: tuple[int, ...], /) -> Array:
     # TODO add examples to doc
     return cast(Array, wrapper.moddims(array.arr, shape))
 
+def reshape(array: Array, shape: tuple[int, ...], /) -> Array:
+    """
+    Modify the shape of the array without changing the data layout.
+
+    Parameters
+    ----------
+    array : af.Array
+        Multi-dimensional array to be reshaped.
+
+    shape : tuple of int
+        The desired shape of the output array. It should be a tuple of integers
+        representing the dimensions of the output array. The product of these
+        dimensions must match the total number of elements in the input array.
+
+    Returns
+    -------
+    out : af.Array
+        - An array containing the same data as `array` with the specified shape.
+        - The total number of elements in `array` must match the product of the
+          dimensions specified in the `shape` tuple.
+
+    Raises
+    ------
+    ValueError
+        If the total number of elements in the input array does not match the
+        product of the dimensions specified in the `shape` tuple.
+
+    Notes
+    -----
+    This function modifies the shape of the input array without changing the
+    data layout. The resulting array will have the same data, but with a
+    different shape as specified by the `shape` parameter.
+    """
+    return moddims(array, shape)
 
 @afarray_as_array
 def reorder(array: Array, /, *, shape: tuple[int, ...] = (1, 0, 2, 3)) -> Array:

@@ -16,7 +16,7 @@ Installing ArrayFire
 
 Install ArrayFire using either a binary installer for Windows, OSX, or Linux or download it from source:
   * `Download and install Binaries <https://arrayfire.com/download/>`_
-  * `Build from source <https://github.com/arrayfire/arrayfire-python>`_
+  * `Build from source <https://github.com/arrayfire/arrayfire-py>`_
 
 Using ArrayFire
 ***************
@@ -88,9 +88,6 @@ Here is an example of ArrayFire code that performs a Monte Carlo estimation of P
     :start-after: [pi-example-simple-snippet]
     :end-before: [pi-example-simple-endsnippet]
 
-
-
-
 Product Support
 ***************
 
@@ -105,7 +102,7 @@ Premium Support
 
 Contact Us
 ~~~~~~~~~~
-  * If you need to contact us, visit our `contact us page <https://arrayfire.com/company/#contact>`_.
+  * If you need to contact us, visit our `Contact Us page <https://arrayfire.com/company/#contact-us>`_.
 
 Email
 ~~~~~

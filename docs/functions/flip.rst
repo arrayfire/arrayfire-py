@@ -1,0 +1,4 @@
+flip
+====
+
+.. autofunction:: arrayfire.flip

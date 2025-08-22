@@ -164,8 +164,7 @@ def sift(
     tuple[Features, Array]
         A tuple containing:
         - An ArrayFire Features object encapsulating the detected keypoints.
-        - An ArrayFire Array containing the corresponding descriptors for each keypoint. The descriptors are
-            128-dimensional vectors describing the local appearance around each keypoint.
+        - An ArrayFire Array containing the corresponding descriptors for each keypoint. The descriptors are 128-dimensional vectors describing the local appearance around each keypoint.
 
     Note
     ----

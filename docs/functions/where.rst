@@ -1,0 +1,4 @@
+where
+=======
+
+.. autofunction:: arrayfire.where

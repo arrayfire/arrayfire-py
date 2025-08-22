@@ -16,9 +16,9 @@ Setup
 
 For benchmarking we will utilize two functions: `af.sync()` and `af.eval(arr)`.
 
-- `af.sync`: The purpose of this function is to stall the current thread until all awaiting operations have finished and the result is accessable by the host. It synchronizes the host and the device, similar to what cuda.Stream.synchronize() does in cupy.
+- :doc:`af.sync <functions/sync>`: The purpose of this function is to stall the current thread until all awaiting operations have finished and the result is accessable by the host. It synchronizes the host and the device, similar to what cuda.Stream.synchronize() does in cupy.
 
-- `af.eval`: This function takes in an array which will be forced to be evaluated immediately. This forces the JIT tree to be cut at the point of this function calls and any later operations will not be considered in this current JIT tree.
+- :doc:`af.eval <functions/eval>`: This function takes in an array which will be forced to be evaluated immediately. This forces the JIT tree to be cut at the point of this function calls and any later operations will not be considered in this current JIT tree.
 
 
 Using these two function we can make sure that we are benchmarking the correct operations by making sure that no operation is running

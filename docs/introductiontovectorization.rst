@@ -62,47 +62,8 @@ Although most functions in ArrayFire do support vectorization, some do not. Most
 
 Using the built in vectorized operations should be the first and preferred method of vectorizing any code written with ArrayFire.
 
-GFOR: Parallel for-loops
-************************
-Another novel method of vectorization present in ArrayFire is the GFOR loop replacement construct. GFOR allows launching all iterations of a loop in parallel on the GPU or device, as long as the iterations are independent. While the standard for-loop performs each iteration sequentially, ArrayFire's gfor-loop performs each iteration at the same time (in parallel). ArrayFire does this by tiling out the values of all loop iterations and then performing computation on those tiles in one pass. You can think of gfor as performing auto-vectorization of your code, e.g. you write a gfor-loop that increments every element of a vector but behind the scenes ArrayFire rewrites it to operate on the entire vector in parallel.
-
-The original for-loop example at the beginning of this document could be rewritten using GFOR as follows:
-
-.. literalinclude:: introductiontovectorization.py 
-    :language: python 
-    :start-after: [vectorization5-snippet]
-    :end-before: [vectorization5-endsnippet]
-
-In this case, each instance of the gfor loop is independent, thus ArrayFire will automatically tile out the :literal:`a` array in device memory and execute the increment kernels in parallel.
-
-To see another example, you could run an accum() on every slice of a matrix in a for-loop, or you could "vectorize" and simply do it all in one gfor-loop operation:
-
-.. literalinclude:: introductiontovectorization.py 
-    :language: python 
-    :start-after: [vectorization6-snippet]
-    :end-before: [vectorization6-endsnippet]
-
-However, returning to our previous vectorization technique, accum() is already vectorized and the operation could be completely replaced with merely:
-
-.. literalinclude:: introductiontovectorization.py 
-    :language: python 
-    :start-after: [vectorization7-snippet]
-    :end-before: [vectorization7-endsnippet]
-
-It is best to vectorize computation as much as possible to avoid the overhead in both for-loops and gfor-loops. However, the gfor-loop construct is most effective in the narrow case of broadcast-style operations. Consider the case when we have a vector of constants that we wish to apply to a collection of variables, such as expressing the values of a linear combination for multiple vectors. The broadcast of one set of constants to many vectors works well with gfor-loops:
-
-.. literalinclude:: introductiontovectorization.py 
-    :language: python 
-    :start-after: [vectorization8-snippet]
-    :end-before: [vectorization8-endsnippet]
-
-Using GFOR requires following several rules and multiple guidelines for optimal performance. The details of this vectorization method can be found in the GFOR documentation.
-
-
 Batching
 ********
-The batchFunc() function allows the broad application of existing ArrayFire functions to multiple sets of data. Effectively, batchFunc() allows ArrayFire functions to execute in "batch processing" mode. In this mode, functions will find a dimension which contains "batches" of data to be processed and will parallelize the procedure.
-
 Consider the following example. Here we create a filter which we would like to apply to each of the weight vectors. The naive solution would be using a for-loop as we have seen previously:
 
 .. literalinclude:: introductiontovectorization.py 
@@ -117,11 +78,19 @@ However, as we have discussed above, this solution will be very inefficient. One
     :start-after: [vectorization10-snippet]
     :end-before: [vectorization10-endsnippet]
 
-
 However, the dimensions of :literal:`filter` and :literal:`weights` do not match, thus ArrayFire will generate a runtime error.
+
+The correct solution is to use `batch operations with matmul <https://arrayfire.org/docs/group__blas__func__matmul.htm#gac061af289fcd39a07a3efba0f33fb17f>`_
+By tiling on the third dimension, matmul is done in the first 2 dimensions and batched on the third to obtain the filtered weights:
+
+.. literalinclude:: introductiontovectorization.py 
+    :language: python 
+    :start-after: [vectorization11-snippet]
+    :end-before: [vectorization11-endsnippet]
+
 
 Advanced Vectorization
 **********************
-We have seen the different methods ArrayFire provides to vectorize our code. Tying them all together is a slightly more involved process that needs to consider data dimensionality and layout, memory usage, nesting order, etc. An excellent example and discussion of these factors can be found on our blog:
-
-http://arrayfire.com/how-to-write-vectorized-code/
+We have seen the different methods ArrayFire provides to vectorize our code. Tying them all together is a slightly more involved process that needs to consider
+data dimensionality and layout, memory usage, nesting order, etc. An excellent example and discussion of these factors can be found on our blog:
+`How to write vectorized code <https://arrayfire.com/blog/how-to-write-vectorized-code/>`_ (Ignore GFOR section as it is not applicable to Python).

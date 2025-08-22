@@ -6,8 +6,8 @@ Introduction
 
 ArrayFire is a high performance software library for parallel computing with an easy-to-use API. ArrayFire abstracts away much of the details of programming parallel architectures by providing a high-level container object, the array, that represents data stored on a CPU, GPU, FPGA, or other type of accelerator. This abstraction permits developers to write massively parallel applications in a high-level language where they need not be concerned about low-level optimizations that are frequently required to achieve high throughput on most parallel architectures.
 
-Supported data types
-********************
+:doc:`Supported data types <constants/Dtype>`
+**********************************************
 
 ArrayFire provides one generic container object, the array on which functions and mathematical operations are performed. The :literal:`array` can represent one of many different basic data types:
 
@@ -136,33 +136,12 @@ Indexing
 Like all functions in ArrayFire, indexing is also executed in parallel on the OpenCL/CUDA devices. Because of this, indexing becomes part of a JIT operation and is accomplished using parentheses instead of square brackets (i.e. as :literal:`A(0)` instead of :literal:`A[0]`). To index :literal:`af::` arrays you may use one or a combination of the following functions:
 
 * integer scalars
-* seq() representing a linear sequence
-* end representing the last element of a dimension
-* span representing the entire description
-* row(i) or col(i) specifying a single row/column
-* rows(first,last) or cols(first,last) specifying a span of rows or columns
+* :literal:`:` representing the entire description
+* :literal:`begin:end:step` representing a linear sequence/slice
+* :literal:`row(i)` or :literal:`col(i)` specifying a single row/column
+* :literal:`rows(first,last)` or :literal:`cols(first,last)` specifying a span of rows or columns
 
 Please see the indexing page for several examples of how to use these functions.
-
-Getting access to ArrayFire array memory on the host and device
-***************************************************************
-
-Memory in :literal:`af::arrays` may be accessed using the host() and device() functions. The :literal:`host` function copies the data from the device and makes it available in a C-style array on the host. As such, it is up to the developer to manage any memory returned by :literal:`host`. The :literal:`device` function returns a pointer/reference to device memory for interoperability with external CUDA/OpenCL kernels. As this memory belongs to ArrayFire, the programmer should not attempt to free/deallocate the pointer. For example, here is how we can interact with both OpenCL and CUDA:
-
-.. literalinclude:: gettingstarted.py 
-    :language: python 
-    :start-after: [gettingstarted10-snippet]
-    :end-before: [gettingstarted10-endsnippet]
-
-
-ArrayFire also provides several helper functions for creating :literal:`af::arrays` from OpenCL :literal:`cl_mem` references and :literal:`cl::Buffer` objects. See the :literal:`include/af/opencl.h` file for further information.
-
-Lastly, if you want only the first value from an :literal:`af::array` you can use get it using the scalar() function:
-
-.. literalinclude:: gettingstarted.py 
-    :language: python 
-    :start-after: [gettingstarted11-snippet]
-    :end-before: [gettingstarted11-endsnippet]
 
 
 Bitwise operators
@@ -174,14 +153,6 @@ In addition to supporting standard mathematical functions, arrays that contain i
     :start-after: [gettingstarted12-snippet]
     :end-before: [gettingstarted12-endsnippet]
 
-
-Using the ArrayFire API in Python
-*********************************
-
-The ArrayFire library in Python is seamlessly integrated into the Python environment. To start using the library, simply :literal:`import arrayfire` and begin coding!
-
-# todo @stf talk about arrayapi implementation
-
 Sample using Python API
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -189,22 +160,3 @@ Sample using Python API
     :language: python 
     :start-after: [gettingstarted13-snippet]
     :end-before: [gettingstarted13-endsnippet]
-
-    
-
-What to read next?
-##################
-
-Now that you have a general introduction to ArrayFire, where do you go from here? In particular you might find these documents useful
-
-* Building an ArrayFire program on Linux
-* Building an ArrayFire program on Windows
-* Timing ArrayFire code
-
-Where to go for help?
-#####################
-
-* Google Groups: https://groups.google.com/forum/#!forum/arrayfire-users
-* ArrayFire Services: `Consulting <http://arrayfire.com/consulting/>`_ | `Support <http://arrayfire.com/support/>`_ | `Training <http://arrayfire.com/training/>`_
-* ArrayFire Blogs: http://arrayfire.com/blog/
-* Email: technical@arrayfire.com

@@ -1,0 +1,4 @@
+sync
+========
+
+.. autofunction:: arrayfire.sync

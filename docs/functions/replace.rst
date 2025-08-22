@@ -1,0 +1,4 @@
+replace
+=======
+
+.. autofunction:: arrayfire.replace

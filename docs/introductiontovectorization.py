@@ -73,7 +73,7 @@ rot_imgs = af.rotate(imgs, 45)
 print("Shape of rotated images:", rot_imgs.shape())
 
 # Optionally, print the rotated images
-# af.af_print(rot_imgs)
+# print(rot_imgs)
 
 # Optionally, display or further process `rot_imgs` as needed
 
@@ -95,30 +95,6 @@ print("Modified array 'a':")
 print(a)
 # [vectorization5-endsnippet]
 
-
-#NOT WORKING
-# [vectorization6-snippet]
-
-import arrayfire as af
-
-# Example data dimensions
-N = 10
-SPAN = af.span
-
-# Example arrays A and B
-A = af.randu(100, N)  # Example array A of size 100xN filled with random numbers
-B = af.constant(0, 100, N)  # Example array B initialized with zeros
-
-# Parallel execution using gfor loop
-af.gfor(seq_i, N):
-B[SPAN, seq_i] = af.accum(A[SPAN, seq_i])
-
-# Print array B after parallel accumulations
-print("Array B after parallel accumulations:")
-af.af_print(B)
-# [vectorization6-endsnippet]
-
-
 # [vectorization7-snippet]
 
 import arrayfire as af
@@ -128,32 +104,6 @@ B = af.accum(A)
 
 
 # [vectorization7-endsnippet]
-
-#NOT WORKING
-# [vectorization8-snippet]
-
-import arrayfire as af
-
-# Define constants
-p = 4
-n = 1000
-
-# Generate constants array and variable terms array
-consts = af.randu(p)
-var_terms = af.randn(p, n)
-
-# Initialize combination array
-combination = af.constant(0, p, n)
-
-# Perform element-wise multiplication using gfor loop
-af.gfor(seq_i, n):
-combination[:, seq_i] = consts * var_terms[:, seq_i]
-
-# Print the combination array after computation
-print("Combination array:")
-af.af_print(combination)
-# [vectorization8-endsnippet]
-
 
 
 # [vectorization9-snippet]
@@ -171,7 +121,7 @@ for i in range(weights.shape[1]):
 
 # Print the filtered weights array
 print("Filtered weights:")
-af.af_print(filtered_weights)
+print(filtered_weights)
 # [vectorization9-endsnippet]
 
 
@@ -184,12 +134,30 @@ filter = af.randu((1, 5))   # Shape: 1x5
 weights = af.randu((5, 5))  # Shape: 5x5
 
 # Transpose the filter to align dimensions for broadcasting
-filter_transposed = af.transpose(filter)  # Shape: 5x1
+filter_transposed = filter.T  # Shape: 5x1
 
 # Element-wise multiplication with broadcasting
 filtered_weights = filter_transposed * weights
 
 # Print the filtered weights array
 print("Filtered weights:")
-print(filtered_weights)
+print(filtered_weights) # Incorrect
 # [vectorization10-endsnippet]
+
+# [vectorization11-snippet]
+
+import arrayfire as af
+
+# Create the filter and weight vectors
+filter = af.randu((1, 5))   # Shape: 1x5
+batched_filter = af.tile(filter, (1, 1, 5)) # batch on the third dimension
+weights = af.randu((5, 5))  # Shape: 5x5
+
+# Leverage matmul batching
+filtered_weights = af.matmul(batched_filter, weights) # shape 1x5x5
+filtered_weights = af.moddims(filtered_weights, (5, 5)) # reshape to 2d 5x5
+
+# Print the filtered weights array
+print("Filtered weights:")
+print(filtered_weights)
+# [vectorization11-endsnippet]

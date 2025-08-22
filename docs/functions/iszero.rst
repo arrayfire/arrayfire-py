@@ -1,0 +1,4 @@
+iszero
+======
+
+.. autofunction:: arrayfire.iszero

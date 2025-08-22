@@ -1,0 +1,4 @@
+lookup
+======
+
+.. autofunction:: arrayfire.lookup
