@@ -1,0 +1,4 @@
+tile
+====
+
+.. autofunction:: arrayfire.tile

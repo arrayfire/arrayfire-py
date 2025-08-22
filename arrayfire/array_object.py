@@ -869,8 +869,8 @@ class Array:
 
         Note
         ----
-        - The array instance must be two-dimensional. If the array instance is not two-dimensional, an error
-        should be raised.
+        - The array instance must be two-dimensional. If the array instance is not two-dimensional, an error should be raised.
+
         """
         if self.ndim < 2:
             raise TypeError(f"Array should be at least 2-dimensional. Got {self.ndim}-dimensional array")
@@ -881,6 +881,24 @@ class Array:
     @property
     @afarray_as_array
     def H(self) -> Array:
+        """
+        Hermitian Conjugate of the array.
+
+        Returns
+        -------
+        Array
+            Two-dimensional array whose first and last dimensions (axes) are permuted in reverse order relative to
+            original array with its elements complex conjugated. The returned array must have the same data type as the original array.
+
+        Note
+        ----
+        - The array instance must be two-dimensional. If the array instance is not two-dimensional, an error should be raised.
+
+        """
+        if self.ndim < 2:
+            raise TypeError(f"Array should be at least 2-dimensional. Got {self.ndim}-dimensional array")
+
+        # TODO add check if out.dtype == self.dtype
         return cast(Array, wrapper.transpose(self._arr, True))
 
     @property
@@ -1095,6 +1113,39 @@ class Array:
     @property
     def is_locked_array(self) -> bool:
         return wrapper.is_locked_array(self._arr)
+
+    @afarray_as_array
+    def reshape(self, shape) -> Array:
+        """
+        Return a copy of this array with the specified shape without changing the data layout.
+
+        Parameters
+        ----------
+        shape : tuple of int
+            The desired shape of the output array. It should be a tuple of integers
+            representing the dimensions of the output array. The product of these
+            dimensions must match the total number of elements in the input array.
+
+        Returns
+        -------
+        out : af.Array
+            - An array containing the same data as `array` with the specified shape.
+            - The total number of elements in `array` must match the product of the dimensions specified in the `shape` tuple.
+
+        Raises
+        ------
+        ValueError
+            If the total number of elements in the input array does not match the
+            product of the dimensions specified in the `shape` tuple.
+
+        Notes
+        -----
+        This function modifies the shape of the input array without changing the
+        data layout. The resulting array will have the same data, but with a
+        different shape as specified by the `shape` parameter.
+        """
+        # TODO add examples to doc
+        return cast(Array, wrapper.moddims(self._arr, shape))
 
     def lock_array(self) -> None:
         return wrapper.lock_array(self._arr)

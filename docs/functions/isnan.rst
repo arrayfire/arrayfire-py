@@ -1,0 +1,4 @@
+isnan
+=====
+
+.. autofunction:: arrayfire.isnan

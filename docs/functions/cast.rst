@@ -1,0 +1,4 @@
+cast
+=====
+
+.. autofunction:: arrayfire.cast

@@ -36,7 +36,10 @@ exclude_patterns = []
 html_theme = 'sphinxawesome_theme'
 html_static_path = ['_static']
 html_permalinks = False
-html_logo = "_static/../images/arrayfire_icon.png"
+html_theme_options = {
+    "logo_light": "_static/../images/arrayfire_icon.png",
+    "logo_dark": "_static/../images/arrayfire_icon.png"
+}
 
 # -- Suppress specific warnings --------------------------------------------
 

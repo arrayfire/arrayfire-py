@@ -1,0 +1,4 @@
+moddims
+=======
+
+.. autofunction:: arrayfire.moddims

@@ -1,0 +1,4 @@
+flat
+====
+
+.. autofunction:: arrayfire.flat

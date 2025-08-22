@@ -2,17 +2,17 @@ Array and Matrix Manipulation
 =============================
 ArrayFire provides several different methods for manipulating arrays and matrices. The functionality includes:
 
-* moddims() - change the dimensions of an array without changing the data
-* array() - create a (shallow) copy of an array with different dimensions.
-* flat() - flatten an array to one dimension
-* flip() - flip an array along a dimension
-* join() - join up to 4 arrays
-* reorder() - changes the dimension order within the array
-* shift() - shifts data along a dimension
-* tile() - repeats an array along a dimension
-* transpose() - performs a matrix transpose
-* T() - transpose a matrix or vector (shorthand notation)
-* H() - Hermitian Transpose (conjugate-transpose) a matrix
+* :doc:`moddims() <functions/moddims>` - change the dimensions of an array without changing the data
+* :doc:`Array() <classes/array>` - create a (shallow) copy of an array with different dimensions.
+* :doc:`flat() <functions/flat>` - flatten an array to one dimension
+* :doc:`flip() <functions/flip>` - flip an array along a dimension
+* :doc:`join() <functions/join>` - join up to 4 arrays
+* :doc:`reorder() <functions/reorder>` - changes the dimension order within the array
+* :doc:`shift() <functions/shift>` - shifts data along a dimension
+* :doc:`tile() <functions/tile>` - repeats an array along a dimension
+* :doc:`transpose() <functions/transpose>` - performs a matrix transpose
+* :doc:`Array property T <classes/array>` - transpose a matrix or vector (shorthand notation)
+* :doc:`Array property H <classes/array>` - Hermitian Transpose (conjugate-transpose) a matrix
 
 Below we provide several examples of these functions and their use.
 
@@ -138,7 +138,8 @@ The python interface for transpose is as follows:
         
 
 
-array()
+Array()
 *******
-**array()** can be used to create a (shallow) copy of a matrix with different dimensions. The total number of elements must remain the same. This function is a wrapper over the moddims() function discussed earlier.
+**Array()** can be used to create a (shallow) copy of another Array with dimensions different to the original.
+The total number of elements must remain the same. This function is a wrapper over the moddims() function discussed earlier.
 

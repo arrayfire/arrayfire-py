@@ -1,0 +1,4 @@
+shift
+=====
+
+.. autofunction:: arrayfire.shift

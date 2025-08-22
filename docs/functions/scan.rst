@@ -1,0 +1,4 @@
+scan
+=====
+
+.. autofunction:: arrayfire.scan

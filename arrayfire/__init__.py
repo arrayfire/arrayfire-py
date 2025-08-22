@@ -72,6 +72,8 @@ from .dtypes import (
 
 __all__ += [
     "constant",
+    "zeros",
+    "ones",
     "diag",
     "identity",
     "iota",
@@ -89,6 +91,7 @@ __all__ += [
     "flip",
     "join",
     "moddims",
+    "reshape",
     "reorder",
     "replace",
     "select",
@@ -100,6 +103,8 @@ __all__ += [
 
 from arrayfire.library.array_functions import (
     constant,
+    zeros,
+    ones,
     copy_array,
     diag,
     eval,
@@ -114,6 +119,7 @@ from arrayfire.library.array_functions import (
     lookup,
     lower,
     moddims,
+    reshape,
     pad,
     range,
     reorder,

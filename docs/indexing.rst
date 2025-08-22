@@ -1,6 +1,6 @@
 Indexing
 ========
-Indexing in ArrayFire is a powerful but easy to abuse feature of the af::array class. This feature allows you to reference or copy subsections of a larger array and perform operations on only a subset of elements.
+Indexing in ArrayFire is a powerful but easy to abuse feature of the af.Array class. This feature allows you to reference or copy subsections of a larger array and perform operations on only a subset of elements.
 
 Indexing in ArrayFire can be performed using the parenthesis operator or one of the member functions of the af::array class. These functions allow you to reference one or a range of elements from the original array.
 
@@ -24,7 +24,7 @@ ArrayFire is column-major so the resulting A array will look like this:
    3 & 7 & 11 & 15
    \end{bmatrix}
 
-In Python, for a two-dimensional array like a matrix, you can access its first element by providing the indices 0, 0 within the indexing operator of the af.array object.
+In Python, for a two-dimensional array like a matrix, you can access its first element by providing the indices 0, 0 within the indexing operator of the af.Array object.
 
 .. literalinclude:: indexing.py
     :language: python 
@@ -106,17 +106,43 @@ You can use Python's slicing notation to define a range when indexing in **array
             \end{bmatrix}
 
 
-Indexing using af.Array ? (Does the python wrapper support cartesian products) TODO STF
-***************************************************************************************
+Indexing using af.Array 
+***************************
+
+In Python with arrayfire, you can also index arrays using other **af.Array** objects. Arrayfire flattens the input and treats the elements inside the array
+as column major indices to index the original Array as 1D Array.
+
+.. code-block:: python
+
+    import arrayfire as af
+
+    x = af.randu((10, 10))
+
+    # indices 1, 3, 5
+    indices = af.range((3)) * 2 + 1
+
+    # returns entries with indices 1, 3, 5 of x.flat()
+    y = x[indices] 
 
 
-In Python with arrayfire, you can also index arrays using other **af.array** objects. arrayfire performs a Cartesian product of the input arrays.
+You can also index Arrays using boolean Arrays. ArrayFire will return an Array with length of the number of :literal:`True` elements in the indexing arrays
+and entries of in column major order of the elements that correspond to :literal:`True` entries:
+
+.. code-block:: python
+
+    import arrayfire as af
+
+    # Creates a random array
+    x = af.randu((10, 10))
+
+    # returns an array with all the entries of x that contain values greater than 0.5
+    y = x[x > 0.5] 
 
 References and copies
 *********************
-All indexing operations in ArrayFire return **af.array** objects, which are instances of the array_proxy class. These objects can either be newly created arrays or references to the original array, depending on the type of indexing operation applied to them
+All indexing operations in ArrayFire return **af.Array** objects, which are instances of the array_proxy class. These objects can either be newly created arrays or references to the original array, depending on the type of indexing operation applied to them
 
-* When an array is indexed using another **af.array** , a new array is created instead of referencing the original data.
+* When an array is indexed using another **af.Array** , a new array is created instead of referencing the original data.
 * If an array was indexed using a scalar, **sequential '0:2'** or **span ':'**, then the resulting array will reference the original data IF the first dimension is continuous. The following lines will not allocate additional memory.
 
 .. note::
@@ -136,11 +162,11 @@ The following code snippet shows some examples of indexing that will allocate ne
     :start-after: [indexing8-snippet]
     :end-before: [indexing8-endsnippet]
 
-Even though the copy3 array references continuous memory in the original array, using an **af.array** for indexing in ArrayFire results in the creation of a new array
+Even though the copy3 array references continuous memory in the original array, using an **af.Array** for indexing in ArrayFire results in the creation of a new array
 
 Assignment
 **********
-In Python with ArrayFire, assigning an **af.array** replaces the array on the left-hand side of :literal:`=` with the result from the right-hand side. This can lead to changes in type and shape compared to the original array. Notably, assignments do not update arrays previously referenced through indexing operations.
+In Python with ArrayFire, assigning an **af.Array** replaces the array on the left-hand side of :literal:`=` with the result from the right-hand side. This can lead to changes in type and shape compared to the original array. Notably, assignments do not update arrays previously referenced through indexing operations.
 
 .. literalinclude:: indexing.py
     :language: python 
@@ -191,11 +217,10 @@ You can also assign to arrays using another af::arrays as an indexing array. Thi
     :end-before: [indexing12-endsnippet]
 
 
+Member Functions
+*********************
 
-**TODO STF**
-
-Member Functions TODO STF
-*************************
+Check the :doc:`Array Class <classes/array>` for more details on other functions that the Array object provides.
 
 Additional examples
 *******************
