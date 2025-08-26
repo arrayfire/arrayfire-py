@@ -150,7 +150,7 @@ deallocations, and garbage collection.
 All trace statements printed to the console have a suffix with the following
 pattern.
 
-**[category][Seconds since Epoch][Thread Id][source file relative path] \<Message\>**
+:literal:`[category][Seconds since Epoch][Thread Id][source file relative path] \<Message\>`
 
 `AF_OPENCL_SHOW_BUILD_INFO`
 ***************************

@@ -20,8 +20,6 @@ Once the ArrayFire has been downloaded, run the installer.
 
 The installer offers the option to automatically add ArrayFire to the path for all users. If the installer did not do this, simply append :literal:`%AF_PATH%/lib` to the PATH variable so that the loader can find ArrayFire DLLs.
 
-For more information on using ArrayFire on Windows, visit the following page.
-
 
 .. _Linux:
 
@@ -131,5 +129,6 @@ Getting help
 * Google Groups: https://groups.google.com/forum/#!forum/arrayfire-users
 * ArrayFire Services: `Consulting <https://arrayfire.com/consulting/>`_ | `Training <https://arrayfire.com/training/>`_
 * ArrayFire Blogs: http://arrayfire.com/blog/
+* ArrayFire `Contact Us <https://arrayfire.com/company/#contact-us>`_
 * Email: support@arrayfire.com
 

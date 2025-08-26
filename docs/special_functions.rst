@@ -18,7 +18,7 @@ Functions for convolutions, creating and applying specific types of filters, com
     * - :doc:`af.canny() <functions/canny>`
         - Canny Edge Detector.
     * - :doc:`af.convolve1() <functions/convolve1>`
-            - Convolution Integral for one dimensional data.
+        - Convolution Integral for one dimensional data.
     * - :doc:`af.convolve2() <functions/convolve2>`
         - Convolution Integral for two dimensional data.
     * - :doc:`af.convolve2_gradient_nn() <functions/convolve2_gradient_nn>`
