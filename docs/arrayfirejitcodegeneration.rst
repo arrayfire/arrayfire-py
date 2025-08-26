@@ -34,12 +34,15 @@ Specifically, as JIT is an integral feature of the ArrayFire library, it cannot 
 
 Timing these two implementations results in the following performance benchmark:
 
-**Add Picture**
+.. image:: images/afjit_benchmark.png
+   :alt: Benchmark Results
+   :align: center
+   :class: responsive-img
 
-The above figure depicts the execution time (abscissa) as a function of the number of samples (ordinate) for the two implementations discussed above.
+The above figure depicts the execution time as a function of the number of samples for the two implementations discussed above.
 
-When the number of samples is small, the execution time of pi_no_jit is dominated by the launch of multiple kernels and the execution time pi_jit is dominated by on-the-fly compilation of the JIT code required to launch a single kernel. Even with this JIT compilation time, pi_jit outperforms pi_no_jit by 1.4-2.0X for smaller sample sizes.
+When the number of samples is small (less than 100k samples), the execution time of pi_no_jit is dominated by the launch of multiple kernels and the execution time pi_jit is dominated by on-the-fly compilation of the JIT code required to launch a single kernel. Even with this JIT compilation time, pi_jit outperforms pi_no_jit by 1.4-2.0X for smaller sample sizes.
 
-When the number of samples is large, both the kernel launch overhead and the JIT code creation are no longer the limiting factors – the kernel’s computational load dominates the execution time. Here, the pi_jit outperforms pi_no_jit by 2.0-2.7X.
+When the number of samples is large (more than 1 million samples), both the kernel launch overhead and the JIT code creation are no longer the limiting factors – the kernel’s computational load dominates the execution time. Here, the pi_jit outperforms pi_no_jit by 3-25X.
 
 The number of applications that benefit from the JIT code generation is significant. The actual performance benefits are also application-dependent.

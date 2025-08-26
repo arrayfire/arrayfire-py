@@ -109,8 +109,6 @@ Functions for performing fundamental arithmetic and mathematical operations on a
         - Elementwise minimum between two arrays
     * - :doc:`af.mod() <functions/mod>`
         - Calculate the modulus.
-    * - :doc:`af.moddims() <functions/moddims>`
-        - Modify the dimensions of an array without changing the order of its elements.
     * - :doc:`af.mul() <functions/mul>`
         - Elementwise multiply.
     * - :doc:`af.neg() <functions/neg>`
@@ -141,6 +139,7 @@ Functions for performing fundamental arithmetic and mathematical operations on a
         - Evaluate the square root.
     * - :doc:`af.sub() <functions/sub>`
         - Elementwise subtraction.
+    * - :doc:`af.tan() <functions/tan>`
         - Evaluate the tangent function.
     * - :doc:`af.tanh() <functions/tanh>`
         - Evaluate the hyperbolic tangent function.

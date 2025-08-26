@@ -11,9 +11,9 @@ Welcome to ArrayFire's documentation!
    :caption: The Basics
 
    overview
+   tutorial
    installation
    gettingstarted
-   tutorial
 
 .. toctree::
    :maxdepth: 1
