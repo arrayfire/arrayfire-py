@@ -109,7 +109,7 @@ You can use Python's slicing notation to define a range when indexing in **array
 Indexing using af.Array 
 ***************************
 
-In Python with arrayfire, you can also index arrays using other **af.Array** objects. Arrayfire flattens the input and treats the elements inside the array
+In Python with arrayfire, you can also index arrays using other **af.Array** objects. ArrayFire flattens the input and treats the elements inside the array
 as column major indices to index the original Array as 1D Array.
 
 .. code-block:: python
