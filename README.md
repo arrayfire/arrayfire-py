@@ -1,4 +1,4 @@
-# arrayfire-py (WIP)
+# arrayfire-python (WIP)
 <p align="center"><a href="http://arrayfire.com/"><img src="http://arrayfire.com/logos/arrayfire_logo_whitebkgnd.png" width="800"></a></p>
 
 [ArrayFire](https://github.com/arrayfire/arrayfire) is a high performance library for parallel computing with an easy-to-use API. It enables users to write scientific computing code that is portable across CUDA, OpenCL and CPU devices.  
@@ -32,9 +32,9 @@ This project is separated into 3 different parts:
 arrayfire-py -> arrayfire-binary-python-wrapper -> ArrayFire C Libraries
 ```
 This means that arrayfire with python each of these parts is needed:
-- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-py) is the `thin` wrapper that provides the numpy-like interface to execute math and array operations. *** This is the intended User Interface ***
-- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is the `binary` wrapper that provides rough direct access to the functions in the C library.
-- [`ArrayFire C Libraries`](https://github.com/arrayfire/arrayfire) are the binaries obtained from compiling the [ArrayFire C/C++ Project](https://github.com/arrayfire/arrayfire)
+- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-python) is the intended User Interface that provides a numpy-like layer to execute math and array operations with ArrayFire. *** This is the preferred Interface ***
+- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is the wrapper that provides Python direct access to the ArrayFire functions in the C library. This package must have access to ArrayFire binaries.
+- [`ArrayFire C Libraries`](https://github.com/arrayfire/arrayfire) are the binaries obtained from compiling the [ArrayFire C/C++ Project](https://github.com/arrayfire/arrayfire). You obtain these easily through [installers in the ArrayFire download page](https://arrayfire.com/download/).
 
 **Install the last stable version of python wrapper:**
 ```sh
@@ -44,7 +44,7 @@ pip install arrayfire-py # install arrayfire python interface library
 
 **Install a pre-built wheel:**
 ```
-pip install arrayfire-py -f https://repo.arrayfire.com/python/wheels/arrayfire-py/0.1.0
+pip install arrayfire-py -f https://repo.arrayfire.com/python/wheels/arrayfire-python/0.1.0
 ```
 
 # Building
