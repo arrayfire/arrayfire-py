@@ -16,7 +16,7 @@ Installing ArrayFire
 
 Install ArrayFire using either a binary installer for Windows, OSX, or Linux or download it from source:
   * `Download and install Binaries <https://arrayfire.com/download/>`_
-  * `Build from source <https://github.com/arrayfire/arrayfire-py>`_
+  * `Build from source <https://github.com/arrayfire/arrayfire>`_
 
 Using ArrayFire
 ***************
@@ -112,4 +112,4 @@ Email
 Citations and Acknowledgements
 ******************************
 
-If you redistribute ArrayFire, please follow the terms established in `the license <https://github.com/arrayfire/arrayfire-python/blob/master/LICENSE>`_. If you wish to cite ArrayFire in an academic publication, please use the following reference:
+If you redistribute ArrayFire, please follow the terms established in `the license <https://github.com/arrayfire/thon/blob/master/LICENSE>`_. If you wish to cite ArrayFire in an academic publication, please use the following reference:

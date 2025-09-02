@@ -21,7 +21,7 @@ Functions
 Documentation grouped by category:
 
 
-.. collapse:: Arrayfire Classes
+.. collapse:: ArrayFire Classes
 
     .. list-table::
 
@@ -33,7 +33,7 @@ Documentation grouped by category:
             - Represents an ArrayFire Feature Extraction class
 
 
-.. collapse:: Arrayfire Functions
+.. collapse:: ArrayFire Functions
 
     .. list-table::
 
@@ -529,7 +529,7 @@ Documentation grouped by category:
             - Creates an array filled with zeros.
 
 
-.. collapse:: Arrayfire Functions by Category
+.. collapse:: ArrayFire Functions by Category
 
     .. list-table::
 
@@ -552,7 +552,7 @@ Documentation grouped by category:
             * - :doc:`Special Functions <special_functions>`
                 - Functions for convolutions, creating and applying specific types of filters, commonly used in signal processing and analysis.
 
-.. collapse:: Arrayfire Constants
+.. collapse:: ArrayFire Constants
 
     .. list-table::
 

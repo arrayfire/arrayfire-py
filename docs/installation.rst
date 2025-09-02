@@ -1,12 +1,23 @@
 ArrayFire Installer
 ===================
 
-Installing ArrayFire couldn't be easier. Navigate to https://arrayfire.com/download and download the appropriate installer for the target architecture and operating system. Although ArrayFire can be `built from source <https://github.com/arrayfire/arrayfire-python/tree/master?tab=readme-ov-file#arrayfire-python-bindings>`_, the installers conveniently package necessary dependencies.
+To use ArrayFire-Python you require three things:
 
-Install the latest device drivers before using ArrayFire. Drivers and runtimes should be downloaded and installed from each device vendor's website.
+.. list-table::
 
-Install Instructions
-####################
+    * - :literal:`arrayfire-python` package
+      - You may install it through pip :literal:`pip install arrayfire-python` or from `building arrayfire-python wheel <../README.md>`_
+    
+    * - :literal:`arrayfire-binary-python-wrapper`
+      - You may download and install through pip :literal:`pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0 -f https://arrayfire.com/python/binaries` which will come with ArrayFire C Libraries as well. You may also `build from source <https://github.com/arrayfire/arrayfire-binary-python-wrapper>`_ without the C Libraries.
+
+    * - :literal:`ArrayFire C/C++ Libraries`
+      - If you build the binary wrapper from source or wish to program with ArrayFire in C/C++, navigate to https://arrayfire.com/download and download the appropriate installer for the target architecture and operating system. Although ArrayFire can be `built from source <https://github.com/arrayfire/arrayfire-python/tree/master?tab=readme-ov-file#arrayfire-python-bindings>`_, the installers conveniently package necessary dependencies.
+
+Below we detail more on the ArrayFire C Libraries installation procedure. Install the latest device drivers before using ArrayFire. Drivers and runtimes should be downloaded and installed from each device vendor's website.
+
+Install Instructions for ArrayFire C Libraries
+###############################################
 
 * :ref:`Windows <Windows>`
 * :ref:`Linux <Linux>`
