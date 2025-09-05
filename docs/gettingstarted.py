@@ -1,14 +1,12 @@
-
 # [gettingstarted1-snippet]
 # Arrays may be created using the array constructor and dimensioned
 # as 1D, 2D, 3D; however, the values in these arrays will be undefined
 import arrayfire as af
 
-array = af.constant(0,(100,))
+array = af.constant(0, (100,))
 array_2d = af.constant(0, (10, 100))
 array_3d = af.constant(0, (10, 10, 10))
 # [gettingstarted1-endsnippet]
-
 
 
 # [gettingstarted2-snippet]
@@ -17,57 +15,58 @@ import arrayfire as af
 # Generate an array of size three filled with zeros.
 # If no data type is specified, ArrayFire defaults to f32.
 # The constant function generates the data on the device.
-zeroes = af.constant(0,(3,))
+zeroes = af.constant(0, (3,))
 
 # Generate a 1x4 array of uniformly distributed [0,1] random numbers
 # The randu function generates the data on the device.
-rand1 = af.randu((1,4)) 
+rand1 = af.randu((1, 4))
 
 # Generate a 2x2 array (or matrix, if you prefer) of random numbers
 # sampled from a normal distribution.
 # The randn function generates data on the device.
-rand2 = af.randu((2,2)) 
+rand2 = af.randu((2, 2))
 
 # Generate a 3x3 identity matrix. The data is generated on the device.
-iden = af.identity((3,3))
+iden = af.identity((3, 3))
 
 # Lastly, create a 2x1 array (column vector) of uniformly distributed
 # 32-bit complex numbers (c32 data type):
-randcplx = af.randu((2,1))
+randcplx = af.randu((2, 1))
 # [gettingstarted2-endsnippet]
 
 
 # [gettingstarted3-snippet]
 import arrayfire as af
+
 # Create a six-element array on the host
-hA = ([0, 1, 2, 3, 4, 5])
+hA = [0, 1, 2, 3, 4, 5]
 
 # Which can be copied into an ArrayFire Array using the pointer copy
 # constructor. Here we copy the data into a 2x3 matrix:
-A = af.moddims(af.Array(hA),(2,3))
+A = af.moddims(af.Array(hA), (2, 3))
 
 
 # ArrayFire provides a convenince function for printing array
 # objects in case you wish to see how the data is stored:
 print(A)
 
-#todo how to create complex numbers
+# todo how to create complex numbers
 # [gettingstarted3-endsnippet]
-
 
 
 # [gettingstarted4-snippet]
 
-import arrayfire as af
-import pycuda.driver as cuda
 import numpy as np
+import pycuda.driver as cuda
+
+import arrayfire as af
 
 # Create an array on the host
 host_ptr = af.Array([0, 1, 2, 3, 4, 5])
 
 
 # Create an ArrayFire array 'a' from host_ptr (2x3 matrix)
-A = af.moddims(host_ptr,(2,3))
+A = af.moddims(host_ptr, (2, 3))
 
 # Allocate CUDA device memory and copy data from host to device
 device_ptr = cuda.mem_alloc(host_ptr.nbytes)
@@ -83,19 +82,18 @@ b = af.Array(device_ptr, dims=(2, 3), is_device=True)
 # [gettingstarted4-endsnippet]
 
 
-
 # [gettingstarted5-snippet]
 
 import arrayfire as af
 
 # Generate two arrays
-a= af.randu((2,2))  # Create a 2x2 array with random numbers between [0, 1]
-b = af.constant(1,(2,1))   # Create a 2x1 array filled with constant value 1
+a = af.randu((2, 2))  # Create a 2x2 array with random numbers between [0, 1]
+b = af.constant(1, (2, 1))  # Create a 2x1 array filled with constant value 1
 
 # Print arrays 'a' and 'b' to the console
 print("Array 'a':", a)
 
-print("Array 'b':",b)  
+print("Array 'b':", b)
 
 # Print the results of an expression involving arrays
 result = a.col(0) + b + 0.4  # Perform operation: first column of 'a' + 'b' + 0.4
@@ -109,7 +107,7 @@ print(result)
 import arrayfire as af
 
 # Create a 4x5x2 array of uniformly distributed random numbers
-a = af.randu((4,5,2))
+a = af.randu((4, 5, 2))
 
 # Determine the number of dimensions using the `numdims()` function
 print("numdims(a):", a.numdims())  # Print the number of dimensions (should be 3)
@@ -150,7 +148,7 @@ import arrayfire as af
 
 # Generate a 3x3 array of uniformly distributed random numbers
 R = af.randu((3, 3))
-print(af.constant(1,( 3, 3)) + af.join(af.sin(R)))  # will be c32
+print(af.constant(1, (3, 3)) + af.join(af.sin(R)))  # will be c32
 
 # Rescale complex values to unit circle
 a = af.randn(5)
@@ -158,7 +156,7 @@ print(a / af.abs(a))
 
 # Calculate L2 norm of vectors
 X = af.randn((3, 4))
-print(af.sqrt(af.sum(af.pow(X, 2))))     # norm of every column vector
+print(af.sqrt(af.sum(af.pow(X, 2))))  # norm of every column vector
 print(af.sqrt(af.sum(af.pow(X, 2), 0)))  # same as above
 print(af.sqrt(af.sum(af.pow(X, 2), 1)))  # norm of every row vector
 
@@ -167,8 +165,9 @@ print(af.sqrt(af.sum(af.pow(X, 2), 1)))  # norm of every row vector
 
 # [gettingstarted9-snippet]
 
-import arrayfire as af
 import math
+
+import arrayfire as af
 
 # Generate a 5x5 array of uniformly distributed random numbers
 A = af.randu((5, 5))
@@ -186,7 +185,6 @@ pi_est = 4 * af.sum(af.hypot(x, y) < 1) / 10e6
 # Print the estimation error compared to math.pi
 print("estimation error:", abs(math.pi - pi_est))
 # [gettingstarted9-endsnippet]
-
 
 
 # [gettingstarted10-snippet]
@@ -233,8 +231,8 @@ print(f"scalar value: {val}")
 import arrayfire as af
 
 # Define host arrays
-h_A = ([1, 1, 0, 0, 4, 0, 0, 2, 0])
-h_B = ([1, 0, 1, 0, 1, 0, 1, 1, 1])
+h_A = [1, 1, 0, 0, 4, 0, 0, 2, 0]
+h_B = [1, 0, 1, 0, 1, 0, 1, 1, 1]
 
 # Create ArrayFire arrays A and B from host arrays
 A = af.Array(h_A, dims=(3, 3))
@@ -256,10 +254,10 @@ print(A_xor_B)
 # [gettingstarted12-endsnippet]
 
 
-
 # [gettingstarted13-snippet]
 
 import arrayfire as af
+
 
 def main():
     # Generate random values
@@ -271,5 +269,3 @@ def main():
 
 
 # [gettingstarted13-endsnippet]
-
-

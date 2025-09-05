@@ -92,7 +92,7 @@ def gemm(
     rhs_opts: MatProp = MatProp.NONE,
     alpha: int | float = 1.0,
     beta: int | float = 0.0,
-    accum: Array = None
+    accum: Array = None,
 ) -> Array:
     """
     Performs BLAS general matrix multiplication (GEMM) on two Array instances.

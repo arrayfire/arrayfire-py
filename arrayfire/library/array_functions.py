@@ -73,6 +73,7 @@ def constant(scalar: int | float | complex, shape: tuple[int, ...] = (1,), dtype
     """
     return cast(Array, wrapper.create_constant_array(scalar, shape, dtype))
 
+
 def zeros(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
     """
     Create a multi-dimensional array filled with zeros
@@ -100,6 +101,7 @@ def zeros(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
     """
     return constant(0, shape, dtype)
 
+
 def ones(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
     """
     Create a multi-dimensional array filled with ones
@@ -126,6 +128,7 @@ def ones(shape: tuple[int, ...], dtype: Dtype = float32) -> Array:
     - If shape is (x1, x2, x3, x4), the output is a 4D array of size (x1, x2, x3, x4).
     """
     return constant(1, shape, dtype)
+
 
 @afarray_as_array
 def diag(array: Array, /, *, diag_index: int = 0, extract: bool = True) -> Array:
@@ -311,7 +314,8 @@ def lower(array: Array, /, *, is_unit_diag: bool = False) -> Array:
     Notes
     -----
     - The function does not alter the elements above the main diagonal; it simply does not include them in the output.
-    - This function can be useful for mathematical operations that require lower triangular matrices, such as certain types of matrix factorizations.
+    - This function can be useful for mathematical operations that require lower triangular matrices,
+         | such as certain types of matrix factorizations.
 
     Examples
     --------
@@ -367,7 +371,8 @@ def upper(array: Array, /, *, is_unit_diag: bool = False) -> Array:
     Notes
     -----
     - The function does not alter the elements below the main diagonal; it simply does not include them in the output.
-    - This function can be useful for mathematical operations that require upper triangular matrices, such as certain types of matrix factorizations.
+    - This function can be useful for mathematical operations that require upper triangular matrices,
+        | such as certain types of matrix factorizations.
 
     Examples
     --------
@@ -872,6 +877,7 @@ def moddims(array: Array, shape: tuple[int, ...], /) -> Array:
     # TODO add examples to doc
     return cast(Array, wrapper.moddims(array.arr, shape))
 
+
 def reshape(array: Array, shape: tuple[int, ...], /) -> Array:
     """
     Modify the shape of the array without changing the data layout.
@@ -906,6 +912,7 @@ def reshape(array: Array, shape: tuple[int, ...], /) -> Array:
     different shape as specified by the `shape` parameter.
     """
     return moddims(array, shape)
+
 
 @afarray_as_array
 def reorder(array: Array, /, *, shape: tuple[int, ...] = (1, 0, 2, 3)) -> Array:

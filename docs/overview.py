@@ -1,5 +1,6 @@
 import arrayfire as af
 
+
 # [pi-example-simple-snippet]
 # Monte Carlo estimation of pi
 def calc_pi_device(samples) -> float:
@@ -12,5 +13,6 @@ def calc_pi_device(samples) -> float:
     within_unit_circle = (x * x + y * y) < 1
     # Intuitive function names
     return 4 * af.count(within_unit_circle) / samples
-# [pi-example-simple-endsnippet]
 
+
+# [pi-example-simple-endsnippet]

@@ -5,12 +5,14 @@
 # removed, then the execution of this code would be equivalent to the
 # following function.
 
-import arrayfire as af
 import time
+
+import arrayfire as af
 
 samples = int(9e8)
 x = af.randu((samples))
 y = af.randu((samples))
+
 
 def pi_no_jit(x, y, samples):
     temp = x * x
@@ -23,10 +25,12 @@ def pi_no_jit(x, y, samples):
     af.eval(temp)
     return 4.0 * af.sum(temp) / samples
 
+
 def pi_jit(x, y, samples):
     temp = af.sqrt(x * x + y * y) < 1
     af.eval(temp)
     return 4.0 * af.sum(temp) / samples
+
 
 # Print device info
 af.info()

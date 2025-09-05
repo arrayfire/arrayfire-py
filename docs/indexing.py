@@ -1,50 +1,48 @@
 # [indexing1-snippet]
 
-import arrayfire as af 
+import arrayfire as af
 
-data = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 A = af.Array(data)
-A = af.moddims(A,(4,4))
+A = af.moddims(A, (4, 4))
 
 # [indexing1-endsnippet]
 
 
 # [indexing2-snippet]
 
-A[0,0] #Returns an array pointing to the first element
+A[0, 0]  # Returns an array pointing to the first element
 
 
-A[2,3] #WARN: avoid doing this. Demo only
+A[2, 3]  # WARN: avoid doing this. Demo only
 # [indexing2-endsnippet]
 
 
 # [indexing3-snippet]
 
-ref0 = A[2,-1] # 14 second row last column
-ref1 = A[2,-2] # 10 Second row, second to last(third) column
+ref0 = A[2, -1]  # 14 second row last column
+ref1 = A[2, -2]  # 10 Second row, second to last(third) column
 # [indexing3-endsnippet]
 
 
 # [indexing4-snippet]
 
-#Returns an array pointing to the third column
-A[:,2]
+# Returns an array pointing to the third column
+A[:, 2]
 # [indexing4-endsnippet]
-
 
 
 # [indexing5-snippet]
 
-#Returns an array pointing to the second row
+# Returns an array pointing to the second row
 A[1, :]
 # [indexing5-endsnippet]
 
 
-
 # [indexing6-snippet]
 
- #Returns an array pointing to the first two columns
+# Returns an array pointing to the first two columns
 A[:, 0:2]
 
 # [indexing6-endsnippet]
@@ -72,12 +70,12 @@ copy3 = A[idx, :]
 
 # [indexing9-snippet]
 
-inputA = af.constant(3,(10,10))
-inputB = af.constant(2,(10,10))
-data = af.constant(1,(10,10))
+inputA = af.constant(3, (10, 10))
+inputB = af.constant(2, (10, 10))
+data = af.constant(1, (10, 10))
 
-#Points to the second column of data. Does not allocate memory
-ref = data[:,1]
+# Points to the second column of data. Does not allocate memory
+ref = data[:, 1]
 
 # This call does NOT update data. Memory allocated in matmul
 ref = af.matmul(inputA, inputB)
@@ -114,16 +112,15 @@ vals = af.Array(hvals)
 
 # [indexing13-snippet]
 
-A = af.Array[1,2,3,4,5,6,7,8,9]
-A = af.moddims(A,(3,3))
+A = af.Array[1, 2, 3, 4, 5, 6, 7, 8, 9]
+A = af.moddims(A, (3, 3))
 # 1.0000 4.0000 7.0000
 # 2.0000 5.0000 8.0000
 # 3.0000 6.0000 9.0000
 
-print(A[0,0]) # first element
+print(A[0, 0])  # first element
 # 1.0000
 
-print(A[0,1]) # first row, second column
+print(A[0, 1])  # first row, second column
 # 4.0000
 # [indexing13-endsnippet]
-

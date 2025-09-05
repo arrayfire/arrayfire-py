@@ -1,8 +1,8 @@
-import pytest
-import arrayfire as af
 import math
 
+import pytest
 
+import arrayfire as af
 
 
 def test_array_shapes():
@@ -19,9 +19,10 @@ def test_array_shapes():
     assert array_2d.shape == (10, 100)  # Check shape of 2D array
     assert array_3d.shape == (10, 10, 10)  # Check shape of 3D array
 
-
     # [pi-example-simple-snippet]
     # Monte Carlo estimation of pi
+
+
 def calc_pi_device(samples) -> float:
     # Simple, array based API
     # Generate uniformly distributed random numers
@@ -33,6 +34,7 @@ def calc_pi_device(samples) -> float:
     # Intuitive function names
     return 4 * af.count(within_unit_circle) / samples
     # [pi-example-simple-endsnippet]
+
 
 def test_calc_pi_device():
     samples = 100000
@@ -52,81 +54,86 @@ import arrayfire as af
 # Generate an array of size three filled with zeros.
 # If no data type is specified, ArrayFire defaults to f32.
 # The constant function generates the data on the device.
-zeroes = af.constant(0,(3,))
+zeroes = af.constant(0, (3,))
 
 # Generate a 1x4 array of uniformly distributed [0,1] random numbers
 # The randu function generates the data on the device.
-rand1 = af.randu((1,4)) 
+rand1 = af.randu((1, 4))
 
 # Generate a 2x2 array (or matrix, if you prefer) of random numbers
 # sampled from a normal distribution.
 # The randn function generates data on the device.
-rand2 = af.randu((2,2)) 
+rand2 = af.randu((2, 2))
 
 # Generate a 3x3 identity matrix. The data is generated on the device.
-iden = af.identity((3,3))
+iden = af.identity((3, 3))
 
 # Lastly, create a 2x1 array (column vector) of uniformly distributed
 # 32-bit complex numbers (c32 data type):
-randcplx = af.randu((2,1))
+randcplx = af.randu((2, 1))
 # [gettingstarted2-endsnippet]
 
 import pytest
+
 import arrayfire as af
+
 
 def test_arrayfire_operations():
     # Generate an array of size three filled with zeros
     zeroes = af.constant(0, (3,))
     assert zeroes.shape == (3,)  # Check shape
-    
+
     # Generate a 1x4 array of uniformly distributed [0,1] random numbers
     rand1 = af.randu((1, 4))
     assert rand1.shape == (1, 4)  # Check shape
-    
+
     # Generate a 2x2 array of random numbers sampled from a normal distribution
     rand2 = af.randn((2, 2))
     assert rand2.shape == (2, 2)  # Check shape
-    
+
     # Generate a 3x3 identity matrix
-    iden = af.identity((3,3))
+    iden = af.identity((3, 3))
     assert iden.shape == (3, 3)  # Check shape
-    
+
     # Generate a 2x1 array (column vector) of uniformly distributed 32-bit complex numbers
     randcplx = af.randu((2, 1))
-    assert randcplx.shape == (2, )  # Check shape
+    assert randcplx.shape == (2,)  # Check shape
+
 
 # [gettingstarted3-snippet]
 import arrayfire as af
+
 # Create a six-element array on the host
-hA = ([0, 1, 2, 3, 4, 5])
+hA = [0, 1, 2, 3, 4, 5]
 
 # Which can be copied into an ArrayFire Array using the pointer copy
 # constructor. Here we copy the data into a 2x3 matrix:
-A = af.moddims(af.Array(hA),(2,3))
+A = af.moddims(af.Array(hA), (2, 3))
 
 
 # ArrayFire provides a convenince function for printing array
 # objects in case you wish to see how the data is stored:
 print(A)
 
-#todo how to create complex numbers
+# todo how to create complex numbers
 # [gettingstarted3-endsnippet]
 
 
 def test_arrayfire_conversion():
     # Create a six-element array on the host
-    hA = ([0, 1, 2, 3, 4, 5])
-    
+    hA = [0, 1, 2, 3, 4, 5]
+
     # Copy data from host array to an ArrayFire array and reshape to 2x3 matrix
-    A = af.moddims(af.Array(hA),(2,3))
-    
+    A = af.moddims(af.Array(hA), (2, 3))
+
     # Assert that the shape of A is (2, 3)
     assert A.shape == (2, 3)
-    
+
     # Assert that the elements in A match hA
     for i in range(2):
         for j in range(3):
             assert A[i, j] == hA[i * 3 + j]
+
 
 # [gettingstarted11-snippet]
 
@@ -144,20 +151,23 @@ print(f"scalar value: {val}")
 
 
 import pytest
+
 import arrayfire as af
+
 
 def test_arrayfire_scalar_value():
     # Create an array consisting of 3 random numbers
     a = af.randu(3)
-    
+
     # Get the scalar value of the array
     val = a.scalar()
-    
+
     # Assert that the scalar value is a float
     assert isinstance(val, float)
-    
+
     # Assert that the scalar value is between 0 and 1 (inclusive)
     assert 0 <= val <= 1
+
 
 def test_vectorization():
 
@@ -165,15 +175,16 @@ def test_vectorization():
 
     import arrayfire as af
 
-    #[0, 9]
+    # [0, 9]
     a = af.range(10)
 
     # [1, 10]
-    a = a+ 1
+    a = a + 1
     # [vectorization2-endsnippet]
     # Assertion: Verify the elements of the array 'a'
     expected_result = af.Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     assert a == expected_result
+
 
 def test_apply_filter():
     # [vectorization9-snippet]
@@ -194,17 +205,15 @@ def test_apply_filter():
     print(filtered_weights)
     # [vectorization9-endsnippet]
     assert filtered_weights.shape == (5, 5)
-    
 
 
-
-def test_filtered_weights():  
+def test_filtered_weights():
     # [vectorization10-snippet]
 
     import arrayfire as af
 
     # Create the filter and weight vectors
-    filter = af.randu((1, 5))   # Shape: 1x5
+    filter = af.randu((1, 5))  # Shape: 1x5
     weights = af.randu((5, 5))  # Shape: 5x5
 
     # Transpose the filter to align dimensions for broadcasting
@@ -214,7 +223,7 @@ def test_filtered_weights():
     filtered_weights = filter_transposed * weights
 
     expected_shape = (5, 5)  # Expected shape of filtered_weights
-    
+
     # Assertions
     assert filtered_weights.shape == expected_shape
 
@@ -222,6 +231,7 @@ def test_filtered_weights():
     print("Filtered weights:")
     print(filtered_weights)
     # [vectorization10-endsnippet]
+
 
 def test_flatten_array():
     # [manipulation1-snippet]
@@ -243,7 +253,7 @@ def test_flatten_array():
 
 
 def test_flip_array():
-   
+
     # [manipulation2-snippet]
 
     import arrayfire as af
@@ -270,6 +280,7 @@ def test_flip_array():
     assert af.min(flip_a) >= 0
     assert af.max(flip_a) < 1
 
+
 def test_join_array():
     # [manipulation3-snippet]
 
@@ -292,7 +303,6 @@ def test_join_array():
     assert a_join.shape == (10,)
 
 
-
 def test_moddims_operations():
     # [manipulation4-snippet]
 
@@ -302,11 +312,11 @@ def test_moddims_operations():
 
     print(a)
 
-    moddims_a = af.moddims(a,(2,4))
+    moddims_a = af.moddims(a, (2, 4))
 
     print(moddims_a)
 
-    moddims_b = af.moddims(a,(len(a),))
+    moddims_b = af.moddims(a, (len(a),))
     print(moddims_b)
 
     # [manipulation4-endsnippet]
@@ -316,28 +326,27 @@ def test_moddims_operations():
     assert a == moddims_b
 
 
-
 def test_arrayfire_shift():
     # [manipulation6-snippet]
 
     import arrayfire as af
 
-    a = af.randu((3,5))
+    a = af.randu((3, 5))
     print(a)
 
-    a_shift = af.shift(a,(0,2))
+    a_shift = af.shift(a, (0, 2))
     print(a_shift)
 
-    a_shift1 = af.shift(a,(-1,2))
+    a_shift1 = af.shift(a, (-1, 2))
     print(a_shift1)
 
     # [manipulation6-endsnippet]
 
     # Check if arrays are equal by comparing element-wise
-    assert a != a_shift 
+    assert a != a_shift
     assert a != a_shift1
-    assert a_shift.shape == (3,5)
-    assert a_shift1.shape == (3,5)
+    assert a_shift.shape == (3, 5)
+    assert a_shift1.shape == (3, 5)
 
 
 def transpose_arrayifre():
@@ -345,20 +354,19 @@ def transpose_arrayifre():
 
     import arrayfire as af
 
-    a = af.randu((3,3))
-    print(a)  #[3 3 1 1]
+    a = af.randu((3, 3))
+    print(a)  # [3 3 1 1]
 
-    ''' 0.3949     0.8465     0.3709
+    """ 0.3949     0.8465     0.3709
         0.3561     0.9399     0.2751
-        0.6097     0.6802     0.2720'''
-        
+        0.6097     0.6802     0.2720"""
 
     a_transpose = af.transpose(a)
-    print(a_transpose) #[3 3 1 1]
+    print(a_transpose)  # [3 3 1 1]
 
-    ''' 0.3949     0.3561     0.6097
+    """ 0.3949     0.3561     0.6097
             0.8465     0.9399     0.6802
-            0.3709     0.2751     0.2720'''
+            0.3709     0.2751     0.2720"""
     # [manipulation8-endsnippet]
     # Convert arrays to Python lists for comparison
     a_list = a.to_array().tolist()
@@ -371,32 +379,21 @@ def transpose_arrayifre():
     assert a_transpose_list == expected_a_transpose
 
 
-
-
 def test_moddims():
     # [indexing1-snippet]
 
-    import arrayfire as af 
+    import arrayfire as af
 
-    data = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+    data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
     A = af.Array(data)
-    A = af.moddims(A,(4,4))
+    A = af.moddims(A, (4, 4))
 
-# [indexing1-endsnippet]
-    expected_result = [
-        [0, 1, 2, 3],
-        [4, 5, 6, 7],
-        [8, 9, 10, 11],
-        [12, 13, 14, 15]
-    ]
-        
+    # [indexing1-endsnippet]
+    expected_result = [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
+
     dims = A.shape
     A_list = [[A[i, j] for j in range(dims[1])] for i in range(dims[0])]
 
     # Check if the reshaped array matches the expected result
     assert A_list == expected_result
-
-
-    
-
