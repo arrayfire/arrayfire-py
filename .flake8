@@ -9,3 +9,5 @@ exclude =
     .venv/**
     build/**
     benchmarks/**
+    docs/*
+    tests/test_documentation/test_documentation.py

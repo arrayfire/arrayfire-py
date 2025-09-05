@@ -758,10 +758,10 @@ class Array:
         ndims = self.ndim
 
         indexing = key
-        
-        if isinstance(key, int | float | slice): # when indexing with one dimension, treat it as indexing a flat array
+
+        if isinstance(key, int | float | slice):  # when indexing with one dimension, treat it as indexing a flat array
             ndims = 1
-        elif isinstance(key, Array): # when indexing with one array, treat it as indexing a flat array
+        elif isinstance(key, Array):  # when indexing with one array, treat it as indexing a flat array
             ndims = 1
             if key.is_bool:
                 indexing = wrapper.where(key.arr)
@@ -836,9 +836,9 @@ class Array:
             del_other = False
 
         indexing = key
-        if isinstance(key, int | float | slice): # when indexing with one dimension, treat it as indexing a flat array
+        if isinstance(key, int | float | slice):  # when indexing with one dimension, treat it as indexing a flat array
             ndims = 1
-        elif isinstance(key, Array): # when indexing with one array, treat it as indexing a flat array
+        elif isinstance(key, Array):  # when indexing with one array, treat it as indexing a flat array
             ndims = 1
             if key.is_bool:
                 indexing = wrapper.where(key.arr)
@@ -930,7 +930,8 @@ class Array:
 
         Note
         ----
-        - The array instance must be two-dimensional. If the array instance is not two-dimensional, an error should be raised.
+        - The array instance must be two-dimensional. If the array instance is not two-dimensional,
+            | an error should be raised.
 
         """
         if self.ndim < 2:
@@ -949,11 +950,13 @@ class Array:
         -------
         Array
             Two-dimensional array whose first and last dimensions (axes) are permuted in reverse order relative to
-            original array with its elements complex conjugated. The returned array must have the same data type as the original array.
+            | original array with its elements complex conjugated.
+            | The returned array must have the same data type as the original array.
 
         Note
         ----
-        - The array instance must be two-dimensional. If the array instance is not two-dimensional, an error should be raised.
+        - The array instance must be two-dimensional. If the array instance is not two-dimensional,
+            | an error should be raised.
 
         """
         if self.ndim < 2:
@@ -1191,7 +1194,8 @@ class Array:
         -------
         out : af.Array
             - An array containing the same data as `array` with the specified shape.
-            - The total number of elements in `array` must match the product of the dimensions specified in the `shape` tuple.
+            - The total number of elements in `array` must match the product of the dimensions
+                | specified in the `shape` tuple.
 
         Raises
         ------

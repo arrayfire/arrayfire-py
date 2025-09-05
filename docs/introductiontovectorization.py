@@ -1,4 +1,3 @@
-
 # [vectorization1-snippet]
 import arrayfire as af
 
@@ -19,11 +18,11 @@ print(a)
 
 import arrayfire as af
 
-#[0, 9]
+# [0, 9]
 a = af.range(10)
 
 # [1, 10]
-a = a+ 1
+a = a + 1
 # [vectorization2-endsnippet]
 
 
@@ -32,9 +31,7 @@ a = a+ 1
 import arrayfire as af
 
 # Define the filter coefficients as a list
-g_coef = [1, 2, 1,
-        2, 4, 2,
-        1, 2, 1]
+g_coef = [1, 2, 1, 2, 4, 2, 1, 2, 1]
 
 # Convert the coefficients list to an ArrayFire array and scale it
 filter = (1.0 / 16.0) * af.Array(3, 3, g_coef)
@@ -130,7 +127,7 @@ print(filtered_weights)
 import arrayfire as af
 
 # Create the filter and weight vectors
-filter = af.randu((1, 5))   # Shape: 1x5
+filter = af.randu((1, 5))  # Shape: 1x5
 weights = af.randu((5, 5))  # Shape: 5x5
 
 # Transpose the filter to align dimensions for broadcasting
@@ -141,7 +138,7 @@ filtered_weights = filter_transposed * weights
 
 # Print the filtered weights array
 print("Filtered weights:")
-print(filtered_weights) # Incorrect
+print(filtered_weights)  # Incorrect
 # [vectorization10-endsnippet]
 
 # [vectorization11-snippet]
@@ -149,13 +146,13 @@ print(filtered_weights) # Incorrect
 import arrayfire as af
 
 # Create the filter and weight vectors
-filter = af.randu((1, 5))   # Shape: 1x5
-batched_filter = af.tile(filter, (1, 1, 5)) # batch on the third dimension
+filter = af.randu((1, 5))  # Shape: 1x5
+batched_filter = af.tile(filter, (1, 1, 5))  # batch on the third dimension
 weights = af.randu((5, 5))  # Shape: 5x5
 
 # Leverage matmul batching
-filtered_weights = af.matmul(batched_filter, weights) # shape 1x5x5
-filtered_weights = af.moddims(filtered_weights, (5, 5)) # reshape to 2d 5x5
+filtered_weights = af.matmul(batched_filter, weights)  # shape 1x5x5
+filtered_weights = af.moddims(filtered_weights, (5, 5))  # reshape to 2d 5x5
 
 # Print the filtered weights array
 print("Filtered weights:")

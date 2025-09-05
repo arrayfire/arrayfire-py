@@ -103,8 +103,6 @@ __all__ += [
 
 from arrayfire.library.array_functions import (
     constant,
-    zeros,
-    ones,
     copy_array,
     diag,
     eval,
@@ -119,17 +117,19 @@ from arrayfire.library.array_functions import (
     lookup,
     lower,
     moddims,
-    reshape,
+    ones,
     pad,
     range,
     reorder,
     replace,
+    reshape,
     select,
     set_manual_eval_flag,
     shift,
     tile,
     transpose,
     upper,
+    zeros,
 )
 
 __all__ += ["gloh", "orb", "sift", "dog", "fast", "harris", "susan", "hamming_matcher", "nearest_neighbour"]

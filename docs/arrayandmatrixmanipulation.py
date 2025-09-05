@@ -64,11 +64,11 @@ a = af.randu((8,))
 
 print(a)
 
-moddims_a = af.moddims(a,(2,4))
+moddims_a = af.moddims(a, (2, 4))
 
 print(moddims_a)
 
-moddims_b = af.moddims(a,(len(a),))
+moddims_b = af.moddims(a, (len(a),))
 print(moddims_b)
 
 # [manipulation4-endsnippet]
@@ -79,24 +79,24 @@ print(moddims_b)
 
 import arrayfire as af
 
-a = af.randu((2,2,3,1))
+a = af.randu((2, 2, 3, 1))
 
 print(a)
 
-a_reorder = af.reorder(a,())
+a_reorder = af.reorder(a, ())
 # [manipulation5-endsnippet]
 
 # [manipulation6-snippet]
 
 import arrayfire as af
 
-a = af.randu((3,5))
+a = af.randu((3, 5))
 print(a)
 
-a_shift = af.shift(a,(0,2))
+a_shift = af.shift(a, (0, 2))
 print(a_shift)
 
-a_shift1 = af.shift(a,(-1,2))
+a_shift1 = af.shift(a, (-1, 2))
 print(a_shift1)
 
 # [manipulation6-endsnippet]
@@ -106,17 +106,17 @@ print(a_shift1)
 
 import arrayfire as af
 
-a = af.randu((3,)) #[3,1,1,1]
+a = af.randu((3,))  # [3,1,1,1]
 
-print (a)
+print(a)
 
-a_tile = af.tile(a,(2,)) 
+a_tile = af.tile(a, (2,))
 print(a_tile)
 
-a_tile1 = af.tile(a,(2,2))
+a_tile1 = af.tile(a, (2, 2))
 print(a_tile1)
 
-a_tile2 = af.tile(a,(1,2,3)) 
+a_tile2 = af.tile(a, (1, 2, 3))
 print(a_tile2)
 # [manipulation7-endsnippet]
 
@@ -125,18 +125,18 @@ print(a_tile2)
 
 import arrayfire as af
 
-a = af.randu((3,3))
-print(a)  #[3 3 1 1]
+a = af.randu((3, 3))
+print(a)  # [3 3 1 1]
 
-''' 0.3949     0.8465     0.3709
+""" 0.3949     0.8465     0.3709
     0.3561     0.9399     0.2751
-    0.6097     0.6802     0.2720'''
-    
+    0.6097     0.6802     0.2720"""
+
 
 a_transpose = af.transpose(a)
-print(a_transpose) #[3 3 1 1]
+print(a_transpose)  # [3 3 1 1]
 
-''' 0.3949     0.3561     0.6097
+""" 0.3949     0.3561     0.6097
         0.8465     0.9399     0.6802
-        0.3709     0.2751     0.2720'''
+        0.3709     0.2751     0.2720"""
 # [manipulation8-endsnippet]
