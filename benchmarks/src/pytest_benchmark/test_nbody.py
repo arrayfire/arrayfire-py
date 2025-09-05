@@ -6,21 +6,16 @@ dt = 1e-3
 softening = 1e-4
 M = 1
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestNbody:
     def test_nbody(self, benchmark, pkgid):
         pkg = PKGDICT[pkgid]
         setup = lambda: (generate_arrays(pkgid), {})
 
         benchmark.extra_info["description"] = f"{NSIZE:.2e} Bodies"
-        result = benchmark.pedantic(
-            target=nbody,
-            setup=setup,
-            rounds=ROUNDS,
-            iterations=ITERATIONS
-        )
+        result = benchmark.pedantic(target=nbody, setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
+
 
 def acceleration(pkg, mass, pos):
     x = pos[:, 0:1]
@@ -42,6 +37,7 @@ def acceleration(pkg, mass, pos):
 
     return pkg.hstack((ax, ay, az))
 
+
 def acceleration_af(mass, pos):
     x = pos[:, 0:1]
     y = pos[:, 1:2]
@@ -54,7 +50,7 @@ def acceleration_af(mass, pos):
 
     # matrix that stores 1/r^3 for all particle pairwise particle separations
     # inv_r3 = dx**2 + dy**2 + dz**2 + softening**2
-    inv_r3 = dx*dx + dy*dy + dz*dz + softening*softening
+    inv_r3 = dx * dx + dy * dy + dz * dz + softening * softening
     inv_r3 = af.pow(inv_r3, -1.5)
 
     ax = G * af.matmul((dx * inv_r3), mass)
@@ -63,11 +59,12 @@ def acceleration_af(mass, pos):
 
     return af.join(1, ax, ay, az)
 
+
 def nbody(pkg, mass, pos, vel):
     vel -= pkg.mean(mass * vel, axis=0) / pkg.mean(mass)
 
     acc = None
-    if pkg.__name__ == 'arrayfire':
+    if pkg.__name__ == "arrayfire":
         acc = acceleration_af(mass, pos)
     else:
         acc = acceleration(pkg, mass, pos)
@@ -77,14 +74,15 @@ def nbody(pkg, mass, pos, vel):
         pos += vel * dt
         vel += acc * dt / 2.0
 
-    energy = 0.5 * pkg.sum(mass * vel ** 2)
+    energy = 0.5 * pkg.sum(mass * vel**2)
 
     return float(energy)
+
 
 def generate_arrays(pkgid):
     arr_list = []
     pkg = PKGDICT[pkgid]
-    
+
     initialize_package(pkgid)
     pkgname = pkg.__name__
     count = 2
@@ -95,8 +93,8 @@ def generate_arrays(pkgid):
         cupy.cuda.runtime.deviceSynchronize()
     elif "arrayfire" == pkgname:
         af.device_gc()
-        arr_list.append(M * af.constant(1, (NSIZE,1), dtype=getattr(af, DTYPE)))
-        for i in range(count):  
+        arr_list.append(M * af.constant(1, (NSIZE, 1), dtype=getattr(af, DTYPE)))
+        for i in range(count):
             arr_list.append(af.randu((NSIZE, 3), dtype=getattr(af, DTYPE)))
         for arr in arr_list:
             af.eval(arr)

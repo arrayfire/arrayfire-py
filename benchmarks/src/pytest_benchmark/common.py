@@ -25,31 +25,32 @@
 # THE POSSIBILITY OF SUCH DAMAGE.
 # *****************************************************************************
 
-import pytest
+import gc
 import math
 
-import arrayfire as af
-import numpy as np
-import dpnp
-import dpctl
 import cupy
-import gc
+import dpctl
+import dpnp
+import numpy as np
+import pytest
+
+import arrayfire as af
 
 # modify parameters for most benchmarks
 ROUNDS = 30
-NSIZE = 2 ** 13
-NNSIZE = NSIZE ** 2
+NSIZE = 2**13
+NNSIZE = NSIZE**2
 DTYPE = "float32"
 
 # comment a line to remove that package from testing
 PKGDICT = {
-    "dpnp" : dpnp,
-    "numpy" : np,
+    "dpnp": dpnp,
+    "numpy": np,
     "cupy": cupy,
     # "afcpu": af,
     "afopencl": af,
-    "afcuda" : af,
-    "afoneapi": af
+    "afcuda": af,
+    "afoneapi": af,
 }
 
 PKGS = []
@@ -58,6 +59,7 @@ IDS = []
 for key, value in PKGDICT.items():
     IDS.append(key)
     PKGS.append(value)
+
 
 # Initialize packages and cleanup memory before each round
 def initialize_package(PKG_ID):
@@ -69,7 +71,7 @@ def initialize_package(PKG_ID):
         mempool.free_all_blocks()
     except:
         pass
-    
+
     if PKG_ID == "afcpu":
         af.set_backend(af.BackendType.cpu)
         af.device_gc()

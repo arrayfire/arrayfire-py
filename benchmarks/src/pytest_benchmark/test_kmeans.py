@@ -6,23 +6,18 @@ NSAMPLES = NSIZE
 NFEATURES = 256
 K = 20
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestKmeans:
     def test_kmeans(self, benchmark, pkgid):
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
-        kmean_class = { "dpnp" : kmeans_dpnp , "numpy" : kmeans_numpy, \
-         "cupy" : kmeans_cupy , "arrayfire" : kmeans_af }
+        kmean_class = {"dpnp": kmeans_dpnp, "numpy": kmeans_numpy, "cupy": kmeans_cupy, "arrayfire": kmeans_af}
         obj = kmean_class[pkg.__name__]()
 
         benchmark.extra_info["description"] = f"{NSAMPLES}x{NFEATURES} over {K} centers"
-        result = benchmark.pedantic(
-            target=obj.kmeans,
-            rounds=ROUNDS,
-            iterations=1
-        )
+        result = benchmark.pedantic(target=obj.kmeans, rounds=ROUNDS, iterations=1)
+
 
 class kmeans_numpy:
     def __init__(self):
@@ -54,7 +49,7 @@ class kmeans_numpy:
         Returns:
             np.ndarray: An array of cluster assignments for each data point (n_samples,).
         """
-        distances = np.sqrt(((self.data[:,np.newaxis,:] - centroids[np.newaxis,:,:])**2).sum(axis=2))
+        distances = np.sqrt(((self.data[:, np.newaxis, :] - centroids[np.newaxis, :, :]) ** 2).sum(axis=2))
         cluster_assignments = np.argmin(distances, axis=1)
         return cluster_assignments
 
@@ -109,7 +104,7 @@ class kmeans_numpy:
                 break
 
         return centroids, cluster_assignments
-    
+
 
 class kmeans_dpnp:
     def __init__(self):
@@ -120,7 +115,7 @@ class kmeans_dpnp:
         return self.data[self.centroid_indices, :]
 
     def assign_to_clusters(self, centroids):
-        distances = dpnp.sqrt(((self.data[:,dpnp.newaxis,:] - centroids[dpnp.newaxis,:,:])**2).sum(axis=2))
+        distances = dpnp.sqrt(((self.data[:, dpnp.newaxis, :] - centroids[dpnp.newaxis, :, :]) ** 2).sum(axis=2))
         cluster_assignments = dpnp.argmin(distances, axis=1)
         return cluster_assignments
 
@@ -149,7 +144,8 @@ class kmeans_dpnp:
                 break
 
         return centroids, cluster_assignments
-    
+
+
 class kmeans_cupy:
     def __init__(self):
         self.data = cupy.random.random((NSAMPLES, NFEATURES))
@@ -160,7 +156,7 @@ class kmeans_cupy:
         return self.data[self.centroid_indices, :]
 
     def assign_to_clusters(self, centroids):
-        distances = cupy.sqrt(((self.data[:,cupy.newaxis,:] - centroids[cupy.newaxis,:,:])**2).sum(axis=2))
+        distances = cupy.sqrt(((self.data[:, cupy.newaxis, :] - centroids[cupy.newaxis, :, :]) ** 2).sum(axis=2))
         cluster_assignments = cupy.argmin(distances, axis=1)
         return cluster_assignments
 
@@ -191,7 +187,8 @@ class kmeans_cupy:
 
         cupy.cuda.runtime.deviceSynchronize()
         return centroids, cluster_assignments
-    
+
+
 class kmeans_af:
     def __init__(self):
         self.data = af.Array(np.random.random((NSAMPLES, NFEATURES)).flatten().tolist(), shape=(NSAMPLES, NFEATURES))
@@ -227,11 +224,11 @@ class kmeans_af:
         Returns:
             np.ndarray: An array of cluster assignments for each data point (n_samples,).
         """
-        dist = (af.moddims(self.data, (NSAMPLES, 1, NFEATURES)) - af.moddims(centroids, (1, K, NFEATURES)))**2
+        dist = (af.moddims(self.data, (NSAMPLES, 1, NFEATURES)) - af.moddims(centroids, (1, K, NFEATURES))) ** 2
         distances = af.sqrt(af.sum(dist, axis=2))
         cluster_assignments = af.where(distances == af.tile(af.min(distances, axis=1), (1, K)))
         # cluster_assignments = af.range((NSAMPLES, K))[distances == af.min(distances, axis=1)]
-        
+
         return cluster_assignments
 
     def update_centroids(self, cluster_assignments):

@@ -29,6 +29,7 @@ from common import *
 
 ITERATIONS = 1
 
+
 def generate_arrays(pkgid, count):
     arr_list = []
     pkg = PKGDICT[pkgid]
@@ -38,7 +39,7 @@ def generate_arrays(pkgid, count):
             arr_list.append(cupy.random.rand(NSIZE, NSIZE, dtype=DTYPE))
         cupy.cuda.runtime.deviceSynchronize()
     elif "arrayfire" == pkg:
-        for i in range(count):  
+        for i in range(count):
             x = af.randu((NSIZE, NSIZE), dtype=getattr(af, DTYPE))
             af.eval(x)
             arr_list.append(x)
@@ -52,9 +53,8 @@ def generate_arrays(pkgid, count):
 
     return arr_list
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestFFT:
     def test_fft(self, benchmark, pkgid):
         initialize_package(pkgid)
@@ -62,12 +62,8 @@ class TestFFT:
         pkg = PKGDICT[pkgid]
 
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
-        result = benchmark.pedantic(
-            target=FUNCS[pkg.__name__],
-            setup=setup,
-            rounds=ROUNDS,
-            iterations=ITERATIONS
-        )
+        result = benchmark.pedantic(target=FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
+
 
 def fft_af(arr):
     res = af.fft(arr)
@@ -76,16 +72,19 @@ def fft_af(arr):
 
     return res
 
+
 def fft_np(arr):
     return np.fft.fft(arr)
 
+
 def fft_dpnp(arr):
     return dpnp.fft.fft(arr)
+
 
 def fft_cupy(arr):
     res = cupy.fft.fft(arr)
     cupy.cuda.runtime.deviceSynchronize()
     return res
 
-FUNCS = { "dpnp" : fft_dpnp , "numpy" : fft_np, \
-         "cupy" : fft_cupy , "arrayfire" : fft_af }
+
+FUNCS = {"dpnp": fft_dpnp, "numpy": fft_np, "cupy": fft_cupy, "arrayfire": fft_af}

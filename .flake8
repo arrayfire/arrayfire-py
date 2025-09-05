@@ -8,3 +8,4 @@ max-line-length = 119
 exclude =
     .venv/**
     build/**
+    benchmarks/**
