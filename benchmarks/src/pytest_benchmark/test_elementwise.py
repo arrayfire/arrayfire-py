@@ -29,9 +29,8 @@ from common import *
 
 ITERATIONS = 1
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestElementwise:
     def test_group_elementwise(self, benchmark, pkgid):
         initialize_package(pkgid)
@@ -40,38 +39,27 @@ class TestElementwise:
         pkg = PKGDICT[pkgid]
 
         def func(arr):
-            return pkg.exp(pkg.cos(pkg.sinh(arr))) +\
-                pkg.cbrt(pkg.log(arr) * pkg.expm1(-pkg.sqrt(arr)))
-        
+            return pkg.exp(pkg.cos(pkg.sinh(arr))) + pkg.cbrt(pkg.log(arr) * pkg.expm1(-pkg.sqrt(arr)))
+
         def func_af(arr):
-            x = af.exp(af.cos(af.sinh(arr))) +\
-                af.cbrt(af.log(arr) * af.expm1(-af.sqrt(arr)))
+            x = af.exp(af.cos(af.sinh(arr))) + af.cbrt(af.log(arr) * af.expm1(-af.sqrt(arr)))
             af.eval(x)
             af.sync()
             return x
 
         def func_cupy(arr):
-            x = pkg.exp(pkg.cos(pkg.sinh(arr))) +\
-                pkg.cbrt(pkg.log(arr) * pkg.expm1(-pkg.sqrt(arr)))
+            x = pkg.exp(pkg.cos(pkg.sinh(arr))) + pkg.cbrt(pkg.log(arr) * pkg.expm1(-pkg.sqrt(arr)))
             cupy.cuda.runtime.deviceSynchronize()
             return x
 
-        GROUP_FUNCS = {
-            "numpy": func,
-            "cupy": func_cupy,
-            "arrayfire": func_af,
-            "dpnp": func
-        }
+        GROUP_FUNCS = {"numpy": func, "cupy": func_cupy, "arrayfire": func_af, "dpnp": func}
 
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         result = benchmark.pedantic(
-            target=GROUP_FUNCS[pkg.__name__],
-            setup=setup,
-            rounds=ROUNDS,
-            iterations=ITERATIONS
+            target=GROUP_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS
         )
 
-    '''
+    """
     def test_arccos(self, benchmark, pkg):
         setup = lambda: ([generate_arrays(pkg, 1)[0] / (NSIZE * NSIZE)], {})
 
@@ -301,7 +289,8 @@ class TestElementwise:
             rounds=ROUNDS,
             iterations=ITERATIONS
         )
-    '''
+    """
+
 
 def generate_arrays(pkgid, count):
     arr_list = []
@@ -312,7 +301,7 @@ def generate_arrays(pkgid, count):
             arr_list.append(cupy.random.rand(NSIZE, NSIZE, dtype=DTYPE))
         cupy.cuda.runtime.deviceSynchronize()
     elif "arrayfire" == pkg:
-        for i in range(count):  
+        for i in range(count):
             x = af.randu((NSIZE, NSIZE), dtype=getattr(af, DTYPE))
             af.eval(x)
             arr_list.append(x)

@@ -1,9 +1,10 @@
+import json
+
 import matplotlib.pyplot as plt
 import numpy as np
-import json
 import pandas as pd
 
-BENCHMARKS_JSON = 'results.json'
+BENCHMARKS_JSON = "results.json"
 
 # Hardware details shown in title
 HARDWARE = "AMD Ryzen 9 9900X 12-Core Processor 63032 MB (fp64 fp16)\noneAPI 2025.1.3 Intel(R) OpenCL Graphics: Intel(R) Arc(TM) B580 Graphics, 11873 MB (fp64 fp16)"
@@ -12,14 +13,10 @@ HARDWARE = "AMD Ryzen 9 9900X 12-Core Processor 63032 MB (fp64 fp16)\noneAPI 202
 SHOW_NUMBERS = True
 
 # Round to digits after decimal
-ROUND_NUMBERS = 1 
+ROUND_NUMBERS = 1
 
 # package list in graph order; arrayfire packages are added later
-PKG_NAMES = [
-    'numpy',
-    'dpnp',
-    'cupy'
-] 
+PKG_NAMES = ["numpy", "dpnp", "cupy"]
 
 # color used in graphs
 PKG_COLOR = {
@@ -29,7 +26,7 @@ PKG_COLOR = {
     "afcpu": "tab:orange",
     "afopencl": "tab:orange",
     "afcuda": "tab:orange",
-    "afoneapi": "tab:orange"
+    "afoneapi": "tab:orange",
 }
 
 # labels displayed in the graph
@@ -40,46 +37,41 @@ PKG_LABELS = {
     "afcpu": "afcpu",
     "afcuda": "afcuda",
     "afopencl": "afopencl[opencl:gpu]",
-    "afoneapi": "afoneapi[opencl:gpu]"
+    "afoneapi": "afoneapi[opencl:gpu]",
 }
 
-AFBACKENDS = [
-    'afcpu',
-    'afcuda',
-    'afopencl',
-    'afoneapi'
-]
+AFBACKENDS = ["afcpu", "afcuda", "afopencl", "afoneapi"]
 
 # Tests to be shown in graphs
 TESTS = [
-    'qr',
-    'neural_network',
-    'gemm',
-    'mandelbrot',
-    'nbody',
-    'pi',
-    'black_scholes',
-    'fft',
-    'normal',
-    'group_elementwise',
-
-    #Other tests
+    "qr",
+    "neural_network",
+    "gemm",
+    "mandelbrot",
+    "nbody",
+    "pi",
+    "black_scholes",
+    "fft",
+    "normal",
+    "group_elementwise",
+    # Other tests
     # 'svd
     # 'cholesky',
     # 'det',
     # 'norm',
     # 'uniform',
     # 'inv'
-] 
+]
+
 
 def get_benchmark_data():
     results = {}
     descriptions = {}
     with open(BENCHMARKS_JSON) as f:
         js = json.load(f)
-        for bench in js['benchmarks']:
+        for bench in js["benchmarks"]:
             test_name = bench["name"]
-            test_name = test_name[test_name.find('_') + 1:test_name.find('[')]
+            test_name = test_name[test_name.find("_") + 1 : test_name.find("[")]
 
             key = bench["param"]
             val = bench["stats"]["ops"]
@@ -88,11 +80,12 @@ def get_benchmark_data():
                 descriptions[test_name] = bench["extra_info"]["description"]
 
             if test_name not in results:
-                results[test_name] = { key : val }
+                results[test_name] = {key: val}
             else:
                 results[test_name][key] = val
 
     return results, descriptions
+
 
 def create_graph(test_name, test_results):
     names = []
@@ -107,11 +100,13 @@ def create_graph(test_name, test_results):
     plt.savefig("img/" + test_name + ".png")
     plt.close()
 
+
 def generate_individual_graphs():
     results, descriptions = get_benchmark_data()
 
     for test in results:
         create_graph(test, results[test])
+
 
 # Stores the timing results in a csv file
 def store_csv():
@@ -124,9 +119,9 @@ def store_csv():
 
     with open(BENCHMARKS_JSON) as f:
         js = json.load(f)
-        for bench in js['benchmarks']:
+        for bench in js["benchmarks"]:
             test_name = bench["name"]
-            test_name = test_name[test_name.find('_') + 1:test_name.find('[')]
+            test_name = test_name[test_name.find("_") + 1 : test_name.find("[")]
 
             pkg = bench["param"]
             time = bench["stats"]["mean"]
@@ -135,18 +130,19 @@ def store_csv():
                 data_dict["Test(seconds)"].append(test_name)
 
             results[pkg][test_name] = time
-    
+
     for test in data_dict["Test(seconds)"]:
         for pkg in PKG_LABELS.keys():
             if test in results[pkg]:
                 data_dict[pkg].append(results[pkg][test])
             else:
                 data_dict[pkg].append(np.nan)
-            
+
     df = pd.DataFrame(data_dict)
     df.to_csv("summary.csv")
 
-def generate_group_graph(test_list = None, show_numbers = False, filename = "comparison"):
+
+def generate_group_graph(test_list=None, show_numbers=False, filename="comparison"):
     results, descriptions = get_benchmark_data()
 
     width = 1 / (1 + len(PKG_NAMES))
@@ -181,7 +177,7 @@ def generate_group_graph(test_list = None, show_numbers = False, filename = "com
             else:
                 tests_values[name].append(np.nan)
 
-    fig, ax = plt.subplots(layout='constrained')
+    fig, ax = plt.subplots(layout="constrained")
 
     for name in PKG_NAMES:
         offset = width * multiplier
@@ -193,21 +189,22 @@ def generate_group_graph(test_list = None, show_numbers = False, filename = "com
 
     xlabels = []
     for test in tests:
-        xlabels.append(test  + "\n" + descriptions[test])
+        xlabels.append(test + "\n" + descriptions[test])
 
-    ax.set_xlabel('Speedup')
-    ax.set_xscale('log')
-    ax.set_title(f'Runtime Comparison\n{HARDWARE}')
+    ax.set_xlabel("Speedup")
+    ax.set_xscale("log")
+    ax.set_title(f"Runtime Comparison\n{HARDWARE}")
     ax.set_yticks(x + width, xlabels, rotation=0)
     xmin, xmax = ax.get_xlim()
     ax.set_xlim(xmin, xmax * 2)
 
-    ax.legend(loc='lower right', ncols=len(PKG_NAMES))
+    ax.legend(loc="lower right", ncols=len(PKG_NAMES))
     fig.set_figheight(8)
     fig.set_figwidth(13)
     fig.savefig(f"img/{filename}.png")
     plt.show()
-    
+
+
 def main():
     store_csv()
     for backend in AFBACKENDS:
@@ -220,6 +217,7 @@ def main():
         except Exception as e:
             print(e)
             print("No data for", backend)
+
 
 if __name__ == "__main__":
     main()

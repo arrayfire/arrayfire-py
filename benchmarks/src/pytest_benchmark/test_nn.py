@@ -8,24 +8,25 @@ ITERATIONS = 10
 BATCH_SIZE = 2560
 SAMPLES = 25600
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestNeuralNetwork:
     def test_neural_network(self, benchmark, pkgid):
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
-        nn = { "dpnp" : NeuralNetwork_dpnp , "numpy" : NeuralNetwork_numpy, \
-         "cupy" : NeuralNetwork_cupy , "arrayfire" : NeuralNetwork_af }
-        
+        nn = {
+            "dpnp": NeuralNetwork_dpnp,
+            "numpy": NeuralNetwork_numpy,
+            "cupy": NeuralNetwork_cupy,
+            "arrayfire": NeuralNetwork_af,
+        }
+
         obj = nn[pkg.__name__]()
 
-        benchmark.extra_info["description"] = f"{INPUT_SIZE}x{HIDDEN_SIZE}x{OUTPUT_SIZE} trained with {SAMPLES:.2e} samples"
-        result = benchmark.pedantic(
-            target=obj.train,
-            rounds=ROUNDS,
-            iterations=1
+        benchmark.extra_info["description"] = (
+            f"{INPUT_SIZE}x{HIDDEN_SIZE}x{OUTPUT_SIZE} trained with {SAMPLES:.2e} samples"
         )
+        result = benchmark.pedantic(target=obj.train, rounds=ROUNDS, iterations=1)
 
 
 class NeuralNetwork_numpy:
@@ -37,14 +38,16 @@ class NeuralNetwork_numpy:
 
         # Initialize weights and biases
         # He initialization (for ReLU) is often a good choice
-        self.W1 = np.random.randn(self.input_size, self.hidden_size) * np.sqrt(2. / self.input_size)
+        self.W1 = np.random.randn(self.input_size, self.hidden_size) * np.sqrt(2.0 / self.input_size)
         self.b1 = np.zeros((1, self.hidden_size))
-        self.W2 = np.random.randn(self.hidden_size, self.output_size) * np.sqrt(2. / self.hidden_size)
+        self.W2 = np.random.randn(self.hidden_size, self.output_size) * np.sqrt(2.0 / self.hidden_size)
         self.b2 = np.zeros((1, self.output_size))
 
-        self.X_train = np.random.rand(SAMPLES,INPUT_SIZE)
+        self.X_train = np.random.rand(SAMPLES, INPUT_SIZE)
         self.y_train = np.zeros((SAMPLES * OUTPUT_SIZE))
-        self.y_train[np.arange(SAMPLES) * OUTPUT_SIZE + np.floor(np.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)] = 1
+        self.y_train[
+            np.arange(SAMPLES) * OUTPUT_SIZE + np.floor(np.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
+        ] = 1
         self.y_train = self.y_train.reshape((SAMPLES, OUTPUT_SIZE))
 
     def relu(self, x):
@@ -54,7 +57,7 @@ class NeuralNetwork_numpy:
         return (x > 0).astype(float)
 
     def softmax(self, x):
-        exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True)) # Subtract max for numerical stability
+        exp_scores = np.exp(x - np.max(x, axis=1, keepdims=True))  # Subtract max for numerical stability
         return exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
 
     def forward(self, X):
@@ -69,7 +72,7 @@ class NeuralNetwork_numpy:
 
     def backward(self, X, y, output):
         # Calculate gradients for the output layer
-        error_output = output - y # Derivative of cross-entropy loss w.r.t. softmax input
+        error_output = output - y  # Derivative of cross-entropy loss w.r.t. softmax input
         dW2 = np.dot(self.a1.T, error_output)
         db2 = np.sum(error_output, axis=0, keepdims=True)
 
@@ -87,7 +90,7 @@ class NeuralNetwork_numpy:
     def train(self):
         X_train = self.X_train
         y_train = self.y_train
-    
+
         num_samples = X_train.shape[0]
 
         for epoch in range(ITERATIONS):
@@ -96,8 +99,8 @@ class NeuralNetwork_numpy:
             y_shuffled = y_train
 
             for i in range(0, num_samples, BATCH_SIZE):
-                X_batch = X_shuffled[i:i + BATCH_SIZE, :]
-                y_batch = y_shuffled[i:i + BATCH_SIZE, :]
+                X_batch = X_shuffled[i : i + BATCH_SIZE, :]
+                y_batch = y_shuffled[i : i + BATCH_SIZE, :]
 
                 # Forward pass
                 output = self.forward(X_batch)
@@ -107,7 +110,7 @@ class NeuralNetwork_numpy:
 
     def predict(self, X):
         return np.argmax(self.forward(X), axis=1)
-    
+
 
 class NeuralNetwork_dpnp:
     def __init__(self):
@@ -118,14 +121,16 @@ class NeuralNetwork_dpnp:
 
         # Initialize weights and biases
         # He initialization (for ReLU) is often a good choice
-        self.W1 = dpnp.random.randn(self.input_size, self.hidden_size) * np.sqrt(2. / self.input_size)
+        self.W1 = dpnp.random.randn(self.input_size, self.hidden_size) * np.sqrt(2.0 / self.input_size)
         self.b1 = dpnp.zeros((1, self.hidden_size))
-        self.W2 = dpnp.random.randn(self.hidden_size, self.output_size) * np.sqrt(2. / self.hidden_size)
+        self.W2 = dpnp.random.randn(self.hidden_size, self.output_size) * np.sqrt(2.0 / self.hidden_size)
         self.b2 = dpnp.zeros((1, self.output_size))
 
         self.X_train = dpnp.random.rand(SAMPLES, INPUT_SIZE)
         self.y_train = dpnp.zeros((SAMPLES * OUTPUT_SIZE))
-        self.y_train[dpnp.arange(SAMPLES) * OUTPUT_SIZE + dpnp.floor(dpnp.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)] = 1
+        self.y_train[
+            dpnp.arange(SAMPLES) * OUTPUT_SIZE + dpnp.floor(dpnp.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
+        ] = 1
         self.y_train = self.y_train.reshape((SAMPLES, OUTPUT_SIZE))
 
     def relu(self, x):
@@ -135,7 +140,7 @@ class NeuralNetwork_dpnp:
         return (x > 0).astype(float)
 
     def softmax(self, x):
-        exp_scores = dpnp.exp(x - dpnp.max(x, axis=1, keepdims=True)) # Subtract max for numerical stability
+        exp_scores = dpnp.exp(x - dpnp.max(x, axis=1, keepdims=True))  # Subtract max for numerical stability
         return exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
 
     def forward(self, X):
@@ -150,7 +155,7 @@ class NeuralNetwork_dpnp:
 
     def backward(self, X, y, output):
         # Calculate gradients for the output layer
-        error_output = output - y # Derivative of cross-entropy loss w.r.t. softmax input
+        error_output = output - y  # Derivative of cross-entropy loss w.r.t. softmax input
         dW2 = dpnp.dot(self.a1.T, error_output)
         db2 = dpnp.sum(error_output, axis=0, keepdims=True)
 
@@ -177,8 +182,8 @@ class NeuralNetwork_dpnp:
             y_shuffled = y_train
 
             for i in range(0, num_samples, BATCH_SIZE):
-                X_batch = X_shuffled[i:i + BATCH_SIZE, :]
-                y_batch = y_shuffled[i:i + BATCH_SIZE, :]
+                X_batch = X_shuffled[i : i + BATCH_SIZE, :]
+                y_batch = y_shuffled[i : i + BATCH_SIZE, :]
 
                 # Forward pass
                 output = self.forward(X_batch)
@@ -188,7 +193,8 @@ class NeuralNetwork_dpnp:
 
     def predict(self, X):
         return dpnp.argmax(self.forward(X), axis=1)
-    
+
+
 class NeuralNetwork_cupy:
     def __init__(self):
         self.input_size = INPUT_SIZE
@@ -198,14 +204,16 @@ class NeuralNetwork_cupy:
 
         # Initialize weights and biases
         # He initialization (for ReLU) is often a good choice
-        self.W1 = cupy.random.randn(self.input_size, self.hidden_size) * np.sqrt(2. / self.input_size)
+        self.W1 = cupy.random.randn(self.input_size, self.hidden_size) * np.sqrt(2.0 / self.input_size)
         self.b1 = cupy.zeros((1, self.hidden_size))
-        self.W2 = cupy.random.randn(self.hidden_size, self.output_size) * np.sqrt(2. / self.hidden_size)
+        self.W2 = cupy.random.randn(self.hidden_size, self.output_size) * np.sqrt(2.0 / self.hidden_size)
         self.b2 = cupy.zeros((1, self.output_size))
 
         self.X_train = cupy.random.rand(SAMPLES, INPUT_SIZE)
         self.y_train = cupy.zeros((SAMPLES * OUTPUT_SIZE))
-        self.y_train[cupy.arange(SAMPLES) * OUTPUT_SIZE + cupy.floor(cupy.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)] = 1
+        self.y_train[
+            cupy.arange(SAMPLES) * OUTPUT_SIZE + cupy.floor(cupy.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
+        ] = 1
         self.y_train = self.y_train.reshape((SAMPLES, OUTPUT_SIZE))
 
         cupy.cuda.runtime.deviceSynchronize()
@@ -217,7 +225,7 @@ class NeuralNetwork_cupy:
         return (x > 0).astype(float)
 
     def softmax(self, x):
-        exp_scores = cupy.exp(x - cupy.max(x, axis=1, keepdims=True)) # Subtract max for numerical stability
+        exp_scores = cupy.exp(x - cupy.max(x, axis=1, keepdims=True))  # Subtract max for numerical stability
         return exp_scores / cupy.sum(exp_scores, axis=1, keepdims=True)
 
     def forward(self, X):
@@ -232,7 +240,7 @@ class NeuralNetwork_cupy:
 
     def backward(self, X, y, output):
         # Calculate gradients for the output layer
-        error_output = output - y # Derivative of cross-entropy loss w.r.t. softmax input
+        error_output = output - y  # Derivative of cross-entropy loss w.r.t. softmax input
         dW2 = cupy.dot(self.a1.T, error_output)
         db2 = cupy.sum(error_output, axis=0, keepdims=True)
 
@@ -259,8 +267,8 @@ class NeuralNetwork_cupy:
             y_shuffled = y_train
 
             for i in range(0, num_samples, BATCH_SIZE):
-                X_batch = X_shuffled[i:i + BATCH_SIZE, :]
-                y_batch = y_shuffled[i:i + BATCH_SIZE, :]
+                X_batch = X_shuffled[i : i + BATCH_SIZE, :]
+                y_batch = y_shuffled[i : i + BATCH_SIZE, :]
 
                 # Forward pass
                 output = self.forward(X_batch)
@@ -272,7 +280,7 @@ class NeuralNetwork_cupy:
 
     def predict(self, X):
         return cupy.argmax(self.forward(X), axis=1)
-    
+
 
 class NeuralNetwork_af:
     def __init__(self):
@@ -283,14 +291,14 @@ class NeuralNetwork_af:
 
         # Initialize weights and biases
         # He initialization (for ReLU) is often a good choice
-        self.W1 = af.randn((self.input_size, self.hidden_size)) * np.sqrt(2. / self.input_size)
+        self.W1 = af.randn((self.input_size, self.hidden_size)) * np.sqrt(2.0 / self.input_size)
         self.b1 = af.constant(0, (1, self.hidden_size))
-        self.W2 = af.randn((self.hidden_size, self.output_size)) * np.sqrt(2. / self.hidden_size)
+        self.W2 = af.randn((self.hidden_size, self.output_size)) * np.sqrt(2.0 / self.hidden_size)
         self.b2 = af.constant(0, (1, self.output_size))
 
         self.X_train = af.randu((SAMPLES, INPUT_SIZE))
         self.y_train = af.constant(0, (SAMPLES, OUTPUT_SIZE))
-    
+
         self.y_train = af.constant(0, (SAMPLES, OUTPUT_SIZE))
         self.y_train[af.iota(SAMPLES), af.floor(af.randu(SAMPLES) * OUTPUT_SIZE)] = 1
 
@@ -310,7 +318,7 @@ class NeuralNetwork_af:
         return af.cast(x > 0, getattr(af, DTYPE))
 
     def softmax(self, x):
-        exp_scores = af.exp(x - af.max(x, axis=1)) # Subtract max for numerical stability
+        exp_scores = af.exp(x - af.max(x, axis=1))  # Subtract max for numerical stability
         return exp_scores / af.sum(exp_scores, axis=1)
 
     def forward(self, X):
@@ -325,7 +333,7 @@ class NeuralNetwork_af:
 
     def backward(self, X, y, output):
         # Calculate gradients for the output layer
-        error_output = output - y # Derivative of cross-entropy loss w.r.t. softmax input
+        error_output = output - y  # Derivative of cross-entropy loss w.r.t. softmax input
         dW2 = af.matmul(self.a1.T, error_output)
         db2 = af.sum(error_output, axis=0)
 
@@ -352,8 +360,8 @@ class NeuralNetwork_af:
             y_shuffled = y_train
 
             for i in range(0, num_samples, BATCH_SIZE):
-                X_batch = X_shuffled[i:i + BATCH_SIZE,:]
-                y_batch = y_shuffled[i:i + BATCH_SIZE,:]
+                X_batch = X_shuffled[i : i + BATCH_SIZE, :]
+                y_batch = y_shuffled[i : i + BATCH_SIZE, :]
 
                 # Forward pass
                 output = self.forward(X_batch)

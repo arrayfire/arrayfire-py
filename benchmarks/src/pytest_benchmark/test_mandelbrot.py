@@ -17,20 +17,16 @@ yn = NSIZE
 itermax = 20
 horizon = 2.0
 
-@pytest.mark.parametrize(
-    "pkgid", IDS, ids=IDS
-)
+
+@pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestMandelbrot:
     def test_mandelbrot(self, benchmark, pkgid):
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
 
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} grid iterated {itermax}x"
-        result = benchmark.pedantic(
-            target=FUNCS[pkg.__name__],
-            rounds=ROUNDS,
-            iterations=1
-        )
+        result = benchmark.pedantic(target=FUNCS[pkg.__name__], rounds=ROUNDS, iterations=1)
+
 
 def mandelbrot_np():
     # Adapted from
@@ -64,6 +60,7 @@ def mandelbrot_np():
         Xi, Yi = Xi[I], Yi[I]
         C = C[I]
     return Z_.T, N_.T
+
 
 def mandelbrot_dpnp():
     # Adapted from
@@ -103,6 +100,7 @@ def mandelbrot_dpnp():
 
     return Z_, N_
 
+
 def mandelbrot_cupy():
     # Adapted from
     # https://thesamovar.wordpress.com/2009/03/22/fast-fractals-with-python-and-numpy/
@@ -140,11 +138,12 @@ def mandelbrot_cupy():
     cupy.cuda.runtime.deviceSynchronize()
     return Z_, N_
 
+
 def mandelbrot_af():
     Xi = af.flat(af.range((xn, yn), axis=0, dtype=af.int64))
     Yi = af.flat(af.range((xn, yn), axis=1, dtype=af.int64))
-    X = af.iota((xn,1), tile_shape=(1,yn), dtype=af.float64) * (xmax - xmin) / (xn - 1) + xmin
-    Y = af.iota((1,yn), tile_shape=(xn,1), dtype=af.float64) * (ymax - ymin) / (yn - 1) + ymin
+    X = af.iota((xn, 1), tile_shape=(1, yn), dtype=af.float64) * (xmax - xmin) / (xn - 1) + xmin
+    Y = af.iota((1, yn), tile_shape=(xn, 1), dtype=af.float64) * (ymax - ymin) / (yn - 1) + ymin
 
     C = af.cplx(X, Y)
     N_ = af.constant(0, (xn, yn))
@@ -168,7 +167,7 @@ def mandelbrot_af():
         Z_[Xi[I] * yn + Yi[I]] = Z[I]
 
         # Keep going with those who have not diverged yet
-        I = af.logical_not(I) 
+        I = af.logical_not(I)
         Z = Z[I]
         Xi = Xi[I]
         Yi = Yi[I]
@@ -181,7 +180,5 @@ def mandelbrot_af():
     af.sync()
     return Z_, N_
 
-FUNCS = {
-    "dpnp" : mandelbrot_dpnp , "numpy" : mandelbrot_np, \
-    "cupy" : mandelbrot_cupy , "arrayfire" : mandelbrot_af
-}
+
+FUNCS = {"dpnp": mandelbrot_dpnp, "numpy": mandelbrot_np, "cupy": mandelbrot_cupy, "arrayfire": mandelbrot_af}
