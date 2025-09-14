@@ -1,61 +1,56 @@
-# arrayfire-python (WIP)
+# arrayfire-py
 <p align="center"><a href="http://arrayfire.com/"><img src="http://arrayfire.com/logos/arrayfire_logo_whitebkgnd.png" width="800"></a></p>
 
-[ArrayFire](https://github.com/arrayfire/arrayfire) is a high performance library for parallel computing with an easy-to-use API. It enables users to write scientific computing code that is portable across CUDA, OpenCL and CPU devices.  
+[ArrayFire](https://github.com/arrayfire/arrayfire) is a high performance library for parallel computing with an easy-to-use API. It enables users to write scientific computing code that is portable across CUDA, OpenCL, oneAPI and CPU devices.  
 
-This project is a **work in progress**. It is meant to provide a numpy-like Python interface for the ArrayFire C library, i.e, it provides array functionality, math operations, printing, etc. This is the front-end python library for using ArrayFire. It is currently supported on Python 3.10+.
+This project is meant is meant to provide an easy to use Python interface for the ArrayFire C library, i.e, it provides array functionality, math operations, printing, etc. This is the front-end python library for using ArrayFire. It is currently supported on Python 3.10+.
 
 Here is an example of the library at work:
 ```py
-# Set backend and device (optional: 'cuda', 'opencl', 'oneapi', 'cpu')
+import arrayfire as af
+
+# Set any backend and device (optional: 'cuda', 'opencl', 'oneapi', 'cpu')
 af.setBackend(af.BackendType.cuda)
 af.setDevice(0)
 
-# Create two 5x5 arrays on the GPU
-a = af.randu((5, 5))
-b = af.randu((5, 5))
-
-# Perform element-wise addition and matrix multiplication
-c = a + b
-d = af.matmul(a, b)
-
-# Print the result
-print(c, "Element-wise Sum")
-print(d, "Matrix Product")
+# Monte Carlo estimation of pi
+def calc_pi_device(samples):
+    # Simple, array based API
+    # Generate uniformly distributed random numers
+    x = af.randu(samples)
+    y = af.randu(samples)
+    # Supports Just In Time Compilation
+    # The following line generates a single kernel
+    within_unit_circle = (x * x + y * y) < 1
+    # Intuitive function names
+    return 4 * af.count(within_unit_circle) / samples
 ```
+Find out more in our [examples](https://github.com/arrayfire/arrayfire-py/tree/master/examples) directory or just read the [documentation](https://arrayfire.org/arrayfire-python). 
 
-# Installing
+# Prequisites and Installing
 
-**Requirement Details**
-This project is separated into 3 different parts:
+This project provides the python interface to ArrayFire, however it requires access to the ArrayFire binaries as a prequisite. The dependency chain can be separated into 3 different parts as follows:
 ```
 arrayfire-py -> arrayfire-binary-python-wrapper -> ArrayFire C Libraries
 ```
-This means that arrayfire with python each of these parts is needed:
-- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-python) is the intended User Interface that provides a numpy-like layer to execute math and array operations with ArrayFire. *** This is the preferred Interface ***
-- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is the wrapper that provides Python direct access to the ArrayFire functions in the C library. This package must have access to ArrayFire binaries.
-- [`ArrayFire C Libraries`](https://github.com/arrayfire/arrayfire) are the binaries obtained from compiling the [ArrayFire C/C++ Project](https://github.com/arrayfire/arrayfire). You obtain these easily through [installers in the ArrayFire download page](https://arrayfire.com/download/).
+To run arrayfire with python each of these parts is needed:
+- [`arrayfire-py`](https://github.com/arrayfire/arrayfire-python) is the ***intended User Interface*** that provides a numpy-like layer to execute math and array operations with ArrayFire.
+- [`arrayfire-binary-python-wrapper`](https://github.com/arrayfire/arrayfire-binary-python-wrapper) is a thin wrapper that provides Python direct access to the ArrayFire functions in the C library. This package must have access to ArrayFire binaries, either through a system-wide install, or through a pre-bundled wheel that includes binaries. 
+- [`ArrayFire C Libraries`](https://github.com/arrayfire/arrayfire) are the binaries obtained from compiling the [ArrayFire C/C++ Project](https://github.com/arrayfire/arrayfire) or more simply by downloading [installers in the ArrayFire download page](https://arrayfire.com/download/). Binaries can also be obtained as part of a pre-packaged arrayfire-binary-python-wrapper wheel.
 
-**Install the last stable version of python wrapper:**
+**Install the python wrapper with existing ArrayFire install:**
 ```sh
-pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0-py3-none-linux_x86_64.whl # install required binary wrapper with the 3.10 ArrayFire binaries included 
+# install required binary wrapper, assumes ArrayFire binaries will be installed on the system
+pip install arrayfire_binary_python_wrapper
 pip install arrayfire-py # install arrayfire python interface library
 ```
 
-**Install a pre-built wheel:**
+**Install wrapper with a pre-built wheel:**
+```sh
+# will grab a binary wrapper with included pre-built binaries
+pip install arrayfire-binary-python-wrapper -f https://repo.arrayfire.com/python/wheels/3.10.0/ 
+pip install arrayfire-py
 ```
-pip install arrayfire-py -f https://repo.arrayfire.com/python/wheels/arrayfire-python/0.1.0
-```
-
-# Building
-Building this interface is straight forward using [scikit-build-core](https://github.com/scikit-build/scikit-build-core):
-```
-python -m pip install -r dev-requirements.txt
-python -m build --wheel
-```
-
-**Note: Building this project does not require the arrayfire-binary-python-wrapper package; however, the binary wrapper is needed to run any projects with it**
-
 # Running Tests
 
 Tests are located in folder [tests](tests).
@@ -64,6 +59,16 @@ To run the tests, use:
 ```bash
 python -m pytest tests/
 ```
+
+# Building
+```
+python -m pip install -r dev-requirements.txt
+python -m build --wheel
+```
+**Note: Building this project does not require the arrayfire-binary-python-wrapper package; however, the binary wrapper is needed to run any projects with it**
+
+## Experimental Array API support
+This wrapper is exploring an experimental implementation of the [DataAPIs](https://data-apis.org) [array API](https://data-apis.org/array-api/latest) standard [in this directory](https://github.com/arrayfire/arrayfire-py/tree/master/arrayfire/array_api) with the goal of allowing ArrayFire to seamlessly interoperate with the broader Python landscape. Some portions of the standard are still unimplemented however some simpler examples are working. 
 
 # Contributing
 
