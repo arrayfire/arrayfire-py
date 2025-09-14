@@ -41,7 +41,7 @@ To run arrayfire with python each of these parts is needed:
 **Install the python wrapper with existing ArrayFire install:**
 ```sh
 # install required binary wrapper, assumes ArrayFire binaries will be installed on the system
-pip install arrayfire_binary_python_wrapper
+pip install arrayfire-binary-python-wrapper
 pip install arrayfire-py # install arrayfire python interface library
 ```
 
