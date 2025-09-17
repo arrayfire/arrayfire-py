@@ -12,7 +12,8 @@ class TestKmeans:
     def test_kmeans(self, benchmark, pkgid):
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
-        kmean_class = {"dpnp": kmeans_dpnp, "numpy": kmeans_numpy, "cupy": kmeans_cupy, "arrayfire": kmeans_af}
+        kmean_class = {"dpnp": kmeans_dpnp, "numpy": kmeans_numpy, "cupy": kmeans_cupy, "arrayfire": kmeans_af,
+        "cupynumeric": kmeans_cupynumeric}
         obj = kmean_class[pkg.__name__]()
 
         benchmark.extra_info["description"] = f"{NSAMPLES}x{NFEATURES} over {K} centers"
@@ -186,6 +187,94 @@ class kmeans_cupy:
                 break
 
         cupy.cuda.runtime.deviceSynchronize()
+        return centroids, cluster_assignments
+
+
+
+class kmeans_cupynumeric:
+    def __init__(self):
+        self.data = cupynumeric.random.random((NSAMPLES, NFEATURES))
+        self.centroid_indices = cupynumeric.random.choice(self.data.shape[0], K, replace=False)
+
+    def initialize_centroids(self):
+        """
+        Randomly initializes k centroids from the data points.
+
+        Args:
+            data (np.ndarray): The input data points (n_samples, n_features).
+            k (int): The number of clusters.
+
+        Returns:
+            np.ndarray: Initial centroids (k, n_features).
+        """
+
+        return self.data[self.centroid_indices, :]
+
+    def assign_to_clusters(self, centroids):
+        """
+        Assigns each data point to the closest centroid.
+
+        Args:
+            data (np.ndarray): The input data points (n_samples, n_features).
+            centroids (np.ndarray): The current centroids (k, n_features).
+
+        Returns:
+            np.ndarray: An array of cluster assignments for each data point (n_samples,).
+        """
+        distances = cupynumeric.sqrt(((self.data[:, cupynumeric.newaxis, :] - centroids[cupynumeric.newaxis, :, :]) ** 2).sum(axis=2))
+        cluster_assignments = cupynumeric.argmin(distances, axis=1)
+        return cluster_assignments
+
+    def update_centroids(self, cluster_assignments):
+        """
+        Recalculates the centroids based on the mean of the assigned data points.
+
+        Args:
+            data (np.ndarray): The input data points (n_samples, n_features).
+            cluster_assignments (np.ndarray): An array of cluster assignments.
+            k (int): The number of clusters.
+
+        Returns:
+            np.ndarray: Updated centroids (k, n_features).
+        """
+        new_centroids = cupynumeric.zeros((K, self.data.shape[1]))
+        for i in range(K):
+            points_in_cluster = self.data[cluster_assignments == i]
+            if len(points_in_cluster) > 0:
+                new_centroids[i] = cupynumeric.mean(points_in_cluster, axis=0)
+        return new_centroids
+
+    def kmeans(self):
+        """
+        Performs the K-Means clustering algorithm.
+
+        Args:
+            data (np.ndarray): The input data points (n_samples, n_features).
+            k (int): The number of clusters.
+            max_iterations (int): Maximum number of iterations to run the algorithm.
+            tolerance (float): The tolerance for convergence (change in centroids).
+
+        Returns:
+            tuple: A tuple containing:
+                - np.ndarray: Final centroids (k, n_features).
+                - np.ndarray: Final cluster assignments for each data point (n_samples,).
+        """
+        centroids = self.initialize_centroids()
+        cluster_assignments = None
+
+        for i in range(ITERATIONS):
+            old_centroids = cupynumeric.copy(centroids)
+
+            # E-step: Assign points to clusters
+            cluster_assignments = self.assign_to_clusters(centroids)
+
+            # M-step: Update centroids
+            centroids = self.update_centroids(cluster_assignments)
+
+            # Check for convergence
+            if cupynumeric.linalg.norm(centroids - old_centroids) < TOLERANCE:
+                break
+
         return centroids, cluster_assignments
 
 

@@ -92,6 +92,29 @@ def black_scholes_cupy(S, X, R, V, T):
 
     return (C, P)
 
+def black_scholes_cupynumeric(S, X, R, V, T):
+    # S = Underlying stock price
+    # X = Strike Price
+    # R = Risk free rate of interest
+    # V = Volatility
+    # T = Time to maturity
+    def cnd(x):
+        temp = x > 0
+        erf = lambda arr: cupynumeric.exp(-arr * arr)
+        return temp * (0.5 + erf(x / sqrt2) / 2) + (1 - temp) * (0.5 - erf((-x) / sqrt2) / 2)
+
+    d1 = cupynumeric.log(S / X)
+    d1 = d1 + (R + (V * V) * 0.5) * T
+    d1 = d1 / (V * cupynumeric.sqrt(T))
+
+    d2 = d1 - (V * cupynumeric.sqrt(T))
+    cnd_d1 = cnd(d1)
+    cnd_d2 = cnd(d2)
+
+    C = S * cnd_d1 - (X * cupynumeric.exp((-R) * T) * cnd_d2)
+    P = X * cupynumeric.exp((-R) * T) * (1 - cnd_d2) - (S * (1 - cnd_d1))
+
+    return (C, P)
 
 def black_scholes_arrayfire(S, X, R, V, T):
     def cnd(x):
@@ -137,6 +160,9 @@ def generate_arrays(pkgid, count):
     elif "numpy" == pkg:
         for i in range(count):
             arr_list.append(np.random.rand(NSIZE, NSIZE).astype(DTYPE))
+    elif "cupynumeric" == pkg:
+        for i in range(count):
+            arr_list.append(cupynumeric.random.rand(NSIZE, NSIZE).astype(DTYPE))
 
     return arr_list
 
@@ -146,4 +172,5 @@ FUNCS = {
     "numpy": black_scholes_numpy,
     "cupy": black_scholes_cupy,
     "arrayfire": black_scholes_arrayfire,
+    "cupynumeric": black_scholes_cupynumeric
 }

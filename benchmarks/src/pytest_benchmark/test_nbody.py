@@ -10,6 +10,7 @@ M = 1
 @pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestNbody:
     def test_nbody(self, benchmark, pkgid):
+        initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
         setup = lambda: (generate_arrays(pkgid), {})
 
@@ -107,5 +108,8 @@ def generate_arrays(pkgid):
         arr_list.append(M * np.ones((NSIZE, 1), dtype=DTYPE))
         for i in range(count):
             arr_list.append(np.random.rand(NSIZE, 3).astype(DTYPE))
-
+    elif "cupynumeric" == pkgname:
+        arr_list.append(M * cupynumeric.ones((NSIZE, 1), dtype=DTYPE))
+        for i in range(count):
+            arr_list.append(cupynumeric.random.rand(NSIZE, 3).astype(DTYPE))
     return (pkg, arr_list[0], arr_list[1], arr_list[2])

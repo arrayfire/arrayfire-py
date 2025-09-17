@@ -63,7 +63,12 @@ def generate_arrays(pkgid, count, posdef=False):
             if posdef:
                 x = x @ x.T + x.T @ x + eps
             arr_list.append(x)
-
+    elif "cupynumeric" == pkg:
+        for i in range(count):
+            x = cupynumeric.random.rand(NSIZE, NSIZE).astype(DTYPE)
+            if posdef:
+                x = x @ x.T + x.T @ x + eps
+            arr_list.append(x)
     return arr_list
 
 
@@ -88,6 +93,8 @@ def svd_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
+def svd_cupynumeric(arr):
+    return cupynumeric.linalg.svd(arr)
 
 def qr_np(arr):
     return np.linalg.qr(arr)
@@ -110,6 +117,8 @@ def qr_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
+def qr_cupynumeric(arr):
+    return cupynumeric.linalg.qr(arr)
 
 def cholesky_np(arr):
     return np.linalg.cholesky(arr)
@@ -131,11 +140,8 @@ def cholesky_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
-
-def qr_cupy(arr):
-    x = cupy.linalg.qr(arr)
-    cupy.cuda.runtime.deviceSynchronize()
-    return x
+def cholesky_cupynumeric(arr):
+    return cupynumeric.linalg.cholesky(arr)
 
 
 def inv_np(arr):
@@ -147,7 +153,7 @@ def inv_dpnp(arr):
 
 
 def inv_af(arr):
-    x, info = af.inverse(arr)
+    x = af.inverse(arr)
     af.eval(x)
     af.sync()
     return x
@@ -158,6 +164,8 @@ def inv_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
+def inv_cupynumeric(arr):
+    return cupynumeric.linalg.inv(arr)
 
 def det_np(arr):
     return np.linalg.det(arr)
@@ -178,6 +186,8 @@ def det_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
+def det_cupynumeric(arr):
+    return cupynumeric.linalg.det(arr)
 
 def norm_np(arr):
     return np.linalg.norm(arr)
@@ -198,6 +208,8 @@ def norm_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return x
 
+def norm_cupynumeric(arr):
+    return cupynumeric.linalg.norm(arr)
 
 @pytest.mark.parametrize("pkgid", IDS, ids=IDS)
 class TestLinalg:
@@ -208,7 +220,8 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        CHOLESKY_FUNCS = {"numpy": cholesky_np, "cupy": cholesky_cupy, "arrayfire": cholesky_af, "dpnp": cholesky_dpnp}
+        CHOLESKY_FUNCS = {"numpy": cholesky_np, "cupy": cholesky_cupy, "arrayfire": cholesky_af, "dpnp": cholesky_dpnp, 
+            "cupynumeric": cholesky_cupynumeric }
         result = benchmark.pedantic(
             target=CHOLESKY_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS
         )
@@ -220,7 +233,8 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        SVD_FUNCS = {"numpy": svd_np, "cupy": svd_cupy, "arrayfire": svd_af, "dpnp": svd_dpnp}
+        SVD_FUNCS = {"numpy": svd_np, "cupy": svd_cupy, "arrayfire": svd_af, "dpnp": svd_dpnp, 
+            "cupynumeric": svd_cupynumeric }
         result = benchmark.pedantic(target=SVD_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
 
     def test_qr(self, benchmark, pkgid):
@@ -230,7 +244,8 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        QR_FUNCS = {"numpy": qr_np, "cupy": qr_cupy, "arrayfire": qr_af, "dpnp": qr_dpnp}
+        QR_FUNCS = {"numpy": qr_np, "cupy": qr_cupy, "arrayfire": qr_af, "dpnp": qr_dpnp, 
+            "cupynumeric": qr_cupynumeric }
         result = benchmark.pedantic(target=QR_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
 
     def test_inv(self, benchmark, pkgid):
@@ -240,7 +255,8 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        INV_FUNCS = {"numpy": inv_np, "cupy": inv_cupy, "arrayfire": inv_af, "dpnp": inv_dpnp}
+        INV_FUNCS = {"numpy": inv_np, "cupy": inv_cupy, "arrayfire": inv_af, "dpnp": inv_dpnp, 
+            "cupynumeric": inv_cupynumeric }
         result = benchmark.pedantic(target=INV_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
 
     def test_det(self, benchmark, pkgid):
@@ -250,7 +266,8 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        DET_FUNCS = {"numpy": det_np, "cupy": det_cupy, "arrayfire": det_af, "dpnp": det_dpnp}
+        DET_FUNCS = {"numpy": det_np, "cupy": det_cupy, "arrayfire": det_af, "dpnp": det_dpnp, 
+            "cupynumeric": det_cupynumeric }
         result = benchmark.pedantic(target=DET_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
 
     def test_norm(self, benchmark, pkgid):
@@ -260,5 +277,6 @@ class TestLinalg:
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         pkg = PKGDICT[pkgid]
 
-        NORM_FUNCS = {"numpy": norm_np, "cupy": norm_cupy, "arrayfire": norm_af, "dpnp": norm_dpnp}
+        NORM_FUNCS = {"numpy": norm_np, "cupy": norm_cupy, "arrayfire": norm_af, "dpnp": norm_dpnp, 
+            "cupynumeric": norm_cupynumeric }
         result = benchmark.pedantic(target=NORM_FUNCS[pkg.__name__], setup=setup, rounds=ROUNDS, iterations=ITERATIONS)
