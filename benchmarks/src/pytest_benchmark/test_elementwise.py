@@ -52,7 +52,7 @@ class TestElementwise:
             cupy.cuda.runtime.deviceSynchronize()
             return x
 
-        GROUP_FUNCS = {"numpy": func, "cupy": func_cupy, "arrayfire": func_af, "dpnp": func}
+        GROUP_FUNCS = {"numpy": func, "cupy": func_cupy, "arrayfire": func_af, "dpnp": func, "cupynumeric": func}
 
         benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} Matrix"
         result = benchmark.pedantic(
@@ -312,5 +312,8 @@ def generate_arrays(pkgid, count):
     elif "numpy" == pkg:
         for i in range(count):
             arr_list.append(np.random.rand(NSIZE, NSIZE).astype(DTYPE))
+    elif "cupynumeric" == pkg:
+        for i in range(count):
+            arr_list.append(cupynumeric.random.rand(NSIZE, NSIZE).astype(DTYPE))
 
     return arr_list

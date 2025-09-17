@@ -29,6 +29,7 @@ import gc
 import math
 
 import cupy
+import cupynumeric
 import dpctl
 import dpnp
 import numpy as np
@@ -38,19 +39,19 @@ import arrayfire as af
 
 # modify parameters for most benchmarks
 ROUNDS = 30
-NSIZE = 2**13
+NSIZE = 2**11
 NNSIZE = NSIZE**2
 DTYPE = "float32"
 
 # comment a line to remove that package from testing
 PKGDICT = {
-    "dpnp": dpnp,
     "numpy": np,
     "cupy": cupy,
     # "afcpu": af,
     "afopencl": af,
-    "afcuda": af,
     "afoneapi": af,
+    "dpnp": dpnp,
+    "cupynumeric": cupynumeric,
 }
 
 PKGS = []
@@ -66,11 +67,13 @@ def initialize_package(PKG_ID):
     pkg = PKGDICT[PKG_ID]
 
     try:
+        # Free all unused memory
+        gc.collect()
         af.device_gc()
         mempool = cupy.get_default_memory_pool()
         mempool.free_all_blocks()
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
     if PKG_ID == "afcpu":
         af.set_backend(af.BackendType.cpu)
@@ -98,8 +101,7 @@ def initialize_package(PKG_ID):
         print(cupy.cuda.Device())
         mempool = cupy.get_default_memory_pool()
         mempool.free_all_blocks()
+    elif PKG_ID == "cupynumeric":
+        pass
     else:
         raise NotImplementedError()
-
-    # Free all unused memory
-    gc.collect()

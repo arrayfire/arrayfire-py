@@ -81,6 +81,9 @@ def generate_arrays(pkgid, count):
         np.random.rand(1)
         for i in range(count):
             arr_list.append(np.random.rand(NSIZE, NSIZE).astype(DTYPE))
+    elif "cupynumeric" == pkg:
+        for i in range(count):
+            arr_list.append(cupynumeric.random.rand(NSIZE, NSIZE).astype(DTYPE))
 
     return arr_list
 
@@ -117,5 +120,7 @@ def gemm_cupy(A, B, C):
     cupy.cuda.runtime.deviceSynchronize()
     return C
 
+def gemm_cupynumeric(A, B, C):
+    return alpha * cupynumeric.matmul(A, B) + beta * C
 
-FUNCS = {"numpy": gemm_np, "cupy": gemm_cupy, "arrayfire": gemm_af, "dpnp": gemm_dpnp}
+FUNCS = {"numpy": gemm_np, "cupy": gemm_cupy, "arrayfire": gemm_af, "dpnp": gemm_dpnp, "cupynumeric": gemm_cupynumeric}

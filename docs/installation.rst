@@ -5,16 +5,31 @@ To use ArrayFire-Python you require three things:
 
 .. list-table::
 
-    * - :literal:`arrayfire-python` package
-      - You may install it through pip :literal:`pip install arrayfire-python` or from `building arrayfire-python wheel <../README.md>`_
+    * - :literal:`arrayfire-py` package
+        - It is the intended User Interface that provides a numpy-like layer to execute math and array operations with ArrayFire. 
     
     * - :literal:`arrayfire-binary-python-wrapper`
-      - You may download and install through pip :literal:`pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0 -f https://arrayfire.com/python/binaries` which will come with ArrayFire C Libraries as well. You may also `build from source <https://github.com/arrayfire/arrayfire-binary-python-wrapper>`_ without the C Libraries.
+        - It is a thin wrapper that provides Python direct access to the ArrayFire functions in the C library. This package must have access to ArrayFire binaries, either through a system-wide install, or through a pre-bundled wheel that includes binaries.
 
     * - :literal:`ArrayFire C/C++ Libraries`
-      - If you build the binary wrapper from source or wish to program with ArrayFire in C/C++, navigate to https://arrayfire.com/download and download the appropriate installer for the target architecture and operating system. Although ArrayFire can be `built from source <https://github.com/arrayfire/arrayfire-python/tree/master?tab=readme-ov-file#arrayfire-python-bindings>`_, the installers conveniently package necessary dependencies.
+        - They are the binaries obtained from compiling the ArrayFire C/C++ Project or more simply by downloading installers in the ArrayFire download page. Binaries can also be obtained as part of a pre-packaged arrayfire-binary-python-wrapper wheel.
 
 Below we detail more on the ArrayFire C Libraries installation procedure. Install the latest device drivers before using ArrayFire. Drivers and runtimes should be downloaded and installed from each device vendor's website.
+
+Install Instructions for ArrayFire Python
+###############################################
+
+arrayfire-py
+*************
+You may install it through pip :literal:`pip install arrayfire-python` or from `building arrayfire-py wheel <../README.md>`_. By installing through pip, you will automatically download the latest arrayfire-binary-python-wrapper containing the ArrayFire C Libraries.
+
+arrayfire-binary-python-wrapper
+********************************
+
+If you wish to use some specific version of ArrayFire, you can must download a specifc version of t he arrayfire-binary-python-wrapper.
+You may download one and install through pip which will come with ArrayFire C Libraries: :literal:`pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0 -f https://arrayfire.com/python/binaries`.
+You may also `build from source <https://github.com/arrayfire/arrayfire-binary-python-wrapper>`_ without the C Libraries and then install the ArrayFire Binaries via the ArrayFire Installers.
+
 
 Install Instructions for ArrayFire C Libraries
 ###############################################

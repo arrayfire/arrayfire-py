@@ -47,5 +47,11 @@ def calc_pi_dpnp(samples):
     y = dpnp.random.rand(samples).astype(dpnp.float32)
     return 4.0 * dpnp.sum(in_circle(x, y)) / samples
 
+def calc_pi_cupynumeric(samples):
+    x = cupynumeric.random.rand(samples).astype(cupynumeric.float32)
+    y = cupynumeric.random.rand(samples).astype(cupynumeric.float32)
+    return 4.0 * cupynumeric.sum(in_circle(x, y)) / samples
 
-FUNCS = {"dpnp": calc_pi_dpnp, "numpy": calc_pi_numpy, "cupy": calc_pi_cupy, "arrayfire": calc_pi_af}
+
+FUNCS = {"dpnp": calc_pi_dpnp, "numpy": calc_pi_numpy, "cupy": calc_pi_cupy, "arrayfire": calc_pi_af,
+ "cupynumeric": calc_pi_cupynumeric }

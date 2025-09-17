@@ -50,6 +50,9 @@ def generate_arrays(pkgid, count):
     elif "numpy" == pkg:
         for i in range(count):
             arr_list.append(np.random.rand(NSIZE, NSIZE).astype(DTYPE))
+    elif "cupynumeric" == pkg:
+        for i in range(count):
+            arr_list.append(cupynumeric.random.rand(NSIZE, NSIZE).astype(DTYPE))
 
     return arr_list
 
@@ -86,5 +89,7 @@ def fft_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return res
 
+def fft_cupynumeric(arr):
+    return cupynumeric.fft.fft(arr)
 
-FUNCS = {"dpnp": fft_dpnp, "numpy": fft_np, "cupy": fft_cupy, "arrayfire": fft_af}
+FUNCS = {"dpnp": fft_dpnp, "numpy": fft_np, "cupy": fft_cupy, "arrayfire": fft_af, "cupynumeric": fft_cupynumeric}

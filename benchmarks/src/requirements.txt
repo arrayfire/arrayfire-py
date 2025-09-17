@@ -2,6 +2,7 @@
 dpnp
 numpy
 cupy-cuda12x
+nvidia-cupynumeric
 pytest
 pytest-benchmark
 matplotlib

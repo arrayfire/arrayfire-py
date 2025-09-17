@@ -19,6 +19,7 @@ class TestNeuralNetwork:
             "numpy": NeuralNetwork_numpy,
             "cupy": NeuralNetwork_cupy,
             "arrayfire": NeuralNetwork_af,
+            "cupynumeric": NeuralNetwork_cupynumeric,
         }
 
         obj = nn[pkg.__name__]()
@@ -281,6 +282,87 @@ class NeuralNetwork_cupy:
     def predict(self, X):
         return cupy.argmax(self.forward(X), axis=1)
 
+class NeuralNetwork_cupynumeric:
+    def __init__(self):
+        self.input_size = INPUT_SIZE
+        self.hidden_size = HIDDEN_SIZE
+        self.output_size = OUTPUT_SIZE
+        self.learning_rate = LEARNING_RATE
+
+        # Initialize weights and biases
+        # He initialization (for ReLU) is often a good choice
+        self.W1 = cupynumeric.random.randn(self.input_size, self.hidden_size) * cupynumeric.sqrt(2.0 / self.input_size)
+        self.b1 = cupynumeric.zeros((1, self.hidden_size))
+        self.W2 = cupynumeric.random.randn(self.hidden_size, self.output_size) * cupynumeric.sqrt(2.0 / self.hidden_size)
+        self.b2 = cupynumeric.zeros((1, self.output_size))
+
+        self.X_train = cupynumeric.random.rand(SAMPLES, INPUT_SIZE)
+        self.y_train = cupynumeric.zeros((SAMPLES * OUTPUT_SIZE))
+        self.y_train[
+            cupynumeric.arange(SAMPLES) * OUTPUT_SIZE + cupynumeric.floor(cupynumeric.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
+        ] = 1
+        self.y_train = self.y_train.reshape((SAMPLES, OUTPUT_SIZE))
+
+    def relu(self, x):
+        return cupynumeric.maximum(0, x)
+
+    def relu_derivative(self, x):
+        return (x > 0).astype(float)
+
+    def softmax(self, x):
+        exp_scores = cupynumeric.exp(x - cupynumeric.max(x, axis=1, keepdims=True))  # Subtract max for numerical stability
+        return exp_scores / cupynumeric.sum(exp_scores, axis=1, keepdims=True)
+
+    def forward(self, X):
+        # Hidden layer
+        self.z1 = cupynumeric.dot(X, self.W1) + self.b1
+        self.a1 = self.relu(self.z1)
+
+        # Output layer
+        self.z2 = cupynumeric.dot(self.a1, self.W2) + self.b2
+        self.a2 = self.softmax(self.z2)
+        return self.a2
+
+    def backward(self, X, y, output):
+        # Calculate gradients for the output layer
+        error_output = output - y  # Derivative of cross-entropy loss w.r.t. softmax input
+        dW2 = cupynumeric.dot(self.a1.T, error_output)
+        db2 = cupynumeric.sum(error_output, axis=0, keepdims=True)
+
+        # Calculate gradients for the hidden layer
+        error_hidden = cupynumeric.dot(error_output, self.W2.T) * self.relu_derivative(self.z1)
+        dW1 = cupynumeric.dot(X.T, error_hidden)
+        db1 = cupynumeric.sum(error_hidden, axis=0, keepdims=True)
+
+        # Update weights and biases
+        self.W2 -= self.learning_rate * dW2
+        self.b2 -= self.learning_rate * db2
+        self.W1 -= self.learning_rate * dW1
+        self.b1 -= self.learning_rate * db1
+
+    def train(self):
+        X_train = self.X_train
+        y_train = self.y_train
+
+        num_samples = X_train.shape[0]
+
+        for epoch in range(ITERATIONS):
+            # Shuffle data for each epoch
+            X_shuffled = X_train
+            y_shuffled = y_train
+
+            for i in range(0, num_samples, BATCH_SIZE):
+                X_batch = X_shuffled[i : i + BATCH_SIZE, :]
+                y_batch = y_shuffled[i : i + BATCH_SIZE, :]
+
+                # Forward pass
+                output = self.forward(X_batch)
+
+                # Backward pass and update weights
+                self.backward(X_batch, y_batch, output)
+
+    def predict(self, X):
+        return cupynumeric.argmax(self.forward(X), axis=1)
 
 class NeuralNetwork_af:
     def __init__(self):
@@ -299,8 +381,7 @@ class NeuralNetwork_af:
         self.X_train = af.randu((SAMPLES, INPUT_SIZE))
         self.y_train = af.constant(0, (SAMPLES, OUTPUT_SIZE))
 
-        self.y_train = af.constant(0, (SAMPLES, OUTPUT_SIZE))
-        self.y_train[af.iota(SAMPLES), af.floor(af.randu(SAMPLES) * OUTPUT_SIZE)] = 1
+        self.y_train[af.iota(SAMPLES) * OUTPUT_SIZE + af.floor(af.randu(SAMPLES) * OUTPUT_SIZE)] = 1
 
         af.eval(self.X_train)
         af.eval(self.y_train)

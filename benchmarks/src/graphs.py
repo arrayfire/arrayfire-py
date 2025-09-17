@@ -7,7 +7,7 @@ import pandas as pd
 BENCHMARKS_JSON = "results.json"
 
 # Hardware details shown in title
-HARDWARE = "AMD Ryzen 9 9900X 12-Core Processor 63032 MB (fp64 fp16)\noneAPI 2025.1.3 Intel(R) OpenCL Graphics: Intel(R) Arc(TM) B580 Graphics, 11873 MB (fp64 fp16)"
+HARDWARE = "Intel Xeon Gold 5315Y (8 Processors) @ 3.201GHz 63032 MB\noneAPI 2025.2.1 NVIDIA RTX A4000, 16222 MB, CUDA 12.8 Compute 8.6"
 
 # Show speedup in graph
 SHOW_NUMBERS = True
@@ -16,12 +16,13 @@ SHOW_NUMBERS = True
 ROUND_NUMBERS = 1
 
 # package list in graph order; arrayfire packages are added later
-PKG_NAMES = ["numpy", "dpnp", "cupy"]
+PKG_NAMES = ["numpy", "dpnp", "cupy", "cupynumeric"]
 
 # color used in graphs
 PKG_COLOR = {
     "numpy": "tab:blue",
     "cupy": "tab:green",
+    "cupynumeric": "green",
     "dpnp": "tab:red",
     "afcpu": "tab:orange",
     "afopencl": "tab:orange",
@@ -32,8 +33,9 @@ PKG_COLOR = {
 # labels displayed in the graph
 PKG_LABELS = {
     "numpy": "numpy[cpu]",
-    "dpnp": "dpnp[level_zero:gpu]",
+    "dpnp": "dpnp[cuda:gpu]",
     "cupy": "cupy",
+    "cupynumeric": "cupynumeric",
     "afcpu": "afcpu",
     "afcuda": "afcuda",
     "afopencl": "afopencl[opencl:gpu]",
@@ -44,16 +46,16 @@ AFBACKENDS = ["afcpu", "afcuda", "afopencl", "afoneapi"]
 
 # Tests to be shown in graphs
 TESTS = [
-    "qr",
+    "group_elementwise",
     "neural_network",
-    "gemm",
+    "black_scholes",
     "mandelbrot",
     "nbody",
     "pi",
-    "black_scholes",
-    "fft",
     "normal",
-    "group_elementwise",
+    "gemm",
+    "fft",
+    "qr",
     # Other tests
     # 'svd
     # 'cholesky',
@@ -63,6 +65,25 @@ TESTS = [
     # 'inv'
 ]
 
+# Reverse list so it appears in order on graph
+TESTS.reverse()
+
+TESTS_GRAPH_NAME = {
+    "group_elementwise": "Group_elementwise (JIT)",
+    "neural_network": "Neural Network (JIT)",
+    "black_scholes": "Black Scholes (JIT)",
+    "mandelbrot": "Mandelbrot (JIT)",
+    "nbody": "Nbody (JIT)",
+    "pi": "Montecarlo Pi (JIT)",
+    "normal": "Normal Distribution",
+    "gemm": "General Matrix Multiplication",
+    "fft": "2D FFT",
+    "qr": "QR Decomposition",
+}
+
+for name in TESTS:
+    if name not in TESTS_GRAPH_NAME:
+        TESTS_GRAPH_NAME[name] = name
 
 def get_benchmark_data():
     results = {}
@@ -189,7 +210,7 @@ def generate_group_graph(test_list=None, show_numbers=False, filename="compariso
 
     xlabels = []
     for test in tests:
-        xlabels.append(test + "\n" + descriptions[test])
+        xlabels.append(TESTS_GRAPH_NAME[test] + "\n" + descriptions[test])
 
     ax.set_xlabel("Speedup")
     ax.set_xscale("log")

@@ -12,8 +12,8 @@ xmin = -2
 xmax = 2
 ymin = -2
 ymax = 2
-xn = NSIZE
-yn = NSIZE
+xn = int(NSIZE / 2)
+yn = int(NSIZE / 2)
 itermax = 20
 horizon = 2.0
 
@@ -24,7 +24,7 @@ class TestMandelbrot:
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
 
-        benchmark.extra_info["description"] = f"{NSIZE}x{NSIZE} grid iterated {itermax}x"
+        benchmark.extra_info["description"] = f"{xn}x{yn} grid iterated {itermax}x"
         result = benchmark.pedantic(target=FUNCS[pkg.__name__], rounds=ROUNDS, iterations=1)
 
 
@@ -132,12 +132,49 @@ def mandelbrot_cupy():
         Xi, Yi = Xi[I], Yi[I]
         C = C[I]
 
+        if i % 2 == 1:
+            mempool = cupy.get_default_memory_pool()
+            mempool.free_all_blocks()
+
     Z_ = Z_.T
     N_ = N_.T
 
     cupy.cuda.runtime.deviceSynchronize()
     return Z_, N_
 
+def mandelbrot_cupynumeric():
+    # Adapted from
+    # https://thesamovar.wordpress.com/2009/03/22/fast-fractals-with-python-and-numpy/
+    Xi, Yi = np.mgrid[0:xn, 0:yn]
+    X = cupynumeric.linspace(xmin, xmax, xn, dtype=cupynumeric.float64)[Xi]
+    Y = cupynumeric.linspace(ymin, ymax, yn, dtype=cupynumeric.float64)[Yi]
+    C = X + Y * 1j
+
+    N_ = cupynumeric.zeros(C.shape, dtype=cupynumeric.int64)
+    Z_ = cupynumeric.zeros(C.shape, dtype=cupynumeric.complex128)
+    Xi.shape = Yi.shape = C.shape = xn * yn
+
+    Z = cupynumeric.zeros(C.shape, cupynumeric.complex128)
+    for i in range(itermax):
+        if not len(Z):
+            break
+
+        # Compute for relevant points only
+        cupynumeric.multiply(Z, Z, Z)
+        cupynumeric.add(Z, C, Z)
+
+        # Failed convergence
+        I = abs(Z) > horizon  # noqa: E741 math variable
+        N_[Xi[I], Yi[I]] = i + 1
+        Z_[Xi[I], Yi[I]] = Z[I]
+
+        # Keep going with those who have not diverged yet
+        cupynumeric.logical_not(I, I)  # np.negative(I, I) not working any longer
+        Z = Z[I]
+        Xi, Yi = Xi[I], Yi[I]
+        C = C[I]
+
+    return Z_.T, N_.T
 
 def mandelbrot_af():
     Xi = af.flat(af.range((xn, yn), axis=0, dtype=af.int64))
@@ -173,6 +210,9 @@ def mandelbrot_af():
         Yi = Yi[I]
         C = C[I]
 
+        if i % 2 == 1:
+            af.device_gc()
+
     Z_ = Z_.T
     N_ = N_.T
     af.eval(Z_)
@@ -181,4 +221,4 @@ def mandelbrot_af():
     return Z_, N_
 
 
-FUNCS = {"dpnp": mandelbrot_dpnp, "numpy": mandelbrot_np, "cupy": mandelbrot_cupy, "arrayfire": mandelbrot_af}
+FUNCS = {"dpnp": mandelbrot_dpnp, "numpy": mandelbrot_np, "cupy": mandelbrot_cupy, "arrayfire": mandelbrot_af, "cupynumeric" : mandelbrot_cupynumeric}
