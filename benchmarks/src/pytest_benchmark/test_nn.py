@@ -282,6 +282,7 @@ class NeuralNetwork_cupy:
     def predict(self, X):
         return cupy.argmax(self.forward(X), axis=1)
 
+
 class NeuralNetwork_cupynumeric:
     def __init__(self):
         self.input_size = INPUT_SIZE
@@ -293,13 +294,16 @@ class NeuralNetwork_cupynumeric:
         # He initialization (for ReLU) is often a good choice
         self.W1 = cupynumeric.random.randn(self.input_size, self.hidden_size) * cupynumeric.sqrt(2.0 / self.input_size)
         self.b1 = cupynumeric.zeros((1, self.hidden_size))
-        self.W2 = cupynumeric.random.randn(self.hidden_size, self.output_size) * cupynumeric.sqrt(2.0 / self.hidden_size)
+        self.W2 = cupynumeric.random.randn(self.hidden_size, self.output_size) * cupynumeric.sqrt(
+            2.0 / self.hidden_size
+        )
         self.b2 = cupynumeric.zeros((1, self.output_size))
 
         self.X_train = cupynumeric.random.rand(SAMPLES, INPUT_SIZE)
         self.y_train = cupynumeric.zeros((SAMPLES * OUTPUT_SIZE))
         self.y_train[
-            cupynumeric.arange(SAMPLES) * OUTPUT_SIZE + cupynumeric.floor(cupynumeric.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
+            cupynumeric.arange(SAMPLES) * OUTPUT_SIZE
+            + cupynumeric.floor(cupynumeric.random.rand(SAMPLES) * OUTPUT_SIZE).astype(int)
         ] = 1
         self.y_train = self.y_train.reshape((SAMPLES, OUTPUT_SIZE))
 
@@ -310,7 +314,9 @@ class NeuralNetwork_cupynumeric:
         return (x > 0).astype(float)
 
     def softmax(self, x):
-        exp_scores = cupynumeric.exp(x - cupynumeric.max(x, axis=1, keepdims=True))  # Subtract max for numerical stability
+        exp_scores = cupynumeric.exp(
+            x - cupynumeric.max(x, axis=1, keepdims=True)
+        )  # Subtract max for numerical stability
         return exp_scores / cupynumeric.sum(exp_scores, axis=1, keepdims=True)
 
     def forward(self, X):
@@ -363,6 +369,7 @@ class NeuralNetwork_cupynumeric:
 
     def predict(self, X):
         return cupynumeric.argmax(self.forward(X), axis=1)
+
 
 class NeuralNetwork_af:
     def __init__(self):

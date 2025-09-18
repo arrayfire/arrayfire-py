@@ -92,6 +92,7 @@ def black_scholes_cupy(S, X, R, V, T):
 
     return (C, P)
 
+
 def black_scholes_cupynumeric(S, X, R, V, T):
     # S = Underlying stock price
     # X = Strike Price
@@ -115,6 +116,7 @@ def black_scholes_cupynumeric(S, X, R, V, T):
     P = X * cupynumeric.exp((-R) * T) * (1 - cnd_d2) - (S * (1 - cnd_d1))
 
     return (C, P)
+
 
 def black_scholes_arrayfire(S, X, R, V, T):
     def cnd(x):
@@ -172,5 +174,5 @@ FUNCS = {
     "numpy": black_scholes_numpy,
     "cupy": black_scholes_cupy,
     "arrayfire": black_scholes_arrayfire,
-    "cupynumeric": black_scholes_cupynumeric
+    "cupynumeric": black_scholes_cupynumeric,
 }
