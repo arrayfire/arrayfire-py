@@ -26,7 +26,7 @@ You may install it through pip :literal:`pip install arrayfire-python` or from `
 arrayfire-binary-python-wrapper
 ********************************
 
-If you wish to use some specific version of ArrayFire, you can must download a specifc version of t he arrayfire-binary-python-wrapper.
+If you wish to use some specific version of ArrayFire, you can must download a specifc version of the arrayfire-binary-python-wrapper.
 You may download one and install through pip which will come with ArrayFire C Libraries: :literal:`pip install arrayfire_binary_python_wrapper-0.8.0+af3.10.0 -f https://arrayfire.com/python/binaries`.
 You may also `build from source <https://github.com/arrayfire/arrayfire-binary-python-wrapper>`_ without the C Libraries and then install the ArrayFire Binaries via the ArrayFire Installers.
 
