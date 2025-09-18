@@ -10,8 +10,8 @@ Here is an example of the library at work:
 import arrayfire as af
 
 # Set any backend and device (optional: 'cuda', 'opencl', 'oneapi', 'cpu')
-af.setBackend(af.BackendType.cuda)
-af.setDevice(0)
+af.set_backend(af.BackendType.cuda)
+af.set_device(0)
 
 # Monte Carlo estimation of pi
 def calc_pi_device(samples):
