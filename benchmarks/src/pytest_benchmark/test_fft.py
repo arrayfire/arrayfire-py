@@ -89,7 +89,9 @@ def fft_cupy(arr):
     cupy.cuda.runtime.deviceSynchronize()
     return res
 
+
 def fft_cupynumeric(arr):
     return cupynumeric.fft.fft(arr)
+
 
 FUNCS = {"dpnp": fft_dpnp, "numpy": fft_np, "cupy": fft_cupy, "arrayfire": fft_af, "cupynumeric": fft_cupynumeric}

@@ -12,8 +12,13 @@ class TestKmeans:
     def test_kmeans(self, benchmark, pkgid):
         initialize_package(pkgid)
         pkg = PKGDICT[pkgid]
-        kmean_class = {"dpnp": kmeans_dpnp, "numpy": kmeans_numpy, "cupy": kmeans_cupy, "arrayfire": kmeans_af,
-        "cupynumeric": kmeans_cupynumeric}
+        kmean_class = {
+            "dpnp": kmeans_dpnp,
+            "numpy": kmeans_numpy,
+            "cupy": kmeans_cupy,
+            "arrayfire": kmeans_af,
+            "cupynumeric": kmeans_cupynumeric,
+        }
         obj = kmean_class[pkg.__name__]()
 
         benchmark.extra_info["description"] = f"{NSAMPLES}x{NFEATURES} over {K} centers"
@@ -190,7 +195,6 @@ class kmeans_cupy:
         return centroids, cluster_assignments
 
 
-
 class kmeans_cupynumeric:
     def __init__(self):
         self.data = cupynumeric.random.random((NSAMPLES, NFEATURES))
@@ -221,7 +225,9 @@ class kmeans_cupynumeric:
         Returns:
             np.ndarray: An array of cluster assignments for each data point (n_samples,).
         """
-        distances = cupynumeric.sqrt(((self.data[:, cupynumeric.newaxis, :] - centroids[cupynumeric.newaxis, :, :]) ** 2).sum(axis=2))
+        distances = cupynumeric.sqrt(
+            ((self.data[:, cupynumeric.newaxis, :] - centroids[cupynumeric.newaxis, :, :]) ** 2).sum(axis=2)
+        )
         cluster_assignments = cupynumeric.argmin(distances, axis=1)
         return cluster_assignments
 

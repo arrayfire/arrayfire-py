@@ -85,6 +85,7 @@ for name in TESTS:
     if name not in TESTS_GRAPH_NAME:
         TESTS_GRAPH_NAME[name] = name
 
+
 def get_benchmark_data():
     results = {}
     descriptions = {}

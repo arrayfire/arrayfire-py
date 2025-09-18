@@ -142,6 +142,7 @@ def mandelbrot_cupy():
     cupy.cuda.runtime.deviceSynchronize()
     return Z_, N_
 
+
 def mandelbrot_cupynumeric():
     # Adapted from
     # https://thesamovar.wordpress.com/2009/03/22/fast-fractals-with-python-and-numpy/
@@ -175,6 +176,7 @@ def mandelbrot_cupynumeric():
         C = C[I]
 
     return Z_.T, N_.T
+
 
 def mandelbrot_af():
     Xi = af.flat(af.range((xn, yn), axis=0, dtype=af.int64))
@@ -221,4 +223,10 @@ def mandelbrot_af():
     return Z_, N_
 
 
-FUNCS = {"dpnp": mandelbrot_dpnp, "numpy": mandelbrot_np, "cupy": mandelbrot_cupy, "arrayfire": mandelbrot_af, "cupynumeric" : mandelbrot_cupynumeric}
+FUNCS = {
+    "dpnp": mandelbrot_dpnp,
+    "numpy": mandelbrot_np,
+    "cupy": mandelbrot_cupy,
+    "arrayfire": mandelbrot_af,
+    "cupynumeric": mandelbrot_cupynumeric,
+}
