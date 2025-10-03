@@ -25,7 +25,7 @@ def calc_pi_device(samples):
     # Intuitive function names
     return 4 * af.count(within_unit_circle) / samples
 ```
-Find out more in our [examples](https://github.com/arrayfire/arrayfire-py/tree/master/examples) directory or just read the [documentation](https://arrayfire.org/arrayfire-python). 
+Find out more in our [examples](https://github.com/arrayfire/arrayfire-py/tree/master/examples) directory or just read the [documentation](https://arrayfire.org/arrayfire-py/overview.html). 
 
 # Prequisites and Installing
 
