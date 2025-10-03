@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="./" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Getting Started | ArrayFire  documentation</title>
+<meta content="Getting Started | ArrayFire  documentation" property="og:title"/>
+<meta content="Getting Started | ArrayFire  documentation" name="twitter:title"/>
+<link href="_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
+<link href="_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx_collapse.css?v=226d88b4" rel="stylesheet" type="text/css"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="configuringarrayfireenvironment.html" rel="next" title="Configuring ArrayFire Environment"/>
+<link href="installation.html" rel="prev" title="ArrayFire Installer"/>
+<script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="index.html">
+<img alt="Logo" class="mr-2 hidden dark:block" height="24" src="_static/arrayfire_icon.png" width="24"/>
+<img alt="Logo" class="mr-2 dark:hidden" height="24" src="_static/arrayfire_icon.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">ArrayFire  documentation</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center space-x-1">
+<button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'" aria-label="Color theme switcher" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="!justify-start text-sm md:!hidden bg-background" href="index.html">
+<img alt="Logo" class="mr-2 hidden dark:block" height="16" src="_static/arrayfire_icon.png" width="16"/>
+<img alt="Logo" class="mr-2 dark:hidden" height="16" src="_static/arrayfire_icon.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">ArrayFire  documentation</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">The Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">ArrayFire Installer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuringarrayfireenvironment.html">Configuring ArrayFire Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introductiontovectorization.html">Introduction to Vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrayfirejitcodegeneration.html">ArrayFire JIT Code Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrayandmatrixmanipulation.html">Array and Matrix Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timing_arrayfire.html">Timing ArrayFire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debuggingarrayfirecode.html">Debugging ArrayFire Issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="product_support.html">Get Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="index.html">
+<span class="hidden md:inline">ArrayFire  documentation</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Getting Started</span>
+</nav>
+<div id="content" role="main">
+<section id="getting-started">
+<h1>Getting Started</h1>
+<section id="introduction">
+<h2>Introduction</h2>
+<p>ArrayFire is a high performance software library for parallel computing with an easy-to-use API. ArrayFire abstracts away much of the details of programming parallel architectures by providing a high-level container object, the array, that represents data stored on a CPU, GPU, FPGA, or other type of accelerator. This abstraction permits developers to write massively parallel applications in a high-level language where they need not be concerned about low-level optimizations that are frequently required to achieve high throughput on most parallel architectures.</p>
+</section>
+<section id="supported-data-types">
+<h2><a class="reference internal" href="constants/Dtype.html"><span class="doc">Supported data types</span></a></h2>
+<p>ArrayFire provides one generic container object, the array on which functions and mathematical operations are performed. The <code class="docutils literal notranslate"><span class="pre">array</span></code> can represent one of many different basic data types:</p>
+<ul class="simple">
+<li><p>f32 real single-precision (<code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>c32 complex single-precision (<code class="docutils literal notranslate"><span class="pre">cfloat</span></code>)</p></li>
+<li><p>f64 real double-precision (<code class="docutils literal notranslate"><span class="pre">double</span></code>)</p></li>
+<li><p>c64 complex double-precision (<code class="docutils literal notranslate"><span class="pre">cdouble</span></code>)</p></li>
+<li><p>f16 real half-precision (<code class="docutils literal notranslate"><span class="pre">half_float::half</span></code>)</p></li>
+<li><p>b8 8-bit boolean values (<code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p>s32 32-bit signed integer (<code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>u32 32-bit unsigned integer (<code class="docutils literal notranslate"><span class="pre">unsigned</span></code>)</p></li>
+<li><p>u8 8-bit unsigned values (<code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">char</span></code>)</p></li>
+<li><p>s64 64-bit signed integer (<code class="docutils literal notranslate"><span class="pre">intl</span></code>)</p></li>
+<li><p>u64 64-bit unsigned integer (<code class="docutils literal notranslate"><span class="pre">uintl</span></code>)</p></li>
+<li><p>s16 16-bit signed integer (<code class="docutils literal notranslate"><span class="pre">short</span></code>)</p></li>
+<li><p>u16 16-bit unsigned integer (<code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">short</span></code>)</p></li>
+</ul>
+<p>Most of these data types are supported on all modern GPUs; however, some older devices may lack support for double precision arrays. In this case, a runtime error will be generated when the array is constructed.</p>
+<p>If not specified otherwise, <code class="docutils literal notranslate"><span class="pre">array`s</span> <span class="pre">are</span> <span class="pre">created</span> <span class="pre">as</span> <span class="pre">single</span> <span class="pre">precision</span> <span class="pre">floating</span> <span class="pre">point</span> <span class="pre">numbers</span> <span class="pre">(:literal:`f32</span></code>).</p>
+</section>
+<section id="creating-and-populating-an-arrayfire-array">
+<h2>Creating and populating an ArrayFire array</h2>
+<p>ArrayFire arrays represent memory stored on the device. As such, creation and population of an array will consume memory on the device which cannot freed until the <code class="docutils literal notranslate"><span class="pre">array</span></code> object goes out of scope. As device memory allocation can be expensive, ArrayFire also includes a memory manager which will re-use device memory whenever possible.</p>
+<p>Arrays can be created using one of the array constructors. Below we show how to create 1D, 2D, and 3D arrays with uninitialized values:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Arrays may be created using the array constructor and dimensioned</span>
+</span><span id="line-2"><span class="c1"># as 1D, 2D, 3D; however, the values in these arrays will be undefined</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="n">array</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,))</span>
+</span><span id="line-6"><span class="n">array_2d</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span><span id="line-7"><span class="n">array_3d</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</span></code></pre></div>
+</div>
+<p>However, uninitialized memory is likely not useful in your application. ArrayFire provides several convenient functions for creating arrays that contain pre-populated values including constants, uniform random numbers, uniform normally distributed numbers, and the identity matrix:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># Generate an array of size three filled with zeros.</span>
+</span><span id="line-4"><span class="c1"># If no data type is specified, ArrayFire defaults to f32.</span>
+</span><span id="line-5"><span class="c1"># The constant function generates the data on the device.</span>
+</span><span id="line-6"><span class="n">zeroes</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># Generate a 1x4 array of uniformly distributed [0,1] random numbers</span>
+</span><span id="line-9"><span class="c1"># The randu function generates the data on the device.</span>
+</span><span id="line-10"><span class="n">rand1</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># Generate a 2x2 array (or matrix, if you prefer) of random numbers</span>
+</span><span id="line-13"><span class="c1"># sampled from a normal distribution.</span>
+</span><span id="line-14"><span class="c1"># The randn function generates data on the device.</span>
+</span><span id="line-15"><span class="n">rand2</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="c1"># Generate a 3x3 identity matrix. The data is generated on the device.</span>
+</span><span id="line-18"><span class="n">iden</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">identity</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="c1"># Lastly, create a 2x1 array (column vector) of uniformly distributed</span>
+</span><span id="line-21"><span class="c1"># 32-bit complex numbers (c32 data type):</span>
+</span><span id="line-22"><span class="n">randcplx</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></code></pre></div>
+</div>
+<p>A complete list of ArrayFire functions that automatically generate data on the device may be found on the functions to create arrays page. As stated above, the default data type for arrays is f32 (a 32-bit floating point number) unless specified otherwise.</p>
+<p>ArrayFire arrays may also be populated from data found on the host. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># Create a six-element array on the host</span>
+</span><span id="line-4"><span class="n">hA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># Which can be copied into an ArrayFire Array using the pointer copy</span>
+</span><span id="line-7"><span class="c1"># constructor. Here we copy the data into a 2x3 matrix:</span>
+</span><span id="line-8"><span class="n">A</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">moddims</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">hA</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-9">
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># ArrayFire provides a convenince function for printing array</span>
+</span><span id="line-12"><span class="c1"># objects in case you wish to see how the data is stored:</span>
+</span><span id="line-13"><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># todo how to create complex numbers</span>
+</span></code></pre></div>
+</div>
+<p>ArrayFire also supports array initialization from memory already on the GPU. For example, with CUDA one can populate an <code class="docutils literal notranslate"><span class="pre">array</span></code> directly using a call to <code class="docutils literal notranslate"><span class="pre">cudaMemcpy</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">pycuda.driver</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cuda</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># Create an array on the host</span>
+</span><span id="line-8"><span class="n">host_ptr</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">Array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</span><span id="line-9">
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># Create an ArrayFire array 'a' from host_ptr (2x3 matrix)</span>
+</span><span id="line-12"><span class="n">A</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">moddims</span><span class="p">(</span><span class="n">host_ptr</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="c1"># Allocate CUDA device memory and copy data from host to device</span>
+</span><span id="line-15"><span class="n">device_ptr</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">mem_alloc</span><span class="p">(</span><span class="n">host_ptr</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span>
+</span><span id="line-16"><span class="n">cuda</span><span class="o">.</span><span class="n">memcpy_htod</span><span class="p">(</span><span class="n">device_ptr</span><span class="p">,</span> <span class="n">host_ptr</span><span class="p">)</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="c1"># Create an ArrayFire array 'b' from CUDA-allocated device memory (2x3 matrix)</span>
+</span><span id="line-19"><span class="n">b</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">device_ptr</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">is_device</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="c1"># Note: ArrayFire takes ownership of `device_ptr`, so no need to free it manually</span>
+</span><span id="line-22">
+</span><span id="line-23"><span class="c1"># Clean up CUDA resources (not necessary due to Python's automatic memory management)</span>
+</span><span id="line-24"><span class="c1"># cuda.mem_free(device_ptr)</span>
+</span></code></pre></div>
+</div>
+<p>Similar functionality exists for OpenCL too. If you wish to intermingle ArrayFire with CUDA or OpenCL code, we suggest you consult the CUDA interoperability or OpenCL interoperability pages for detailed instructions.</p>
+</section>
+<section id="arrayfire-array-contents-dimensions-and-properties">
+<h2>ArrayFire array contents, dimensions, and properties</h2>
+<p>ArrayFire provides several functions to determine various aspects of arrays. This includes functions to print the contents, query the dimensions, and determine various other aspects of arrays.</p>
+<p>The print function can be used to print arrays that have already been generated or any expression involving arrays:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Generate two arrays</span>
+</span><span id="line-5"><span class="n">a</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># Create a 2x2 array with random numbers between [0, 1]</span>
+</span><span id="line-6"><span class="n">b</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># Create a 2x1 array filled with constant value 1</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># Print arrays 'a' and 'b' to the console</span>
+</span><span id="line-9"><span class="nb">print</span><span class="p">(</span><span class="s2">"Array 'a':"</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="nb">print</span><span class="p">(</span><span class="s2">"Array 'b':"</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># Print the results of an expression involving arrays</span>
+</span><span id="line-14"><span class="n">result</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="mf">0.4</span>  <span class="c1"># Perform operation: first column of 'a' + 'b' + 0.4</span>
+</span><span id="line-15"><span class="nb">print</span><span class="p">(</span><span class="s2">"Result of expression (a.col(0) + b + 0.4):"</span><span class="p">)</span>
+</span><span id="line-16"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The dimensions of an array may be determined using either a dim4 object or by accessing the dimensions directly using the dims() and numdims() functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Create a 4x5x2 array of uniformly distributed random numbers</span>
+</span><span id="line-5"><span class="n">a</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># Determine the number of dimensions using the `numdims()` function</span>
+</span><span id="line-8"><span class="nb">print</span><span class="p">(</span><span class="s2">"numdims(a):"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">numdims</span><span class="p">())</span>  <span class="c1"># Print the number of dimensions (should be 3)</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># Print the size of the individual dimensions using the `dims()` function</span>
+</span><span id="line-11"><span class="nb">print</span><span class="p">(</span><span class="s2">"dims ="</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">dims</span><span class="p">())</span>  <span class="c1"># Print dimensions as a tuple (4, 5, 2)</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># Alternatively, access dimensions using a dim4 object</span>
+</span><span id="line-14"><span class="n">dims</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>
+</span><span id="line-15"><span class="nb">print</span><span class="p">(</span><span class="s2">"dims ="</span><span class="p">,</span> <span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Print dimensions separately (4, 5)</span>
+</span></code></pre></div>
+</div>
+<p>In addition to dimensions, arrays also carry several properties including methods to determine the underlying type and size (in bytes). You can even determine whether the array is empty, real/complex, a row/column, or a scalar or a vector:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Create an example ArrayFire array 'a'</span>
+</span><span id="line-5"><span class="n">a</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Example array of dtype float32</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># Get the type stored in the array</span>
+</span><span id="line-8"><span class="nb">print</span><span class="p">(</span><span class="s2">"underlying type:"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># Check if the array contains complex or real values</span>
+</span><span id="line-11"><span class="nb">print</span><span class="p">(</span><span class="s2">"is complex?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">iscomplex</span><span class="p">(),</span> <span class="s2">"   is real?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">isreal</span><span class="p">())</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># Check if the array is a vector, column vector, or row vector</span>
+</span><span id="line-14"><span class="nb">print</span><span class="p">(</span><span class="s2">"is vector?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">isvector</span><span class="p">(),</span> <span class="s2">"  column?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">iscolumn</span><span class="p">(),</span> <span class="s2">"  row?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">isrow</span><span class="p">())</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># Check if the array is empty, and determine its total elements and memory usage</span>
+</span><span id="line-17"><span class="nb">print</span><span class="p">(</span><span class="s2">"empty?"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">isempty</span><span class="p">(),</span> <span class="s2">"  total elements:"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">elements</span><span class="p">(),</span> <span class="s2">"  bytes:"</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">bytes</span><span class="p">())</span>
+</span></code></pre></div>
+</div>
+<p>For further information on these capabilities, we suggest you consult the full documentation on the array.</p>
+</section>
+<section id="writing-mathematical-expressions-in-arrayfire">
+<h2>Writing mathematical expressions in ArrayFire</h2>
+<p>ArrayFire leverages an advanced Just-In-Time (JIT) compilation engine that optimizes array operations by minimizing the number of CUDA/OpenCL kernels used. In Python, ArrayFire functions operate similarly to a vector library. This means that typical element-wise operations, such as <code class="docutils literal notranslate"><span class="pre">c[i]</span> <span class="pre">=</span> <span class="pre">a[i]</span> <span class="pre">+</span> <span class="pre">b[i]</span></code> in C, can be expressed more succinctly as <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code>, eliminating the need for explicit indexing.</p>
+<p>When multiple array operations are involved, ArrayFire’s JIT engine consolidates them through “kernel fusion”. This technique not only reduces the frequency of kernel invocations but also optimizes memory usage by eliminating redundant global memory operations. The JIT functionality extends seamlessly across Python function boundaries, continuing until a non-JIT function is encountered or a synchronization operation is explicitly invoked in the code.</p>
+<p>ArrayFire provides a broad spectrum of functions tailored for element-wise operations. It supports standard arithmetic operators (+, -, *, /) as well as a variety of transcendental functions (sin, cos, log, sqrt, etc.). These capabilities empower users to perform complex computations efficiently and effectively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Generate a 3x3 array of uniformly distributed random numbers</span>
+</span><span id="line-5"><span class="n">R</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-6"><span class="nb">print</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">+</span> <span class="n">af</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">R</span><span class="p">)))</span>  <span class="c1"># will be c32</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># Rescale complex values to unit circle</span>
+</span><span id="line-9"><span class="n">a</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="line-10"><span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">af</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># Calculate L2 norm of vectors</span>
+</span><span id="line-13"><span class="n">X</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</span><span id="line-14"><span class="nb">print</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">))))</span>  <span class="c1"># norm of every column vector</span>
+</span><span id="line-15"><span class="nb">print</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">)))</span>  <span class="c1"># same as above</span>
+</span><span id="line-16"><span class="nb">print</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">)))</span>  <span class="c1"># norm of every row vector</span>
+</span><span id="line-17">
+</span></code></pre></div>
+</div>
+<p>To see the complete list of functions please consult the documentation on mathematical, linear algebra, signal processing, and statistics.</p>
+</section>
+<section id="mathematical-constants">
+<h2>Mathematical constants</h2>
+<p>In Python, ArrayFire provides several platform-independent constants such as Pi, NaN, and Inf. If ArrayFire lacks a specific constant you require, you can create it using the <cite>af.constant</cite> array constructor.</p>
+<p>These constants are universally applicable across all ArrayFire functions. Below, we illustrate their usage in element selection and a mathematical expression:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># Generate a 5x5 array of uniformly distributed random numbers</span>
+</span><span id="line-7"><span class="n">A</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># Set elements in A greater than 0.5 to NaN</span>
+</span><span id="line-10"><span class="n">A</span><span class="p">[</span><span class="n">af</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)]</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">NaN</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># Generate arrays x and y with 10 million random numbers each</span>
+</span><span id="line-13"><span class="n">x</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">10e6</span><span class="p">))</span>
+</span><span id="line-14"><span class="n">y</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">10e6</span><span class="p">))</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># Estimate Pi using Monte Carlo method</span>
+</span><span id="line-17"><span class="n">pi_est</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">af</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">af</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10e6</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># Print the estimation error compared to math.pi</span>
+</span><span id="line-20"><span class="nb">print</span><span class="p">(</span><span class="s2">"estimation error:"</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">-</span> <span class="n">pi_est</span><span class="p">))</span>
+</span></code></pre></div>
+</div>
+<p>Please note that our constants may, at times, conflict with macro definitions in standard header files. When this occurs, please refer to our constants using the <code class="docutils literal notranslate"><span class="pre">af::</span></code> namespace.</p>
+</section>
+<section id="indexing">
+<h2>Indexing</h2>
+<p>Like all functions in ArrayFire, indexing is also executed in parallel on the OpenCL/CUDA devices. Because of this, indexing becomes part of a JIT operation and is accomplished using parentheses instead of square brackets (i.e. as <code class="docutils literal notranslate"><span class="pre">A(0)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">A[0]</span></code>). To index <code class="docutils literal notranslate"><span class="pre">af::</span></code> arrays you may use one or a combination of the following functions:</p>
+<ul class="simple">
+<li><p>integer scalars</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:</span></code> representing the entire description</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">begin:end:step</span></code> representing a linear sequence/slice</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">row(i)</span></code> or <code class="docutils literal notranslate"><span class="pre">col(i)</span></code> specifying a single row/column</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows(first,last)</span></code> or <code class="docutils literal notranslate"><span class="pre">cols(first,last)</span></code> specifying a span of rows or columns</p></li>
+</ul>
+<p>Please see the indexing page for several examples of how to use these functions.</p>
+</section>
+<section id="bitwise-operators">
+<h2>Bitwise operators</h2>
+<p>In addition to supporting standard mathematical functions, arrays that contain integer data types also support bitwise operators including and, or, and shift:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Define host arrays</span>
+</span><span id="line-5"><span class="n">h_A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="line-6"><span class="n">h_B</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># Create ArrayFire arrays A and B from host arrays</span>
+</span><span id="line-9"><span class="n">A</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">h_A</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-10"><span class="n">B</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">h_B</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># Print arrays A and B</span>
+</span><span id="line-13"><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</span><span id="line-14"><span class="nb">print</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># Perform bitwise operations</span>
+</span><span id="line-17"><span class="n">A_and_B</span> <span class="o">=</span> <span class="n">A</span> <span class="o">&amp;</span> <span class="n">B</span>
+</span><span id="line-18"><span class="n">A_or_B</span> <span class="o">=</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span>
+</span><span id="line-19"><span class="n">A_xor_B</span> <span class="o">=</span> <span class="n">A</span> <span class="o">^</span> <span class="n">B</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="c1"># Print results of bitwise operations</span>
+</span><span id="line-22"><span class="nb">print</span><span class="p">(</span><span class="n">A_and_B</span><span class="p">)</span>
+</span><span id="line-23"><span class="nb">print</span><span class="p">(</span><span class="n">A_or_B</span><span class="p">)</span>
+</span><span id="line-24"><span class="nb">print</span><span class="p">(</span><span class="n">A_xor_B</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<section id="sample-using-python-api">
+<h3>Sample using Python API</h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">arrayfire</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">af</span>
+</span><span id="line-3">
+</span><span id="line-4">
+</span><span id="line-5"><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="line-6">    <span class="c1"># Generate random values</span>
+</span><span id="line-7">    <span class="n">a</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">randu</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">af</span><span class="o">.</span><span class="n">Dtype</span><span class="o">.</span><span class="n">f32</span><span class="p">)</span>
+</span><span id="line-8">
+</span><span id="line-9">    <span class="c1"># Sum all the values</span>
+</span><span id="line-10">    <span class="n">result</span> <span class="o">=</span> <span class="n">af</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span><span id="line-11">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sum: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="line-12">
+</span><span id="line-13">
+</span></code></pre></div>
+</div>
+</section>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#introduction'" class="reference internal" href="#introduction">Introduction</a></li>
+<li><a :data-current="activeSection === '#supported-data-types'" class="reference internal" href="#supported-data-types"><span class="xref std std-doc">Supported data types</span></a></li>
+<li><a :data-current="activeSection === '#creating-and-populating-an-arrayfire-array'" class="reference internal" href="#creating-and-populating-an-arrayfire-array">Creating and populating an ArrayFire array</a></li>
+<li><a :data-current="activeSection === '#arrayfire-array-contents-dimensions-and-properties'" class="reference internal" href="#arrayfire-array-contents-dimensions-and-properties">ArrayFire array contents, dimensions, and properties</a></li>
+<li><a :data-current="activeSection === '#writing-mathematical-expressions-in-arrayfire'" class="reference internal" href="#writing-mathematical-expressions-in-arrayfire">Writing mathematical expressions in ArrayFire</a></li>
+<li><a :data-current="activeSection === '#mathematical-constants'" class="reference internal" href="#mathematical-constants">Mathematical constants</a></li>
+<li><a :data-current="activeSection === '#indexing'" class="reference internal" href="#indexing">Indexing</a></li>
+<li><a :data-current="activeSection === '#bitwise-operators'" class="reference internal" href="#bitwise-operators">Bitwise operators</a><ul>
+<li><a :data-current="activeSection === '#sample-using-python-api'" class="reference internal" href="#sample-using-python-api">Sample using Python API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2025, ArrayFire Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 8.2.3</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="_static/documentation_options.js?v=5929fcd5"></script>
+<script src="_static/doctools.js?v=9bcbadda"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="_static/theme.js?v=073f68d9"></script>
+</body>
+</html>

@@ -1,7 +1,0 @@
-TODO
-=====
-
-- Add docstring to function image processing
-- Change to where the Restructured Files for the undocumented functions point to (currently some point to docs in the arrayfire-binary-python-wrapper)
-- Add more detail to the constants and classes
-- Add more information in the python installation section
